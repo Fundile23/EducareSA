@@ -1,0 +1,67 @@
+﻿@model IEnumerable<EducareSA.Models.Faculty>
+
+@{
+    ViewData["Title"] = "Manage Faculties";
+}
+
+<h1>Manage Faculties</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">
+        Add Faculty
+    </a>
+</p>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Faculty</th>
+            <th>University</th>
+            <th>Description</th>
+            <th>Programmes</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var faculty in Model)
+        {
+            <tr>
+                <td>@faculty.Name</td>
+                <td>@faculty.University.Name</td>
+                <td>
+                    @(string.IsNullOrWhiteSpace(faculty.Description)
+                        ? "—"
+                        : faculty.Description)
+                </td>
+                <td>@faculty.Programmes.Count</td>
+                <td>
+                    <a asp-action="Details"
+                       asp-route-id="@faculty.FacultyId"
+                       class="btn btn-sm btn-info">
+                        Details
+                    </a>
+
+                    <a asp-action="Edit"
+                       asp-route-id="@faculty.FacultyId"
+                       class="btn btn-sm btn-warning">
+                        Edit
+                    </a>
+
+                    <a asp-action="Delete"
+                       asp-route-id="@faculty.FacultyId"
+                       class="btn btn-sm btn-danger">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

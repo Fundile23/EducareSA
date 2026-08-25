@@ -1,0 +1,84 @@
+﻿@model EducareSA.Models.Faculty
+
+@{
+    ViewData["Title"] = "Faculty Details";
+}
+
+<h1>Faculty Details</h1>
+
+<div class="card">
+    <div class="card-body">
+
+        <h3>@Model.Name</h3>
+
+        <dl class="row">
+
+            <dt class="col-sm-3">
+                University
+            </dt>
+
+            <dd class="col-sm-9">
+                @Model.University.Name
+            </dd>
+
+            <dt class="col-sm-3">
+                Description
+            </dt>
+
+            <dd class="col-sm-9">
+                @(string.IsNullOrWhiteSpace(Model.Description)
+                    ? "No description provided."
+                    : Model.Description)
+            </dd>
+
+            <dt class="col-sm-3">
+                Number of Programmes
+            </dt>
+
+            <dd class="col-sm-9">
+                @Model.Programmes.Count
+            </dd>
+
+        </dl>
+
+    </div>
+</div>
+
+@if (Model.Programmes.Any())
+{
+    <h3 class="mt-4">Programmes</h3>
+
+    <table class="table table-striped">
+
+        <thead>
+            <tr>
+                <th>Programme</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var programme in Model.Programmes)
+            {
+                <tr>
+                    <td>@programme.Name</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+
+<div class="mt-3">
+
+    <a asp-action="Edit"
+       asp-route-id="@Model.FacultyId"
+       class="btn btn-warning">
+        Edit
+    </a>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Back
+    </a>
+
+</div>

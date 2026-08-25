@@ -1,0 +1,62 @@
+﻿@model EducareSA.Models.Faculty
+
+@{
+    ViewData["Title"] = "Delete Faculty";
+}
+
+<h1>Delete Faculty</h1>
+
+<div class="alert alert-danger">
+    <strong>Warning:</strong>
+    Are you sure you want to delete this faculty?
+</div>
+
+<div class="card">
+    <div class="card-body">
+
+        <h3>@Model.Name</h3>
+
+        <p>
+            <strong>University:</strong>
+            @Model.University.Name
+        </p>
+
+        <p>
+            <strong>Programmes:</strong>
+            @Model.Programmes.Count
+        </p>
+
+        @if (Model.Programmes.Any())
+        {
+            <div class="alert alert-warning">
+                This faculty has programmes associated with it
+                and cannot be deleted.
+            </div>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+                Back
+            </a>
+        }
+        else
+        {
+            <form asp-action="Delete" method="post">
+
+                <input type="hidden"
+                       asp-for="FacultyId" />
+
+                <button type="submit"
+                        class="btn btn-danger">
+                    Yes, Delete
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </form>
+        }
+
+    </div>
+</div>

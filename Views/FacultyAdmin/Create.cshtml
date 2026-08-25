@@ -1,0 +1,77 @@
+﻿@model EducareSA.Models.Faculty
+
+@{
+    ViewData["Title"] = "Add Faculty";
+}
+
+<h1>Add Faculty</h1>
+
+<form asp-action="Create" method="post">
+
+    <div asp-validation-summary="ModelOnly"
+         class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="UniversityId" class="form-label">
+            University
+        </label>
+
+        <select asp-for="UniversityId"
+                class="form-select">
+
+            <option value="">-- Select University --</option>
+
+            @foreach (var university in ViewBag.Universities)
+            {
+                <option value="@university.UniversityId">
+                    @university.Name (@university.ShortName)
+                </option>
+            }
+
+        </select>
+
+        <span asp-validation-for="UniversityId"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">
+            Faculty Name
+        </label>
+
+        <input asp-for="Name"
+               class="form-control"
+               placeholder="e.g. Faculty of Engineering" />
+
+        <span asp-validation-for="Name"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">
+            Description
+        </label>
+
+        <textarea asp-for="Description"
+                  class="form-control"
+                  rows="4"></textarea>
+
+        <span asp-validation-for="Description"
+              class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Create Faculty
+    </button>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        Cancel
+    </a>
+
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
