@@ -1,0 +1,202 @@
+﻿@model EducareSA.ViewModels.ProgrammeMatchViewModel
+@{
+    ViewData["Title"] = "Eligibility Check";
+    var e = Model.Eligibility;
+    var programme = Model.Programme;
+}
+
+<section style="padding: 48px 0 40px; background: linear-gradient(135deg, var(--beige-light) 0%, var(--cream) 100%); position: relative; overflow: hidden;">
+    <div style="position: absolute; top: -40%; right: -15%; width: 700px; height: 700px; background: radial-gradient(circle, var(--secondary) 0%, transparent 70%); border-radius: 50%; opacity: 0.5; pointer-events: none;"></div>
+
+    <div class="shell" style="position: relative; z-index: 2;">
+
+        <nav style="margin-bottom: 24px;" data-aos="fade-right">
+            <div style="font-size: 0.85rem; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
+                <a asp-action="Matches" style="color: var(--brown-medium);">My matches</a>
+                <span style="color: var(--brown-soft);">/</span>
+                <span style="color: var(--primary); font-weight: 500;">@programme.Name</span>
+            </div>
+        </nav>
+
+        <div style="max-width: 820px;" data-aos="fade-right">
+            <div style="font-size: 0.9rem; color: var(--brown-medium); margin-bottom: 8px;">
+                @programme.Faculty.University.Name
+            </div>
+            <h1 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); margin-bottom: 16px; line-height: 1.15;">
+                @programme.Name
+            </h1>
+
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                @if (!string.IsNullOrWhiteSpace(programme.QualificationType))
+                {
+                    <span class="badge bg-primary">@programme.QualificationType</span>
+                }
+                @if (programme.NQFLevel.HasValue)
+                {
+                    <span class="badge bg-secondary">NQF @programme.NQFLevel</span>
+                }
+                @if (programme.DurationYears.HasValue)
+                {
+                    <span class="badge bg-secondary">
+                        <i class="fas fa-clock" style="font-size: 0.65rem; margin-right: 4px;"></i>
+                        @programme.DurationYears.Value.ToString("0.#") year@(programme.DurationYears.Value == 1 ? "" : "s")
+                    </span>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<section style="padding: 40px 0 100px;">
+    <div class="shell">
+        <div class="check-layout">
+
+            <!-- LEFT: requirements -->
+            <div>
+
+                <!-- Verdict banner -->
+                <div class="card" style="padding: 32px; border-radius: var(--r-lg); margin-bottom: 24px; @(e.IsQualified ? "background: var(--success-bg); border-color: transparent;" : e.Status == EducareSA.Services.EligibilityStatus.MissingData ? "background: var(--warning-bg); border-color: transparent;" : "background: var(--danger-bg); border-color: transparent;")" data-aos="fade-up">
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <div style="font-size: 2.5rem;">
+                            @if (e.IsQualified)
+                            {
+                                <i class="fas fa-check-circle" style="color: var(--success);"></i>
+                            }
+                            else if (e.Status == EducareSA.Services.EligibilityStatus.MissingData)
+                            {
+                                <i class="fas fa-exclamation-circle" style="color: var(--warning);"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-times-circle" style="color: var(--danger);"></i>
+                            }
+                        </div>
+                        <div>
+                            <h3 style="font-family: var(--font-display); margin: 0 0 4px; font-size: 1.25rem; color: var(--primary);">
+                                @if (e.IsQualified)
+                                {
+                                    <text>You qualify for this programme</text>
+                                }
+                                else if (e.Status == EducareSA.Services.EligibilityStatus.MissingData)
+                                {
+                                    <text>Not enough data to check</text>
+                                }
+                                else
+                                {
+                                    <text>Not yet — some requirements aren't met</text>
+                                }
+                            </h3>
+                            <p style="margin: 0; font-size: 0.9rem; color: var(--brown-medium);">
+                                @if (e.IsQualified)
+                                {
+                                    <text>You meet every requirement we have on file for this programme.</text>
+                                }
+                                else if (e.Status == EducareSA.Services.EligibilityStatus.MissingData)
+                                {
+                                    <text>Add your subjects and marks so we can evaluate your eligibility.</text>
+                                }
+                                else
+                                {
+                                    <text>See the details below to understand what's missing.</text>
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Requirements breakdown -->
+                <div class="card" style="padding: 32px; border-radius: var(--r-lg);" data-aos="fade-up">
+                    <h3 style="font-family: var(--font-display); margin: 0 0 20px; font-size: 1.2rem;">
+                        Requirement breakdown
+                    </h3>
+
+                    @if (e.Checks.Count == 0)
+                    {
+                        <p style="color: var(--brown-medium); margin: 0; font-size: 0.95rem;">
+                            No specific requirements recorded for this programme yet.
+                        </p>
+                    }
+                    else
+                    {
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            @foreach (var check in e.Checks)
+                            {
+                                <li style="display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; background: var(--beige-light); border-radius: var(--r-sm); margin-bottom: 8px;">
+                                    <i class="fas @(check.Passed ? "fa-check-circle" : "fa-times-circle")"
+                                       style="margin-top: 3px; font-size: 1rem; color: @(check.Passed ? "var(--success)" : "var(--danger)");"></i>
+                                    <span style="font-size: 0.95rem; color: var(--brown-dark);">@check.Description</span>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(programme.Description))
+                {
+                    <div class="card" style="padding: 32px; border-radius: var(--r-lg); margin-top: 24px;" data-aos="fade-up">
+                        <h3 style="font-family: var(--font-display); margin: 0 0 16px; font-size: 1.2rem;">
+                            About the programme
+                        </h3>
+                        <p style="margin: 0; color: var(--brown-medium); line-height: 1.75; font-size: 0.98rem;">
+                            @programme.Description
+                        </p>
+                    </div>
+                }
+
+            </div>
+
+            <!-- RIGHT: APS sidebar -->
+            <aside style="display: flex; flex-direction: column; gap: 20px;">
+
+                <div class="card" style="background: var(--secondary); border-color: transparent; padding: 32px; border-radius: var(--r-lg); text-align: center;" data-aos="fade-up">
+                    <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary); font-weight: 600; margin-bottom: 12px;">
+                        Your APS
+                    </div>
+                    <div style="font-family: var(--font-display); font-size: 3.5rem; font-weight: 700; color: var(--primary); line-height: 1; margin-bottom: 8px;">
+                        @e.StudentAps
+                    </div>
+                    @if (e.RequiredAps.HasValue)
+                    {
+                        <div style="font-size: 0.85rem; color: var(--primary); opacity: 0.75;">
+                            Required: @e.RequiredAps
+                        </div>
+                    }
+                    else
+                    {
+                        <div style="font-size: 0.85rem; color: var(--primary); opacity: 0.75;">
+                            No APS requirement captured
+                        </div>
+                    }
+                </div>
+
+                <a asp-action="Matches" class="btn-pill-outline btn-pill" style="justify-content: center;">
+                    <i class="fas fa-arrow-left" style="font-size: 0.75rem;"></i>
+                    Back to matches
+                </a>
+
+                <a asp-controller="Programmes" asp-action="Details" asp-route-id="@programme.ProgrammeId"
+                   class="btn-pill" style="justify-content: center;">
+                    Programme details
+                    <i class="fas fa-arrow-right" style="font-size: 0.75rem;"></i>
+                </a>
+
+            </aside>
+
+        </div>
+    </div>
+</section>
+
+<style>
+    .check-layout {
+        display: grid;
+        grid-template-columns: 1fr 340px;
+        gap: 32px;
+        align-items: start;
+    }
+
+    @@media (max-width: 992px) {
+        .check-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

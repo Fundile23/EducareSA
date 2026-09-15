@@ -1,5 +1,122 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
 }
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="mb-0">Admin Dashboard</h1>
+        <p class="text-muted mb-0">Manage the EducareSA catalogue.</p>
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small text-uppercase">Universities</div>
+                <div class="display-6 fw-bold">@ViewBag.UniversityCount</div>
+                @if (ViewBag.InactiveUniversities > 0)
+                {
+                    <div class="small text-warning">
+                        @ViewBag.InactiveUniversities inactive
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small text-uppercase">Campuses</div>
+                <div class="display-6 fw-bold">@ViewBag.CampusCount</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small text-uppercase">Faculties</div>
+                <div class="display-6 fw-bold">@ViewBag.FacultyCount</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small text-uppercase">Programmes</div>
+                <div class="display-6 fw-bold">@ViewBag.ProgrammeCount</div>
+                <div class="small text-success">
+                    @ViewBag.ActiveProgrammes active
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small text-uppercase">Subjects</div>
+                <div class="display-6 fw-bold">@ViewBag.SubjectCount</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small text-uppercase">Bursaries</div>
+                <div class="display-6 fw-bold">@ViewBag.BursaryCount</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small text-uppercase">Students</div>
+                <div class="display-6 fw-bold">@ViewBag.StudentCount</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3 class="mt-4 mb-3">Manage</h3>
+
+<div class="row g-3">
+    <div class="col-6 col-md-4 col-lg-3">
+        <a asp-controller="UniversityAdmin" asp-action="Index"
+           class="text-decoration-none">
+            <div class="card border-0 shadow-sm h-100 text-center p-3">
+                <div class="fs-3">🏛️</div>
+                <div class="fw-semibold">Universities</div>
+            </div>
+        </a>
+    </div>
+    <div class="col-6 col-md-4 col-lg-3">
+        <a asp-controller="CampusAdmin" asp-action="Index"
+           class="text-decoration-none">
+            <div class="card border-0 shadow-sm h-100 text-center p-3">
+                <div class="fs-3">📍</div>
+                <div class="fw-semibold">Campuses</div>
+            </div>
+        </a>
+    </div>
+    <div class="col-6 col-md-4 col-lg-3">
+        <a asp-controller="FacultyAdmin" asp-action="Index"
+           class="text-decoration-none">
+            <div class="card border-0 shadow-sm h-100 text-center p-3">
+                <div class="fs-3">🎓</div>
+                <div class="fw-semibold">Faculties</div>
+            </div>
+        </a>
+    </div>
+    <div class="col-6 col-md-4 col-lg-3">
+        <a asp-controller="ProgrammeAdmin" asp-action="Index"
+           class="text-decoration-none">
+            <div class="card border-0 shadow-sm h-100 text-center p-3">
+                <div class="fs-3">📚</div>
+                <div class="fw-semibold">Programmes</div>
+            </div>
+        </a>
+    </div>
+</div>

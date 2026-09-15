@@ -24,25 +24,34 @@ builder.Services
     .AddEntityFrameworkStores<EducareDbContext>()
     .AddDefaultTokenProviders()
     .AddDefaultUI();
+
 // MVC
 builder.Services.AddControllersWithViews();
+
+// App services
+builder.Services.AddScoped<EducareSA.Services.IApsCalculator, EducareSA.Services.ApsCalculator>();
+builder.Services.AddScoped<EducareSA.Services.IEligibilityService, EducareSA.Services.EligibilityService>();
+builder.Services.AddScoped<EducareSA.Services.IStudentProvisioningService,
+                           EducareSA.Services.StudentProvisioningService>();
 
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
+// Seed database (catalogue + identity)
+// Seed database (catalogue + identity + university JSON)
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
+    var env = services.GetRequiredService<IWebHostEnvironment>();
+
+    var db = services.GetRequiredService<EducareDbContext>();
+    await SeedData.SeedAsync(db);
+
+    var jsonPath = Path.Combine(env.ContentRootPath, "Data", "Seed", "universities.json");
+    await UniversityJsonSeeder.SeedAsync(db, jsonPath);
 
     await IdentitySeeder.SeedAsync(services);
-}
-
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-
-    await DbSeeder.SeedAdminAsync(services);
 }
 
 if (!app.Environment.IsDevelopment())
@@ -58,6 +67,10 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",

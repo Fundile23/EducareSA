@@ -1,50 +1,127 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - EducareSA</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/EducareSA.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">EducareSA</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+
+    <nav class="site-nav" id="siteNav">
+        <div class="shell">
+            <div class="nav-inner">
+
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="brand">
+                    EducareSA.
+                </a>
+
+                <ul class="nav-links">
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-area="" asp-controller="Universities" asp-action="Index">Universities</a></li>
+                    <li><a asp-area="" asp-controller="Programmes" asp-action="Index">Programmes</a></li>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li><a asp-area="" asp-controller="Student" asp-action="Results">My Results</a></li>
+                        <li><a asp-area="" asp-controller="Eligibility" asp-action="Matches">My Matches</a></li>
+                    }
+                </ul>
+
+                <div class="nav-actions">
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index"
+                               class="btn-pill-outline btn-pill btn-pill-sm">Admin</a>
+                        }
+                        <a asp-area="" asp-controller="Student" asp-action="Profile"
+                           class="btn-pill-outline btn-pill btn-pill-sm">Profile</a>
+                        <form asp-area="Identity" asp-page="/Account/Logout"
+                              asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })"
+                              method="post" style="display:inline;margin:0;">
+                            <button type="submit" class="btn-pill btn-pill-sm">Logout</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <a asp-area="Identity" asp-page="/Account/Login"
+                           class="btn-pill-outline btn-pill btn-pill-sm">Login</a>
+                        <a asp-area="Identity" asp-page="/Account/Register"
+                           class="btn-pill btn-pill-sm">Get started</a>
+                    }
+
+                    <button type="button" class="nav-toggle" aria-label="Menu"
+                            onclick="document.getElementById('siteNav').classList.toggle('open')">
+                        ☰
+                    </button>
                 </div>
+
             </div>
-            <partial name="_LoginPartial" />
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        </div>
+    </nav>
+
+    <div class="shell">
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
+                @TempData["Success"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
+                @TempData["Error"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - EducareSA - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer class="site-footer">
+        <div class="shell" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:16px;">
+            <div>
+                <strong style="font-family: var(--font-display); font-size: 1.1rem; color: var(--secondary);">EducareSA.</strong>
+                <span style="margin-left:10px;">Find your future in South Africa.</span>
+            </div>
+            <div style="display:flex; gap:6px; align-items:center;">
+                <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                <span>© @DateTime.UtcNow.Year</span>
+            </div>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+            AOS.init({ duration: 900, once: true, offset: 60 });
+
+            (function () {
+                var nav = document.getElementById('siteNav');
+                if (!nav) return;
+                var onScroll = function () {
+                    if (window.scrollY > 20) nav.classList.add('scrolled');
+                    else nav.classList.remove('scrolled');
+                };
+                window.addEventListener('scroll', onScroll, { passive: true });
+                onScroll();
+            })();
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

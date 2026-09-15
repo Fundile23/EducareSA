@@ -83,6 +83,8 @@ namespace EducareSA.Controllers
                 return View(campus);
             }
 
+
+
             _context.Campuses.Add(campus);
             await _context.SaveChangesAsync();
 
@@ -148,6 +150,7 @@ namespace EducareSA.Controllers
                 existingCampus.City = campus.City;
                 existingCampus.Province = campus.Province;
                 existingCampus.Address = campus.Address;
+                existingCampus.HeroImageUrl = campus.HeroImageUrl;
                 existingCampus.Latitude = campus.Latitude;
                 existingCampus.Longitude = campus.Longitude;
                 existingCampus.IsActive = campus.IsActive;

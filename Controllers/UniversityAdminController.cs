@@ -34,6 +34,7 @@ namespace EducareSA.Controllers
                 return NotFound();
 
             var university = await _context.Universities
+                .Include(u => u.Campuses)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.UniversityId == id);
 

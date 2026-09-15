@@ -1,8 +1,218 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- HERO -->
+<section class="hero">
+    <div class="shell">
+        <div class="split" style="align-items:center; gap:80px;">
+
+            <div class="hero-content" data-aos="fade-right">
+                <h1>Find the <span class="highlight">right course</span> for your future</h1>
+                <p class="hero-subtitle">South Africa's free matric course finder.</p>
+                <p>
+                    Capture your subjects and marks once. Instantly see which
+                    programmes you qualify for — and exactly why.
+                </p>
+                <div class="hero-cta">
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <a asp-controller="Student" asp-action="Results" class="btn-pill btn-pill-lg">
+                            Capture my results
+                        </a>
+                        <a asp-controller="Programmes" asp-action="Index" class="btn-pill-outline btn-pill btn-pill-lg">
+                            Browse programmes
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-area="Identity" asp-page="/Account/Register" class="btn-pill btn-pill-lg">
+                            Get started — it's free
+                        </a>
+                        <a asp-controller="Programmes" asp-action="Index" class="btn-pill-outline btn-pill btn-pill-lg">
+                            Browse programmes
+                        </a>
+                    }
+                </div>
+            </div>
+
+            <div data-aos="fade-left">
+                <div class="card" style="padding: 40px; border-radius: var(--r-xl);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+                        <span class="eyebrow" style="margin:0;">Your APS</span>
+                        <span class="badge bg-success">Live preview</span>
+                    </div>
+                    <div style="font-family: var(--font-display); font-size: 5rem; font-weight: 700; color: var(--brown-soft); line-height: 1; margin-bottom: 24px;">
+                        38
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:10px;">
+                        <div style="display:flex; justify-content:space-between; font-size:0.9rem; color: var(--brown-medium);">
+                            <span>Mathematics</span><span>78% · 6 pts</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; font-size:0.9rem; color: var(--brown-medium);">
+                            <span>English HL</span><span>72% · 6 pts</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; font-size:0.9rem; color: var(--brown-medium);">
+                            <span>Physical Sciences</span><span>65% · 5 pts</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; font-size:0.9rem; color: var(--brown-medium);">
+                            <span>Life Sciences</span><span>70% · 6 pts</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; font-size:0.9rem; color: var(--brown-medium); padding-top:10px; border-top:1px dashed var(--beige-dark);">
+                            <span>Life Orientation</span><span>85% · 4 pts</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- STATS -->
+<section class="section-tight">
+    <div class="shell">
+        <div class="stats-row">
+            <div class="stat-item" data-aos="fade-up" data-aos-delay="0">
+                <div class="stat-number">26</div>
+                <div class="stat-label">Universities</div>
+            </div>
+            <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-number">100+</div>
+                <div class="stat-label">Programmes</div>
+            </div>
+            <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-number">7</div>
+                <div class="stat-label">Point APS scale</div>
+            </div>
+            <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Free to use</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section">
+    <div class="shell">
+        <div class="split">
+            <div data-aos="fade-right">
+                <span class="eyebrow">How it works</span>
+                <h2 class="section-title">Three steps to your matches</h2>
+                <p class="split-body" style="margin-top: 24px;">
+                    No more guessing. EducareSA shows you exactly where you stand
+                    against each programme's real admission requirements.
+                </p>
+                <a asp-controller="Programmes" asp-action="Index"
+                   class="pill-link" style="margin-top: 24px;">
+                    Start exploring <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:20px;" data-aos="fade-left">
+
+                <div class="card" style="padding:28px; display:flex; gap:20px; align-items:flex-start;">
+                    <div style="width:48px;height:48px;border-radius:50%;background:var(--beige-light);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:1.2rem;color:var(--brown-soft);flex-shrink:0;">1</div>
+                    <div>
+                        <h4 style="margin: 0 0 6px; font-size: 1.1rem;">Capture your results</h4>
+                        <p class="text-muted" style="margin:0; font-size: 0.92rem;">
+                            Enter your subjects and percentages. We work out your APS instantly.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card" style="padding:28px; display:flex; gap:20px; align-items:flex-start;">
+                    <div style="width:48px;height:48px;border-radius:50%;background:var(--beige-light);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:1.2rem;color:var(--brown-soft);flex-shrink:0;">2</div>
+                    <div>
+                        <h4 style="margin: 0 0 6px; font-size: 1.1rem;">See your matches</h4>
+                        <p class="text-muted" style="margin:0; font-size: 0.92rem;">
+                            Every programme you qualify for, grouped by university.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card" style="padding:28px; display:flex; gap:20px; align-items:flex-start;">
+                    <div style="width:48px;height:48px;border-radius:50%;background:var(--beige-light);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:1.2rem;color:var(--brown-soft);flex-shrink:0;">3</div>
+                    <div>
+                        <h4 style="margin: 0 0 6px; font-size: 1.1rem;">Understand the gaps</h4>
+                        <p class="text-muted" style="margin:0; font-size: 0.92rem;">
+                            For every "no", we tell you exactly which requirement you missed.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOR LEARNERS / PARENTS -->
+<section class="section" style="background: var(--beige-light);">
+    <div class="shell">
+        <div class="text-center" style="margin-bottom: 56px;">
+            <span class="eyebrow">Built for</span>
+            <h2 class="section-title text-center" data-aos="fade-up">Learners and parents</h2>
+        </div>
+
+        <div class="card-grid-2">
+            <div class="card card-lift" style="padding: 40px;" data-aos="fade-right">
+                <div style="width:60px;height:60px;border-radius:50%;background:var(--beige-light);display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:var(--brown-soft);margin-bottom:24px;">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <h3 style="font-size: 1.5rem;">For learners</h3>
+                <p class="text-muted">
+                    Whether you're planning in Grade 11 or finalising in Grade 12,
+                    add your marks once and update them as you get them. Your matches
+                    update instantly.
+                </p>
+                <a asp-controller="Student" asp-action="Results" class="pill-link" style="margin-top:16px;">
+                    Try it now <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="card card-lift" style="padding: 40px;" data-aos="fade-left">
+                <div style="width:60px;height:60px;border-radius:50%;background:var(--beige-light);display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:var(--brown-soft);margin-bottom:24px;">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 style="font-size: 1.5rem;">For parents</h3>
+                <p class="text-muted">
+                    Understand what your child qualifies for, where the gaps are,
+                    and which universities offer the best fit — all based on the
+                    same information institutions use.
+                </p>
+                <a asp-controller="Universities" asp-action="Index" class="pill-link" style="margin-top:16px;">
+                    Browse universities <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="section">
+    <div class="shell">
+        <div class="card card-dark" style="padding: 72px 40px; text-align:center; border-radius: var(--r-xl);" data-aos="fade-up">
+            <h2 style="color: var(--cream); font-size: clamp(1.75rem, 3.5vw, 2.5rem); margin-bottom: 16px;">
+                Ready to find your matches?
+            </h2>
+            <p style="color: var(--beige-medium); max-width: 520px; margin: 0 auto 32px; font-size: 1.05rem;">
+                It takes two minutes. No credit card, no paywall, no nonsense.
+            </p>
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <a asp-controller="Eligibility" asp-action="Matches"
+                   class="btn-pill btn-pill-lg" style="background:var(--brown-soft); border-color:var(--brown-soft);">
+                    See my matches <i class="fas fa-arrow-right"></i>
+                </a>
+            }
+            else
+            {
+                <a asp-area="Identity" asp-page="/Account/Register"
+                   class="btn-pill btn-pill-lg" style="background:var(--brown-soft); border-color:var(--brown-soft);">
+                    Create free account <i class="fas fa-arrow-right"></i>
+                </a>
+            }
+        </div>
+    </div>
+</section>

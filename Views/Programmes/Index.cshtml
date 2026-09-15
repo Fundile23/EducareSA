@@ -1,0 +1,205 @@
+﻿@model EducareSA.ViewModels.ProgrammeSearchViewModel
+@{
+    ViewData["Title"] = "Programmes";
+}
+
+<!-- PAGE HEADER -->
+<section style="padding: 48px 0 32px; background: linear-gradient(135deg, var(--beige-light) 0%, var(--cream) 100%);">
+    <div class="shell">
+        <div style="max-width: 720px;" data-aos="fade-right">
+            <span class="eyebrow">Course finder</span>
+            <h1 style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 12px;">
+                Find your <span class="highlight">programme</span>
+            </h1>
+            <p style="font-size: 1.05rem; color: var(--brown-medium); margin: 0;">
+                @Model.TotalCount result@(Model.TotalCount == 1 ? "" : "s") across South African universities.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- SEARCH / FILTERS -->
+<section style="padding: 40px 0;">
+    <div class="shell">
+        <form method="get" data-aos="fade-up">
+            <div class="card" style="padding: 28px; border-radius: var(--r-lg);">
+                <div class="filter-grid">
+
+                    <div>
+                        <label class="form-label">Search</label>
+                        <div style="position: relative;">
+                            <i class="fas fa-search" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--brown-soft); font-size: 0.9rem;"></i>
+                            <input name="q" value="@Model.Query" class="form-control"
+                                   style="padding-left: 42px;"
+                                   placeholder="e.g. Bachelor of Science" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="form-label">University</label>
+                        <select name="universityId" class="form-select">
+                            <option value="">All universities</option>
+                            @foreach (var u in Model.Universities)
+                            {
+                                <option value="@u.UniversityId" selected="@(Model.UniversityId == u.UniversityId)">
+                                    @u.Name
+                                </option>
+                            }
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="form-label">Type</label>
+                        <select name="qualificationType" class="form-select">
+                            <option value="">Any type</option>
+                            @foreach (var t in new[] { "Degree", "Diploma", "Higher Certificate", "Advanced Diploma" })
+                            {
+                                <option value="@t" selected="@(Model.QualificationType == t)">@t</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div style="display:flex; gap:10px; align-items:flex-end;">
+                        <button type="submit" class="btn-pill" style="flex:1; justify-content:center;">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                        <a asp-action="Index" class="btn-pill-outline btn-pill" title="Clear filters">
+                            <i class="fas fa-rotate-left"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- RESULTS -->
+<section style="padding: 24px 0 100px;">
+    <div class="shell">
+
+        @if (Model.Results.Count == 0)
+        {
+            <div class="card" style="padding: 72px 32px; text-align:center; border-radius: var(--r-xl);" data-aos="fade-up">
+                <div style="width:80px;height:80px;border-radius:50%;background:var(--beige-light);display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--brown-soft);margin:0 auto 24px;">
+                    <i class="fas fa-magnifying-glass"></i>
+                </div>
+                <h3 style="font-family: var(--font-display); font-size: 1.6rem; margin-bottom: 12px;">
+                    No programmes matched
+                </h3>
+                <p class="text-muted" style="max-width: 420px; margin: 0 auto 28px;">
+                    Try adjusting your search or clearing filters to see more results.
+                </p>
+                <a asp-action="Index" class="btn-pill">Reset filters</a>
+            </div>
+        }
+        else
+        {
+            <div class="card-grid-3">
+
+                @{
+                    var i = 0;
+                }
+                @foreach (var p in Model.Results)
+                {
+                    var delay = (i % 6) * 80;
+                    i++;
+
+                    <div class="card card-lift"
+                         style="display:flex; flex-direction:column; border-radius: var(--r-lg);"
+                         data-aos="fade-up" data-aos-delay="@delay">
+
+                        <div class="card-body" style="display:flex; flex-direction:column; flex:1; padding: 28px;">
+
+                            <!-- Top row: university + type -->
+                            <div style="display:flex; justify-content:space-between; align-items:start; gap:8px; margin-bottom:16px;">
+                                <span class="badge bg-secondary">@p.Faculty.University.ShortName</span>
+                                @if (!string.IsNullOrWhiteSpace(p.QualificationType))
+                                {
+                                    <span class="badge bg-primary">@p.QualificationType</span>
+                                }
+                            </div>
+
+                            <!-- Title -->
+                            <h4 style="margin: 0 0 8px; font-size: 1.15rem; font-family: var(--font-display); font-weight: 600; line-height: 1.35; letter-spacing: -0.005em;">
+                                @p.Name
+                            </h4>
+
+                            <!-- Faculty + campus -->
+                            <div style="color: var(--brown-medium); font-size: 0.85rem; margin-bottom: 18px;">
+                                <i class="fas fa-building-columns" style="font-size: 0.75rem; margin-right: 6px; color: var(--brown-soft);"></i>
+                                @p.Faculty.Name
+                                @if (p.Campus != null)
+                                {
+                                    <div style="margin-top: 4px; padding-left: 18px;">
+                                        <i class="fas fa-location-dot" style="font-size: 0.75rem; margin-right: 6px; color: var(--brown-soft);"></i>
+                                        @p.Campus.Name
+                                    </div>
+                                }
+                            </div>
+
+                            <!-- Meta badges -->
+                            @if (p.NQFLevel.HasValue || p.DurationYears.HasValue)
+                            {
+                                <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom: 20px;">
+                                    @if (p.NQFLevel.HasValue)
+                                    {
+                                        <span class="badge bg-secondary" style="font-size:0.68rem;">
+                                            NQF @p.NQFLevel
+                                        </span>
+                                    }
+                                    @if (p.DurationYears.HasValue)
+                                    {
+                                        <span class="badge bg-secondary" style="font-size:0.68rem;">
+                                            <i class="fas fa-clock" style="font-size:0.6rem; margin-right:4px;"></i>
+                                            @p.DurationYears.Value.ToString("0.#") yr@(p.DurationYears.Value == 1 ? "" : "s")
+                                        </span>
+                                    }
+                                </div>
+                            }
+
+                            <!-- Actions -->
+                            <div style="margin-top:auto; display:flex; gap:8px;">
+                                <a asp-action="Details" asp-route-id="@p.ProgrammeId"
+                                   class="btn-pill-outline btn-pill btn-pill-sm"
+                                   style="flex:1; justify-content:center;">
+                                    Details
+                                </a>
+                                <a asp-controller="Eligibility" asp-action="Check" asp-route-id="@p.ProgrammeId"
+                                   class="btn-pill btn-pill-sm"
+                                   style="flex:1; justify-content:center;">
+                                    <i class="fas fa-check-circle" style="font-size:0.75rem;"></i>
+                                    Qualify?
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+
+            </div>
+        }
+
+    </div>
+</section>
+
+<style>
+    .filter-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr auto;
+        gap: 16px;
+        align-items: end;
+    }
+
+    @@media (max-width: 992px) {
+        .filter-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    @@media (max-width: 576px) {
+        .filter-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

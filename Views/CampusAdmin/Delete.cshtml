@@ -1,0 +1,46 @@
+﻿@model EducareSA.Models.Campus
+@{
+    ViewData["Title"] = "Delete Campus";
+}
+
+<section style="padding: 48px 0 32px;">
+    <div class="shell">
+        <nav style="margin-bottom: 20px; font-size: 0.85rem;">
+            <a asp-action="Index" style="color: var(--brown-medium);">Campuses</a>
+            <span style="color: var(--brown-soft); margin: 0 8px;">/</span>
+            <span style="color: var(--primary); font-weight: 500;">Delete @Model.Name</span>
+        </nav>
+
+        <h1 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); margin-bottom: 8px;">Delete campus</h1>
+    </div>
+</section>
+
+<section style="padding: 0 0 100px;">
+    <div class="shell">
+        <div class="card" style="padding: 32px; border-radius: var(--r-lg); max-width: 620px; border-color: var(--danger); background: var(--danger-bg);">
+            <div style="display: flex; gap: 16px; align-items: flex-start; margin-bottom: 24px;">
+                <i class="fas fa-exclamation-triangle" style="font-size: 1.5rem; color: var(--danger); margin-top: 4px;"></i>
+                <div>
+                    <h3 style="font-family: var(--font-display); margin: 0 0 8px; font-size: 1.2rem; color: var(--primary);">
+                        Are you sure?
+                    </h3>
+                    <p style="margin: 0; color: var(--brown-medium); font-size: 0.95rem;">
+                        This will permanently remove <strong>@Model.Name</strong> from the database.
+                        Programmes linked to this campus will be unassigned.
+                    </p>
+                </div>
+            </div>
+
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="CampusId" />
+                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <button type="submit" class="btn-pill" style="background: var(--danger); border-color: var(--danger);">
+                        <i class="fas fa-trash" style="font-size: 0.8rem;"></i>
+                        Yes, delete
+                    </button>
+                    <a asp-action="Index" class="btn-pill-outline btn-pill">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

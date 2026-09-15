@@ -1,0 +1,198 @@
+﻿@model EducareSA.ViewModels.SubjectResultsPageViewModel
+@{
+    ViewData["Title"] = "My Results";
+}
+
+<section style="padding: 48px 0 32px; background: linear-gradient(135deg, var(--beige-light) 0%, var(--cream) 100%);">
+    <div class="shell">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap;" data-aos="fade-right">
+            <div>
+                <span class="eyebrow">My portfolio</span>
+                <h1 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); margin-bottom: 8px;">My results</h1>
+                <p style="color: var(--brown-medium); margin: 0; max-width: 520px;">
+                    Capture your matric subjects and marks. Your APS updates instantly.
+                </p>
+            </div>
+            <a asp-action="Profile" class="btn-pill-outline btn-pill">
+                <i class="fas fa-user" style="font-size: 0.8rem;"></i>
+                My profile
+            </a>
+        </div>
+    </div>
+</section>
+
+<section style="padding: 40px 0 100px;">
+    <div class="shell">
+        <div class="results-layout">
+
+            <!-- LEFT: APS + add form -->
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+
+                <div class="card" style="background: var(--secondary); border-color: transparent; padding: 32px; border-radius: var(--r-lg); text-align: center;" data-aos="fade-up">
+                    <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary); font-weight: 600; margin-bottom: 12px;">
+                        Your APS
+                    </div>
+                    <div style="font-family: var(--font-display); font-size: 4rem; font-weight: 700; color: var(--primary); line-height: 1; margin-bottom: 8px;">
+                        @Model.Aps
+                    </div>
+                    <div style="font-size: 0.85rem; color: var(--primary); opacity: 0.75;">
+                        Best 6 subjects, LO capped at 4
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 28px; border-radius: var(--r-lg);" data-aos="fade-up">
+                    <h3 style="font-family: var(--font-display); margin: 0 0 20px; font-size: 1.2rem;">
+                        <i class="fas fa-plus-circle" style="font-size: 0.95rem; color: var(--primary); margin-right: 8px;"></i>
+                        Add a subject
+                    </h3>
+
+                    <form asp-action="AddResult" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger small" style="margin-bottom: 12px;"></div>
+
+                        <div style="margin-bottom: 16px;">
+                            <label asp-for="NewResult.SubjectId" class="form-label">Subject</label>
+                            <select asp-for="NewResult.SubjectId"
+                                    asp-items="@(new SelectList(Model.AvailableSubjects, "SubjectId", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select subject --</option>
+                            </select>
+                            <span asp-validation-for="NewResult.SubjectId" class="text-danger small"></span>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+                            <div>
+                                <label asp-for="NewResult.Percentage" class="form-label">Percentage</label>
+                                <input asp-for="NewResult.Percentage" type="number" step="0.01"
+                                       min="0" max="100" class="form-control" placeholder="0–100" />
+                                <span asp-validation-for="NewResult.Percentage" class="text-danger small"></span>
+                            </div>
+                            <div>
+                                <label asp-for="NewResult.AcademicYear" class="form-label">Year</label>
+                                <input asp-for="NewResult.AcademicYear" type="number"
+                                       min="2000" max="2100" class="form-control" />
+                                <span asp-validation-for="NewResult.AcademicYear" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-pill btn-pill-block">
+                            <i class="fas fa-plus" style="font-size: 0.8rem;"></i>
+                            Add subject
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- RIGHT: results table -->
+            <div>
+                @if (Model.Results.Count == 0)
+                {
+                    <div class="card" style="padding: 72px 32px; text-align: center; border-radius: var(--r-xl);" data-aos="fade-up">
+                        <div style="width: 80px; height: 80px; border-radius: 50%; background: var(--secondary); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--primary); margin: 0 auto 24px;">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 12px;">
+                            No subjects yet
+                        </h3>
+                        <p class="text-muted" style="max-width: 420px; margin: 0 auto;">
+                            Add your subjects on the left to see your APS and start matching against programmes.
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <div class="card" style="border-radius: var(--r-lg); overflow: hidden;" data-aos="fade-up">
+                        <div style="padding: 24px 28px; border-bottom: 1px solid var(--border);">
+                            <h3 style="font-family: var(--font-display); margin: 0; font-size: 1.2rem;">
+                                Captured subjects
+                                <span style="font-family: var(--font-body); font-size: 0.82rem; color: var(--brown-medium); font-weight: 400; margin-left: 8px;">
+                                    (@Model.Results.Count)
+                                </span>
+                            </h3>
+                        </div>
+
+                        <div style="overflow-x: auto;">
+                            <table class="table table-hover" style="margin: 0;">
+                                <thead>
+                                    <tr>
+                                        <th>Subject</th>
+                                        <th style="text-align: right; width: 90px;">%</th>
+                                        <th style="text-align: center; width: 90px;">Points</th>
+                                        <th style="text-align: center; width: 80px;">Counts</th>
+                                        <th style="width: 60px;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var row in Model.Breakdown)
+                                    {
+                                        var match = Model.Results.FirstOrDefault(r => r.Subject?.Name == row.SubjectName);
+                                        <tr>
+                                            <td style="font-weight: 500;">@row.SubjectName</td>
+                                            <td style="text-align: right;">@row.Percentage.ToString("0.##")</td>
+                                            <td style="text-align: center;">
+                                                <span class="badge bg-primary">@row.Points</span>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                @if (row.Counted)
+                                                {
+                                                    <i class="fas fa-check-circle" style="color: var(--success);"></i>
+                                                }
+                                                else
+                                                {
+                                                    <span style="color: var(--brown-soft);">—</span>
+                                                }
+                                            </td>
+                                            <td style="text-align: right;">
+                                                @if (match != null)
+                                                {
+                                                    <form asp-action="DeleteResult" asp-route-id="@match.ResultId"
+                                                          method="post" style="display: inline;"
+                                                          onsubmit="return confirm('Remove this subject?');">
+                                                        <button type="submit" class="btn-pill-outline btn-pill btn-pill-sm"
+                                                                style="padding: 6px 12px; font-size: 0.75rem;">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 24px;" data-aos="fade-up">
+                        <a asp-controller="Eligibility" asp-action="Matches"
+                           class="btn-pill btn-pill-lg btn-pill-block">
+                            <i class="fas fa-check-circle" style="font-size: 0.85rem;"></i>
+                            See what I qualify for
+                        </a>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<style>
+    .results-layout {
+        display: grid;
+        grid-template-columns: 380px 1fr;
+        gap: 32px;
+        align-items: start;
+    }
+
+    @@media (max-width: 992px) {
+        .results-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

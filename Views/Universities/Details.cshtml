@@ -1,5 +1,144 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model EducareSA.Models.University
 @{
+    ViewData["Title"] = Model.Name;
 }
+
+<section style="padding: 48px 0 40px; background: linear-gradient(135deg, var(--beige-light) 0%, var(--cream) 100%); position: relative; overflow: hidden;">
+    <div style="position: absolute; top: -40%; right: -15%; width: 700px; height: 700px; background: radial-gradient(circle, var(--secondary) 0%, transparent 70%); border-radius: 50%; opacity: 0.5; pointer-events: none;"></div>
+
+    <div class="shell" style="position: relative; z-index: 2;">
+
+        <nav style="margin-bottom: 24px;" data-aos="fade-right">
+            <div style="font-size: 0.85rem; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
+                <a asp-action="Index" style="color: var(--brown-medium);">Universities</a>
+                <span style="color: var(--brown-soft);">/</span>
+                <span style="color: var(--primary); font-weight: 500;">@Model.ShortName</span>
+            </div>
+        </nav>
+
+        <div style="display: flex; gap: 32px; align-items: flex-start; flex-wrap: wrap;" data-aos="fade-right">
+
+            @if (!string.IsNullOrWhiteSpace(Model.LogoUrl))
+            {
+                <div style="width: 100px; height: 100px; background: var(--white); border-radius: var(--r-lg); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); flex-shrink: 0;">
+                    <img src="@Model.LogoUrl" alt="@Model.Name logo" style="max-width: 80px; max-height: 80px; object-fit: contain;" />
+                </div>
+            }
+            else
+            {
+                <div style="width: 100px; height: 100px; background: var(--primary); color: var(--white); border-radius: var(--r-lg); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 1.6rem; box-shadow: var(--shadow-sm); flex-shrink: 0;">
+                    @Model.ShortName
+                </div>
+            }
+
+            <div style="flex: 1; min-width: 260px;">
+                <h1 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); margin-bottom: 12px;">
+                    @Model.Name
+                </h1>
+                <p style="font-size: 1.05rem; color: var(--brown-medium); margin: 0 0 20px;">
+                    <i class="fas fa-location-dot" style="font-size: 0.85rem; margin-right: 8px; color: var(--primary);"></i>
+                    @Model.City, @Model.Province
+                </p>
+
+                @if (!string.IsNullOrWhiteSpace(Model.WebsiteUrl))
+                {
+                    <a href="@Model.WebsiteUrl" target="_blank" rel="noopener"
+                       class="btn-pill-outline btn-pill">
+                        <i class="fas fa-arrow-up-right-from-square" style="font-size: 0.75rem;"></i>
+                        Official website
+                    </a>
+                }
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section style="padding: 56px 0 100px;">
+    <div class="shell">
+
+        @if (!string.IsNullOrWhiteSpace(Model.Description))
+        {
+            <div class="card" style="padding: 32px; border-radius: var(--r-lg); margin-bottom: 24px;" data-aos="fade-up">
+                <h3 style="font-family: var(--font-display); margin: 0 0 16px; font-size: 1.35rem;">About</h3>
+                <p style="margin: 0; color: var(--brown-medium); line-height: 1.75; font-size: 1.02rem;">
+                    @Model.Description
+                </p>
+            </div>
+        }
+
+        <!-- Campuses -->
+        <div data-aos="fade-up">
+            <h3 style="font-family: var(--font-display); margin: 40px 0 20px; font-size: 1.35rem;">
+                <i class="fas fa-building-columns" style="font-size: 1rem; color: var(--primary); margin-right: 10px;"></i>
+                Campuses
+            </h3>
+
+            @if (Model.Campuses.Any())
+            {
+                <div class="card-grid-3">
+                    @foreach (var c in Model.Campuses.OrderBy(x => x.Name))
+                    {
+                        <div class="card" style="border-radius: var(--r-lg); overflow: hidden;">
+
+                            @if (!string.IsNullOrWhiteSpace(c.HeroImageUrl))
+                            {
+                                <div style="height: 160px; overflow: hidden; background: var(--beige-light);">
+                                    <img src="@c.HeroImageUrl" alt="@c.Name"
+                                         style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="height: 160px; background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-deep) 100%); display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-building-columns" style="font-size: 2.5rem; color: var(--primary); opacity: 0.35;"></i>
+                                </div>
+                            }
+
+                            <div style="padding: 22px;">
+                                <h5 style="margin: 0 0 6px; font-family: var(--font-display); font-size: 1.05rem; color: var(--primary);">
+                                    @c.Name
+                                </h5>
+                                <div style="font-size: 0.85rem; color: var(--brown-medium);">
+                                    <i class="fas fa-location-dot" style="font-size: 0.7rem; margin-right: 5px;"></i>
+                                    @c.City, @c.Province
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p class="text-muted">No campuses captured for this university yet.</p>
+            }
+        </div>
+
+        <!-- Faculties -->
+        @if (Model.Faculties.Any())
+        {
+            <div data-aos="fade-up" style="margin-top: 48px;">
+                <h3 style="font-family: var(--font-display); margin: 0 0 20px; font-size: 1.35rem;">
+                    <i class="fas fa-graduation-cap" style="font-size: 1rem; color: var(--primary); margin-right: 10px;"></i>
+                    Faculties
+                </h3>
+
+                <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                    @foreach (var f in Model.Faculties.OrderBy(x => x.Name))
+                    {
+                        <span class="skill-tag">@f.Name</span>
+                    }
+                </div>
+            </div>
+        }
+
+        <div style="margin-top: 48px;">
+            <a asp-controller="Programmes" asp-action="Index" asp-route-universityId="@Model.UniversityId"
+               class="btn-pill">
+                Browse programmes at @Model.ShortName
+                <i class="fas fa-arrow-right" style="font-size: 0.75rem;"></i>
+            </a>
+        </div>
+
+    </div>
+</section>

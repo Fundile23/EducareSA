@@ -18,7 +18,12 @@ namespace EducareSA.Models
         [StringLength(100)]
         public string Province { get; set; } = string.Empty;
 
+     
+        public string? HeroImageUrl { get; set; }
+
         public string? Address { get; set; }
+
+
 
         public double? Latitude { get; set; }
 

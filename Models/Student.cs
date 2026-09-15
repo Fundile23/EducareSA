@@ -1,10 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EducareSA.Models
 {
     public class Student
     {
         public int StudentId { get; set; }
+
+        // FK to AspNetUsers
+        [Required]
+        public string ApplicationUserId { get; set; } = string.Empty;
 
         [Required]
         [StringLength(100)]
@@ -16,6 +21,7 @@ namespace EducareSA.Models
 
         [Required]
         [EmailAddress]
+        [StringLength(200)]
         public string Email { get; set; } = string.Empty;
 
         public DateTime? DateOfBirth { get; set; }
@@ -31,6 +37,9 @@ namespace EducareSA.Models
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+
+        [ForeignKey(nameof(ApplicationUserId))]
+        public Microsoft.AspNetCore.Identity.IdentityUser? ApplicationUser { get; set; }
 
         public ICollection<StudentSubjectResult> SubjectResults { get; set; }
             = new List<StudentSubjectResult>();

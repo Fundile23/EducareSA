@@ -1,0 +1,746 @@
+﻿[
+  {
+    "name": "University of Cape Town",
+    "shortName": "UCT",
+    "province": "Western Cape",
+    "city": "Cape Town",
+    "websiteUrl": "https://www.uct.ac.za",
+    "logoUrl": null,
+    "description": "South Africa's oldest university, founded in 1829. Research-intensive, consistently ranked among the top universities on the African continent.",
+    "campuses": [
+      {
+        "name": "Rondebosch Campus",
+        "city": "Cape Town",
+        "province": "Western Cape",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Upper Campus",
+        "city": "Cape Town",
+        "province": "Western Cape",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Medical School (Groote Schuur)",
+        "city": "Cape Town",
+        "province": "Western Cape",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Graduate School of Business",
+        "city": "Cape Town",
+        "province": "Western Cape",
+        "heroImageUrl": null
+      }
+    ]
+  },
+  {
+    "name": "University of the Witwatersrand",
+    "shortName": "Wits",
+    "province": "Gauteng",
+    "city": "Johannesburg",
+    "websiteUrl": "https://www.wits.ac.za",
+    "logoUrl": null,
+    "description": "Located in the heart of Johannesburg, Wits is one of South Africa's leading research universities, known for its role in the country's political and intellectual history.",
+    "campuses": [
+      {
+        "name": "East Campus",
+        "city": "Johannesburg",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      },
+      {
+        "name": "West Campus",
+        "city": "Johannesburg",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Education Campus",
+        "city": "Johannesburg",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Medical School (Parktown)",
+        "city": "Johannesburg",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Business School (WBS)",
+        "city": "Johannesburg",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      }
+    ]
+  },
+  {
+    "name": "Stellenbosch University",
+    "shortName": "SU",
+    "province": "Western Cape",
+    "city": "Stellenbosch",
+    "websiteUrl": "https://www.sun.ac.za",
+    "logoUrl": null,
+    "description": "One of South Africa's leading research universities, located in the historic Winelands town of Stellenbosch. Offers instruction in both Afrikaans and English.",
+    "campuses": [
+      {
+        "name": "Stellenbosch Campus",
+        "city": "Stellenbosch",
+        "province": "Western Cape",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Tygerberg Medical Campus",
+        "city": "Cape Town",
+        "province": "Western Cape",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Bellville Park Campus",
+        "city": "Bellville",
+        "province": "Western Cape",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Saldanha Campus",
+        "city": "Saldanha",
+        "province": "Western Cape",
+        "heroImageUrl": null
+      }
+    ]
+  },
+  {
+    "name": "University of Pretoria",
+    "shortName": "UP",
+    "province": "Gauteng",
+    "city": "Pretoria",
+    "websiteUrl": "https://www.up.ac.za",
+    "logoUrl": null,
+    "description": "One of South Africa's largest contact universities, UP is a research-intensive institution with a strong focus on innovation and community engagement.",
+    "campuses": [
+      {
+        "name": "Hatfield Campus",
+        "city": "Pretoria",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Hillcrest Campus",
+        "city": "Pretoria",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Groenkloof Campus",
+        "city": "Pretoria",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Prinshof Campus",
+        "city": "Pretoria",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Onderstepoort Campus",
+        "city": "Pretoria",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      },
+      {
+        "name": "GIBS (Illovo)",
+        "city": "Johannesburg",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      }
+    ]
+  },
+  {
+    "name": "University of KwaZulu-Natal",
+    "shortName": "UKZN",
+    "province": "KwaZulu-Natal",
+    "city": "Durban",
+    "websiteUrl": "https://www.ukzn.ac.za",
+    "logoUrl": null,
+    "description": "Formed in 2004 through the merger of the University of Natal and the University of Durban-Westville. Multi-campus, research-intensive, with a strong medical school.",
+    "campuses": [
+      {
+        "name": "Howard College",
+        "city": "Durban",
+        "province": "KwaZulu-Natal",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Westville Campus",
+        "city": "Durban",
+        "province": "KwaZulu-Natal",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Pietermaritzburg Campus",
+        "city": "Pietermaritzburg",
+        "province": "KwaZulu-Natal",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Nelson R Mandela School of Medicine",
+        "city": "Durban",
+        "province": "KwaZulu-Natal",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Edgewood Campus",
+        "city": "Pinetown",
+        "province": "KwaZulu-Natal",
+        "heroImageUrl": null
+      }
+    ]
+  },
+  {
+    "name": "University of Johannesburg",
+    "shortName": "UJ",
+    "province": "Gauteng",
+    "city": "Johannesburg",
+    "websiteUrl": "https://www.uj.ac.za",
+    "logoUrl": null,
+    "description": "A comprehensive university formed in 2005, UJ has grown into one of South Africa's largest contact universities with a strong focus on innovation.",
+    "campuses": [
+      {
+        "name": "Auckland Park Kingsway",
+        "city": "Johannesburg",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Auckland Park Bunting Road",
+        "city": "Johannesburg",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Doornfontein Campus",
+        "city": "Johannesburg",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Soweto Campus",
+        "city": "Soweto",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      }
+    ]
+  },
+  {
+    "name": "Rhodes University",
+    "shortName": "RU",
+    "province": "Eastern Cape",
+    "city": "Makhanda",
+    "websiteUrl": "https://www.ru.ac.za",
+    "logoUrl": null,
+    "description": "A small, residential, research-intensive university in Makhanda (formerly Grahamstown). Known for academic excellence and a strong student residential culture.",
+    "campuses": [
+      {
+        "name": "Main Campus",
+        "city": "Makhanda",
+        "province": "Eastern Cape",
+        "heroImageUrl": null
+      }
+    ]
+  },
+  {
+    "name": "North-West University",
+    "shortName": "NWU",
+    "province": "North West",
+    "city": "Potchefstroom",
+    "websiteUrl": "https://www.nwu.ac.za",
+    "logoUrl": null,
+    "description": "A multi-campus university formed in 2004, with campuses in Potchefstroom, Mahikeng and Vanderbijlpark. Strong distance-education offering.",
+    "campuses": [
+      {
+        "name": "Potchefstroom Campus",
+        "city": "Potchefstroom",
+        "province": "North West",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Mahikeng Campus",
+        "city": "Mahikeng",
+        "province": "North West",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Vanderbijlpark Campus",
+        "city": "Vanderbijlpark",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      }
+    ]
+  },
+  {
+    "name": "University of the Free State",
+    "shortName": "UFS",
+    "province": "Free State",
+    "city": "Bloemfontein",
+    "websiteUrl": "https://www.ufs.ac.za",
+    "logoUrl": null,
+    "description": "A multi-campus university with its main campus in Bloemfontein, plus a Qwaqwa campus and a South Campus. Strong in agriculture, education and health sciences.",
+    "campuses": [
+      {
+        "name": "Bloemfontein Campus",
+        "city": "Bloemfontein",
+        "province": "Free State",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Qwaqwa Campus",
+        "city": "Phuthaditjhaba",
+        "province": "Free State",
+        "heroImageUrl": null
+      },
+      {
+        "name": "South Campus",
+        "city": "Bloemfontein",
+        "province": "Free State",
+        "heroImageUrl": null
+      }
+    ]
+  },
+  {
+    "name": "University of the Western Cape",
+    "shortName": "UWC",
+    "province": "Western Cape",
+    "city": "Bellville",
+    "websiteUrl": "https://www.uwc.ac.za",
+    "logoUrl": null,
+    "description": "A research-intensive university located in Bellville, with a proud history of contributing to South Africa's liberation struggle and a diverse student body.",
+    "campuses": [
+      {
+        "name": "Bellville Campus",
+        "city": "Bellville",
+        "province": "Western Cape",
+        "heroImageUrl": null
+      }
+    ]
+  },
+  {
+    "name": "Nelson Mandela University",
+    "shortName": "NMU",
+    "province": "Eastern Cape",
+    "city": "Port Elizabeth",
+    "websiteUrl": "https://www.mandela.ac.za",
+    "logoUrl": null,
+    "description": "A comprehensive university in the Eastern Cape, renamed in honour of Nelson Mandela in 2017. Merges academic, vocational and applied programmes.",
+    "campuses": [
+      {
+        "name": "South Campus",
+        "city": "Port Elizabeth",
+        "province": "Eastern Cape",
+        "heroImageUrl": null
+      },
+      {
+        "name": "North Campus",
+        "city": "Port Elizabeth",
+        "province": "Eastern Cape",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Second Avenue Campus",
+        "city": "Port Elizabeth",
+        "province": "Eastern Cape",
+        "heroImageUrl": null
+      },
+      {
+        "name": "George Campus",
+        "city": "George",
+        "province": "Western Cape",
+        "heroImageUrl": null
+      }
+    ]
+  },
+  {
+    "name": "University of Limpopo",
+    "shortName": "UL",
+    "province": "Limpopo",
+    "city": "Polokwane",
+    "websiteUrl": "https://www.ul.ac.za",
+    "logoUrl": null,
+    "description": "A comprehensive university in Limpopo province with a strong focus on health sciences, agriculture and education. Main campus at Mankweng.",
+    "campuses": [
+      {
+        "name": "Turfloop Campus",
+        "city": "Mankweng",
+        "province": "Limpopo",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Medunsa Campus",
+        "city": "Ga-Rankuwa",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      }
+    ]
+  },
+  {
+    "name": "University of Fort Hare",
+    "shortName": "UFH",
+    "province": "Eastern Cape",
+    "city": "Alice",
+    "websiteUrl": "https://www.ufh.ac.za",
+    "logoUrl": null,
+    "description": "One of South Africa's oldest universities and a historic institution that educated many leaders of the anti-apartheid movement, including Nelson Mandela.",
+    "campuses": [
+      {
+        "name": "Alice Campus",
+        "city": "Alice",
+        "province": "Eastern Cape",
+        "heroImageUrl": null
+      },
+      {
+        "name": "East London Campus",
+        "city": "East London",
+        "province": "Eastern Cape",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Bhisho Campus",
+        "city": "Bhisho",
+        "province": "Eastern Cape",
+        "heroImageUrl": null
+      }
+    ]
+  },
+  {
+    "name": "University of Zululand",
+    "shortName": "UniZulu",
+    "province": "KwaZulu-Natal",
+    "city": "KwaDlangezwa",
+    "websiteUrl": "https://www.unizulu.ac.za",
+    "logoUrl": null,
+    "description": "A comprehensive university serving the northern KwaZulu-Natal region, with campuses at KwaDlangezwa and Richards Bay.",
+    "campuses": [
+      {
+        "name": "KwaDlangezwa Campus",
+        "city": "KwaDlangezwa",
+        "province": "KwaZulu-Natal",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Richards Bay Campus",
+        "city": "Richards Bay",
+        "province": "KwaZulu-Natal",
+        "heroImageUrl": null
+      }
+    ]
+  },
+  {
+    "name": "Sefako Makgatho Health Sciences University",
+    "shortName": "SMU",
+    "province": "Gauteng",
+    "city": "Ga-Rankuwa",
+    "websiteUrl": "https://www.smu.ac.za",
+    "logoUrl": null,
+    "description": "A dedicated health sciences university established in 2015, based at the former Medunsa campus. Focused on medicine, dentistry, pharmacy and allied health.",
+    "campuses": [
+      {
+        "name": "Ga-Rankuwa Campus",
+        "city": "Ga-Rankuwa",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      }
+    ]
+  },
+  {
+    "name": "University of South Africa",
+    "shortName": "UNISA",
+    "province": "Gauteng",
+    "city": "Pretoria",
+    "websiteUrl": "https://www.unisa.ac.za",
+    "logoUrl": null,
+    "description": "South Africa's largest open-distance-learning university, serving hundreds of thousands of students across the country and beyond.",
+    "campuses": [
+      {
+        "name": "Muckleneuk Campus",
+        "city": "Pretoria",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Sunnyside Campus",
+        "city": "Pretoria",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Science Campus (Florida)",
+        "city": "Johannesburg",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Parow Campus",
+        "city": "Cape Town",
+        "province": "Western Cape",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Durban Campus",
+        "city": "Durban",
+        "province": "KwaZulu-Natal",
+        "heroImageUrl": null
+      }
+    ]
+  },
+  {
+    "name": "Vaal University of Technology",
+    "shortName": "VUT",
+    "province": "Gauteng",
+    "city": "Vanderbijlpark",
+    "websiteUrl": "https://www.vut.ac.za",
+    "logoUrl": null,
+    "description": "A university of technology in the Vaal Triangle, offering career-focused programmes in engineering, science, management and applied sciences.",
+    "campuses": [
+      {
+        "name": "Vanderbijlpark Campus",
+        "city": "Vanderbijlpark",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Secunda Campus",
+        "city": "Secunda",
+        "province": "Mpumalanga",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Kempton Park Campus",
+        "city": "Kempton Park",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      }
+    ]
+  },
+  {
+    "name": "Cape Peninsula University of Technology",
+    "shortName": "CPUT",
+    "province": "Western Cape",
+    "city": "Cape Town",
+    "websiteUrl": "https://www.cput.ac.za",
+    "logoUrl": null,
+    "description": "The largest university of technology in the Western Cape, offering career-focused programmes across multiple campuses in Cape Town and Wellington.",
+    "campuses": [
+      {
+        "name": "Bellville Campus",
+        "city": "Bellville",
+        "province": "Western Cape",
+        "heroImageUrl": null
+      },
+      {
+        "name": "District Six Campus",
+        "city": "Cape Town",
+        "province": "Western Cape",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Mowbray Campus",
+        "city": "Cape Town",
+        "province": "Western Cape",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Athlone Campus",
+        "city": "Cape Town",
+        "province": "Western Cape",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Wellington Campus",
+        "city": "Wellington",
+        "province": "Western Cape",
+        "heroImageUrl": null
+      }
+    ]
+  },
+  {
+    "name": "Durban University of Technology",
+    "shortName": "DUT",
+    "province": "KwaZulu-Natal",
+    "city": "Durban",
+    "websiteUrl": "https://www.dut.ac.za",
+    "logoUrl": null,
+    "description": "A university of technology in Durban offering career-focused programmes across several campuses in the city and Pietermaritzburg.",
+    "campuses": [
+      {
+        "name": "Steve Biko Campus",
+        "city": "Durban",
+        "province": "KwaZulu-Natal",
+        "heroImageUrl": null
+      },
+      {
+        "name": "ML Sultan Campus",
+        "city": "Durban",
+        "province": "KwaZulu-Natal",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Ritson Campus",
+        "city": "Durban",
+        "province": "KwaZulu-Natal",
+        "heroImageUrl": null
+      },
+      {
+        "name": "City Campus",
+        "city": "Durban",
+        "province": "KwaZulu-Natal",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Brickfield Campus",
+        "city": "Durban",
+        "province": "KwaZulu-Natal",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Riverside Campus",
+        "city": "Pietermaritzburg",
+        "province": "KwaZulu-Natal",
+        "heroImageUrl": null
+      }
+    ]
+  },
+  {
+    "name": "Tshwane University of Technology",
+    "shortName": "TUT",
+    "province": "Gauteng",
+    "city": "Pretoria",
+    "websiteUrl": "https://www.tut.ac.za",
+    "logoUrl": null,
+    "description": "One of the largest residential universities of technology in South Africa, with campuses across Gauteng, Mpumalanga and Limpopo.",
+    "campuses": [
+      {
+        "name": "Pretoria Campus",
+        "city": "Pretoria",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Arcadia Campus",
+        "city": "Pretoria",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Soshanguve South Campus",
+        "city": "Soshanguve",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Ga-Rankuwa Campus",
+        "city": "Ga-Rankuwa",
+        "province": "Gauteng",
+        "heroImageUrl": null
+      },
+      {
+        "name": "eMalahleni Campus",
+        "city": "eMalahleni",
+        "province": "Mpumalanga",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Mbombela Campus",
+        "city": "Mbombela",
+        "province": "Mpumalanga",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Polokwane Campus",
+        "city": "Polokwane",
+        "province": "Limpopo",
+        "heroImageUrl": null
+      }
+    ]
+  },
+  {
+    "name": "Central University of Technology",
+    "shortName": "CUT",
+    "province": "Free State",
+    "city": "Bloemfontein",
+    "websiteUrl": "https://www.cut.ac.za",
+    "logoUrl": null,
+    "description": "A university of technology in the Free State, offering career-focused programmes in engineering, ICT, health and management sciences.",
+    "campuses": [
+      {
+        "name": "Bloemfontein Campus",
+        "city": "Bloemfontein",
+        "province": "Free State",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Welkom Campus",
+        "city": "Welkom",
+        "province": "Free State",
+        "heroImageUrl": null
+      }
+    ]
+  },
+  {
+    "name": "Mangosuthu University of Technology",
+    "shortName": "MUT",
+    "province": "KwaZulu-Natal",
+    "city": "Durban",
+    "websiteUrl": "https://www.mut.ac.za",
+    "logoUrl": null,
+    "description": "A university of technology in Umlazi, south of Durban, focused on engineering, natural sciences and management sciences.",
+    "campuses": [
+      {
+        "name": "Umlazi Campus",
+        "city": "Umlazi",
+        "province": "KwaZulu-Natal",
+        "heroImageUrl": null
+      }
+    ]
+  },
+  {
+    "name": "Sol Plaatje University",
+    "shortName": "SPU",
+    "province": "Northern Cape",
+    "city": "Kimberley",
+    "websiteUrl": "https://www.spu.ac.za",
+    "logoUrl": null,
+    "description": "Established in 2013, SPU is the Northern Cape's first university. Named after writer and political leader Sol Plaatje.",
+    "campuses": [
+      {
+        "name": "Central Campus",
+        "city": "Kimberley",
+        "province": "Northern Cape",
+        "heroImageUrl": null
+      }
+    ]
+  },
+  {
+    "name": "University of Mpumalanga",
+    "shortName": "UMP",
+    "province": "Mpumalanga",
+    "city": "Mbombela",
+    "websiteUrl": "https://www.ump.ac.za",
+    "logoUrl": null,
+    "description": "Established in 2014, UMP is one of South Africa's newest universities, with campuses in Mbombela and at the Lowveld College of Agriculture.",
+    "campuses": [
+      {
+        "name": "Mbombela Campus",
+        "city": "Mbombela",
+        "province": "Mpumalanga",
+        "heroImageUrl": null
+      },
+      {
+        "name": "Siyabuswa Campus",
+        "city": "Siyabuswa",
+        "province": "Mpumalanga",
+        "heroImageUrl": null
+      }
+    ]
+  }
+]

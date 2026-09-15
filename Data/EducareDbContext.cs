@@ -40,6 +40,9 @@ namespace EducareSA.Data
 
         public DbSet<Module> Modules { get; set; }
 
+        // NEW
+        public DbSet<Bursary> Bursaries { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -71,6 +74,11 @@ namespace EducareSA.Data
 
             modelBuilder.Entity<StudentSubjectResult>()
                 .Property(r => r.Percentage)
+                .HasPrecision(5, 2);
+
+            // NEW: Bursary precision
+            modelBuilder.Entity<Bursary>()
+                .Property(b => b.MinimumAPS)
                 .HasPrecision(5, 2);
 
             // University → Campus
@@ -182,6 +190,17 @@ namespace EducareSA.Data
                     r.AcademicYear
                 })
                 .IsUnique();
+
+            // NEW: Student → ApplicationUser (1:1)
+            modelBuilder.Entity<Student>()
+                .HasIndex(s => s.ApplicationUserId)
+                .IsUnique();
+
+            modelBuilder.Entity<Student>()
+                .HasOne(s => s.ApplicationUser)
+                .WithOne()
+                .HasForeignKey<Student>(s => s.ApplicationUserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -1,0 +1,94 @@
+﻿@model IEnumerable<EducareSA.Models.University>
+@{
+    ViewData["Title"] = "Manage Universities";
+}
+
+<section style="padding: 48px 0 32px;">
+    <div class="shell">
+        <div class="page-header" style="margin: 0;">
+            <div>
+                <span class="eyebrow">Admin</span>
+                <h1 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); margin-bottom: 8px;">Universities</h1>
+                <p style="color: var(--brown-medium); margin: 0;">
+                    @Model.Count() total · manage logos, descriptions and status.
+                </p>
+            </div>
+            <a asp-action="Create" class="btn-pill">
+                <i class="fas fa-plus" style="font-size: 0.8rem;"></i>
+                Add university
+            </a>
+        </div>
+    </div>
+</section>
+
+<section style="padding: 0 0 100px;">
+    <div class="shell">
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger" style="margin-bottom: 20px;">@TempData["Error"]</div>
+        }
+
+        <div class="card" style="border-radius: var(--r-lg); overflow: hidden;">
+            <div style="overflow-x: auto;">
+                <table class="table table-hover" style="margin: 0;">
+                    <thead>
+                        <tr>
+                            <th style="width: 70px;">Logo</th>
+                            <th>Name</th>
+                            <th>Short</th>
+                            <th>Location</th>
+                            <th style="width: 90px;">Status</th>
+                            <th style="width: 220px; text-align: right;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var u in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @if (!string.IsNullOrWhiteSpace(u.LogoUrl))
+                                    {
+                                        <img src="@u.LogoUrl" alt="" style="width: 40px; height: 40px; object-fit: contain; border-radius: var(--r-xs); background: var(--beige-light); padding: 4px;" />
+                                    }
+                                    else
+                                    {
+                                        <div style="width: 40px; height: 40px; border-radius: var(--r-xs); background: var(--primary); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700;">@u.ShortName</div>
+                                    }
+                                </td>
+                                <td style="font-weight: 500;">@u.Name</td>
+                                <td>@u.ShortName</td>
+                                <td style="color: var(--brown-medium); font-size: 0.9rem;">@u.City, @u.Province</td>
+                                <td>
+                                    @if (u.IsActive)
+                                    {
+                                        <span class="badge bg-success">Active</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">Inactive</span>
+                                    }
+                                </td>
+                                <td style="text-align: right;">
+                                    <a asp-action="Details" asp-route-id="@u.UniversityId"
+                                       class="btn-pill-outline btn-pill btn-pill-sm" style="padding: 6px 12px; font-size: 0.78rem;">View</a>
+                                    <a asp-action="Edit" asp-route-id="@u.UniversityId"
+                                       class="btn-pill btn-pill-sm" style="padding: 6px 14px; font-size: 0.78rem; margin-left: 4px;">Edit</a>
+                                    <a asp-action="Delete" asp-route-id="@u.UniversityId"
+                                       class="btn-pill-outline btn-pill btn-pill-sm" style="padding: 6px 12px; font-size: 0.78rem; margin-left: 4px; color: var(--danger); border-color: var(--danger);">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div style="margin-top: 24px;">
+            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="btn-pill-outline btn-pill">
+                <i class="fas fa-arrow-left" style="font-size: 0.75rem;"></i>
+                Back to dashboard
+            </a>
+        </div>
+    </div>
+</section>

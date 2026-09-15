@@ -1,0 +1,368 @@
+﻿@model EducareSA.Models.Programme
+@{
+    ViewData["Title"] = Model.Name;
+    var university = Model.Faculty?.University;
+}
+
+<!-- PAGE HEADER -->
+<section style="padding: 48px 0 40px; background: linear-gradient(135deg, var(--beige-light) 0%, var(--cream) 100%); position: relative; overflow: hidden;">
+    <div style="position: absolute; top: -40%; right: -15%; width: 700px; height: 700px; background: radial-gradient(circle, var(--secondary) 0%, transparent 70%); border-radius: 50%; opacity: 0.5; pointer-events: none;"></div>
+
+    <div class="shell" style="position: relative; z-index: 2;">
+
+        <!-- Breadcrumb -->
+        <nav style="margin-bottom: 24px;" data-aos="fade-right">
+            <div style="font-size: 0.85rem; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
+                <a asp-action="Index" style="color: var(--brown-medium);">Programmes</a>
+                <span style="color: var(--brown-soft);">/</span>
+                @if (university != null)
+                {
+                    <a asp-controller="Universities" asp-action="Details" asp-route-id="@university.UniversityId"
+                       style="color: var(--brown-medium);">@university.ShortName</a>
+                    <span style="color: var(--brown-soft);">/</span>
+                }
+                <span style="color: var(--primary); font-weight: 500;">@Model.Name</span>
+            </div>
+        </nav>
+
+        <div style="max-width: 820px;" data-aos="fade-right">
+
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px;">
+                @if (!string.IsNullOrWhiteSpace(Model.QualificationType))
+                {
+                    <span class="badge bg-primary">@Model.QualificationType</span>
+                }
+                @if (Model.NQFLevel.HasValue)
+                {
+                    <span class="badge bg-secondary">NQF @Model.NQFLevel</span>
+                }
+                @if (Model.DurationYears.HasValue)
+                {
+                    <span class="badge bg-secondary">
+                        <i class="fas fa-clock" style="font-size:0.65rem; margin-right:4px;"></i>
+                        @Model.DurationYears.Value.ToString("0.#") year@(Model.DurationYears.Value == 1 ? "" : "s")
+                    </span>
+                }
+                @if (!Model.IsActive)
+                {
+                    <span class="badge bg-danger">Not currently offered</span>
+                }
+            </div>
+
+            <h1 style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 16px; line-height: 1.15;">
+                @Model.Name
+            </h1>
+
+            @if (university != null)
+            {
+                <p style="font-size: 1.05rem; color: var(--brown-medium); margin: 0;">
+                    <i class="fas fa-building-columns" style="font-size: 0.85rem; margin-right: 8px; color: var(--primary);"></i>
+                    @Model.Faculty.Name · @university.Name
+                    @if (Model.Campus != null)
+                    {
+                        <span style="display:inline-block; margin-left: 8px;">
+                            <i class="fas fa-location-dot" style="font-size: 0.85rem; margin-right: 6px; color: var(--primary);"></i>
+                            @Model.Campus.Name
+                        </span>
+                    }
+                </p>
+            }
+
+            <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top: 28px;">
+                <a asp-controller="Eligibility" asp-action="Check" asp-route-id="@Model.ProgrammeId"
+                   class="btn-pill btn-pill-lg">
+                    <i class="fas fa-check-circle" style="font-size:0.85rem;"></i>
+                    Do I qualify?
+                </a>
+                @if (university != null && !string.IsNullOrWhiteSpace(university.WebsiteUrl))
+                {
+                    <a href="@university.WebsiteUrl" target="_blank" rel="noopener"
+                       class="btn-pill-outline btn-pill btn-pill-lg">
+                        <i class="fas fa-arrow-up-right-from-square" style="font-size:0.8rem;"></i>
+                        University website
+                    </a>
+                }
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<section style="padding: 56px 0 100px;">
+    <div class="shell">
+        <div class="detail-layout">
+
+            <!-- LEFT COLUMN -->
+            <div style="display:flex; flex-direction:column; gap:24px;">
+
+                @if (!string.IsNullOrWhiteSpace(Model.Description))
+                {
+                    <div class="card" style="padding: 32px; border-radius: var(--r-lg);" data-aos="fade-up">
+                        <h3 style="font-family: var(--font-display); margin: 0 0 16px; font-size: 1.35rem;">
+                            About this programme
+                        </h3>
+                        <p style="margin: 0; color: var(--brown-medium); line-height: 1.75;">
+                            @Model.Description
+                        </p>
+                    </div>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(Model.CareerInformation))
+                {
+                    <div class="card" style="padding: 32px; border-radius: var(--r-lg);" data-aos="fade-up">
+                        <h3 style="font-family: var(--font-display); margin: 0 0 16px; font-size: 1.35rem;">
+                            Career information
+                        </h3>
+                        <p style="margin: 0; color: var(--brown-medium); line-height: 1.75;">
+                            @Model.CareerInformation
+                        </p>
+                    </div>
+                }
+
+                <!-- Subject requirements -->
+                <div class="card" style="padding: 32px; border-radius: var(--r-lg);" data-aos="fade-up">
+                    <h3 style="font-family: var(--font-display); margin: 0 0 20px; font-size: 1.35rem;">
+                        <i class="fas fa-list-check" style="font-size: 1rem; color: var(--primary); margin-right: 10px;"></i>
+                        Subject requirements
+                    </h3>
+
+                    @if (Model.SubjectRequirements.Any())
+                    {
+                        <div style="display:flex; flex-direction:column; gap:12px;">
+                            @foreach (var r in Model.SubjectRequirements.OrderByDescending(x => x.Required).ThenBy(x => x.Subject?.Name))
+                            {
+                                <div style="display:flex; justify-content:space-between; align-items:center; gap:16px; padding: 16px 20px; background: var(--beige-light); border-radius: var(--r-sm);">
+                                    <div>
+                                        <div style="font-weight: 600; color: var(--primary); font-size: 0.98rem;">
+                                            @r.Subject?.Name
+                                        </div>
+                                        @if (!string.IsNullOrWhiteSpace(r.Notes))
+                                        {
+                                            <div style="font-size: 0.82rem; color: var(--brown-medium); margin-top: 4px;">
+                                                @r.Notes
+                                            </div>
+                                        }
+                                    </div>
+                                    <div style="text-align:right; flex-shrink:0;">
+                                        <div style="font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; color: var(--primary); line-height:1;">
+                                            @r.MinimumPercentage.ToString("0")%
+                                        </div>
+                                        @if (!r.Required)
+                                        {
+                                            <div style="font-size: 0.7rem; color: var(--brown-medium); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px;">
+                                                Recommended
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p style="color: var(--brown-medium); margin: 0; font-size: 0.95rem;">
+                            No specific subject requirements have been captured for this programme yet.
+                        </p>
+                    }
+                </div>
+
+                <!-- Modules -->
+                @if (Model.Modules.Any())
+                {
+                    <div class="card" style="padding: 32px; border-radius: var(--r-lg);" data-aos="fade-up">
+                        <h3 style="font-family: var(--font-display); margin: 0 0 20px; font-size: 1.35rem;">
+                            <i class="fas fa-book-open" style="font-size: 1rem; color: var(--primary); margin-right: 10px;"></i>
+                            Modules
+                        </h3>
+                        <div style="overflow-x: auto;">
+                            <table class="table table-hover" style="margin: 0;">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 110px;">Code</th>
+                                        <th>Module</th>
+                                        <th style="width: 80px;">Year</th>
+                                        <th style="width: 90px;">Credits</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var m in Model.Modules.OrderBy(x => x.Year).ThenBy(x => x.Code))
+                                    {
+                                        <tr>
+                                            <td><code style="font-family: 'Inter'; font-size: 0.85rem; color: var(--primary); background: var(--secondary); padding: 3px 8px; border-radius: 6px;">@m.Code</code></td>
+                                            <td>
+                                                <div style="font-weight: 500;">@m.Name</div>
+                                                @if (!string.IsNullOrWhiteSpace(m.Description))
+                                                {
+                                                    <div style="font-size: 0.82rem; color: var(--brown-medium); margin-top: 2px;">
+                                                        @m.Description
+                                                    </div>
+                                                }
+                                            </td>
+                                            <td>@m.Year</td>
+                                            <td>@(m.Credits?.ToString() ?? "—")</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+
+            </div>
+
+            <!-- RIGHT COLUMN (sidebar) -->
+            <aside style="display:flex; flex-direction:column; gap:20px;">
+
+                <!-- APS / Admission card -->
+                <div class="card" style="padding: 28px; border-radius: var(--r-lg); background: var(--secondary); border-color: transparent;" data-aos="fade-up">
+                    <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary); font-weight: 600; margin-bottom: 12px;">
+                        Minimum APS
+                    </div>
+
+                    @{
+                        var latestAdmission = Model.AdmissionRequirements
+                            .OrderByDescending(a => a.AcademicYear)
+                            .FirstOrDefault();
+                    }
+
+                    @if (latestAdmission?.MinimumAPS is decimal minAps)
+                    {
+                        <div style="font-family: var(--font-display); font-size: 3rem; font-weight: 700; color: var(--primary); line-height: 1; margin-bottom: 8px;">
+                            @minAps.ToString("0")
+                        </div>
+                        <div style="font-size: 0.85rem; color: var(--primary); opacity: 0.75;">
+                            Based on @latestAdmission.AcademicYear admission requirements
+                        </div>
+                    }
+                    else
+                    {
+                        <div style="font-size: 0.95rem; color: var(--primary); opacity: 0.8;">
+                            No APS requirement captured for this programme yet.
+                        </div>
+                    }
+                </div>
+
+                <!-- Additional requirements -->
+                @if (!string.IsNullOrWhiteSpace(latestAdmission?.AdditionalRequirements))
+                {
+                    <div class="card" style="padding: 28px; border-radius: var(--r-lg);" data-aos="fade-up">
+                        <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary); font-weight: 600; margin-bottom: 12px;">
+                            Additional requirements
+                        </div>
+                        <p style="margin: 0; font-size: 0.9rem; color: var(--brown-medium); line-height: 1.6;">
+                            @latestAdmission.AdditionalRequirements
+                        </p>
+                    </div>
+                }
+
+                <!-- Fees -->
+                <div class="card" style="padding: 28px; border-radius: var(--r-lg);" data-aos="fade-up">
+                    <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary); font-weight: 600; margin-bottom: 16px;">
+                        <i class="fas fa-coins" style="font-size: 0.75rem; margin-right: 6px;"></i>
+                        Fees
+                    </div>
+
+                    @if (Model.Fees.Any())
+                    {
+                        <div style="display:flex; flex-direction:column; gap:12px;">
+                            @foreach (var f in Model.Fees.OrderByDescending(x => x.AcademicYear).ThenBy(x => x.FeeType))
+                            {
+                                <div style="padding-bottom: 12px; border-bottom: 1px dashed var(--beige-dark);">
+                                    <div style="display:flex; justify-content:space-between; align-items:baseline; gap:12px;">
+                                        <div style="font-weight: 500; color: var(--primary); font-size: 0.92rem;">
+                                            @f.FeeType
+                                        </div>
+                                        <div style="font-family: var(--font-display); font-weight: 700; color: var(--primary);">
+                                            R @f.Amount.ToString("N0")
+                                        </div>
+                                    </div>
+                                    <div style="font-size: 0.75rem; color: var(--brown-medium); margin-top: 4px;">
+                                        @f.AcademicYear
+                                        @if (!string.IsNullOrWhiteSpace(f.Description))
+                                        {
+                                            <span>· @f.Description</span>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p style="margin: 0; font-size: 0.9rem; color: var(--brown-medium);">
+                            No fee information captured yet.
+                        </p>
+                    }
+                </div>
+
+                <!-- Application periods -->
+                @if (Model.ApplicationPeriods.Any())
+                {
+                    <div class="card" style="padding: 28px; border-radius: var(--r-lg);" data-aos="fade-up">
+                        <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary); font-weight: 600; margin-bottom: 16px;">
+                            <i class="fas fa-calendar" style="font-size: 0.75rem; margin-right: 6px;"></i>
+                            Application periods
+                        </div>
+
+                        <div style="display:flex; flex-direction:column; gap:14px;">
+                            @foreach (var ap in Model.ApplicationPeriods.OrderByDescending(x => x.AcademicYear))
+                            {
+                                <div>
+                                    <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom: 6px;">
+                                        <div style="font-weight: 600; color: var(--primary); font-size: 0.92rem;">
+                                            @ap.AcademicYear
+                                        </div>
+                                        <span class="badge @(ap.Status == "Open" ? "bg-success" : ap.Status == "Closed" ? "bg-danger" : "bg-secondary")"
+                                              style="font-size: 0.68rem;">
+                                            @ap.Status
+                                        </span>
+                                    </div>
+                                    <div style="font-size: 0.82rem; color: var(--brown-medium);">
+                                        @ap.OpeningDate.ToString("dd MMM yyyy") → @ap.ClosingDate.ToString("dd MMM yyyy")
+                                    </div>
+                                    @if (ap.ApplicationFee.HasValue)
+                                    {
+                                        <div style="font-size: 0.78rem; color: var(--brown-medium); margin-top: 4px;">
+                                            Application fee: <strong style="color: var(--primary);">R @ap.ApplicationFee.Value.ToString("N0")</strong>
+                                        </div>
+                                    }
+                                    @if (!string.IsNullOrWhiteSpace(ap.ApplicationUrl))
+                                    {
+                                        <a href="@ap.ApplicationUrl" target="_blank" rel="noopener"
+                                           style="display:inline-block; margin-top: 8px; font-size: 0.82rem; font-weight: 500;">
+                                            Apply here <i class="fas fa-arrow-right" style="font-size: 0.7rem;"></i>
+                                        </a>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+
+                <!-- Back link -->
+                <a asp-action="Index" class="pill-link" style="align-self: flex-start;">
+                    <i class="fas fa-arrow-left" style="font-size: 0.75rem;"></i>
+                    Back to all programmes
+                </a>
+
+            </aside>
+
+        </div>
+    </div>
+</section>
+
+<style>
+    .detail-layout {
+        display: grid;
+        grid-template-columns: 1fr 340px;
+        gap: 32px;
+        align-items: start;
+    }
+
+    @@media (max-width: 992px) {
+        .detail-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
