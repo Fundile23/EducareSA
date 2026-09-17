@@ -1,0 +1,140 @@
+﻿@model EducareSA.Models.Programme
+@{
+    ViewData["Title"] = "Edit Programme";
+    var faculties = ViewBag.Faculties as List<EducareSA.Models.Faculty> ?? new();
+    var campuses = ViewBag.Campuses as List<EducareSA.Models.Campus> ?? new();
+}
+
+<section style="padding: 48px 0 32px;">
+    <div class="shell">
+        <nav style="margin-bottom: 20px; font-size: 0.85rem;">
+            <a asp-action="Index" style="color: var(--brown-medium);">Programmes</a>
+            <span style="color: var(--brown-soft); margin: 0 8px;">/</span>
+            <span style="color: var(--primary); font-weight: 500;">Edit @Model.Name</span>
+        </nav>
+        <h1 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); margin-bottom: 8px;">Edit programme</h1>
+        <p style="color: var(--brown-medium);">Update details, verify requirements, or change visibility.</p>
+    </div>
+</section>
+
+<section style="padding: 0 0 100px;">
+    <div class="shell">
+        <form asp-action="Edit" method="post" class="card" style="padding: 32px; border-radius: var(--r-lg); max-width: 900px;">
+            <input type="hidden" asp-for="ProgrammeId" />
+            <div asp-validation-summary="ModelOnly" class="text-danger small" style="margin-bottom: 16px;"></div>
+
+            <h3 style="font-family: var(--font-display); margin: 0 0 20px; font-size: 1.15rem;">Placement</h3>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                <div>
+                    <label class="form-label">Faculty</label>
+                    <select asp-for="FacultyId" class="form-select">
+                        <option value="">-- Select faculty --</option>
+                        @foreach (var f in faculties)
+                        {
+                            <option value="@f.FacultyId" selected="@(Model.FacultyId == f.FacultyId)">
+                                @f.University?.ShortName — @f.Name
+                            </option>
+                        }
+                    </select>
+                    <span asp-validation-for="FacultyId" class="text-danger small"></span>
+                </div>
+                <div>
+                    <label class="form-label">Campus (optional)</label>
+                    <select asp-for="CampusId" class="form-select">
+                        <option value="">-- No specific campus --</option>
+                        @foreach (var c in campuses)
+                        {
+                            <option value="@c.CampusId" selected="@(Model.CampusId == c.CampusId)">
+                                @c.University?.ShortName — @c.Name
+                            </option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <h3 style="font-family: var(--font-display); margin: 32px 0 20px; font-size: 1.15rem;">Basic details</h3>
+
+            <div style="margin-bottom: 20px;">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger small"></span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                <div>
+                    <label asp-for="QualificationType" class="form-label">Type</label>
+                    <select asp-for="QualificationType" class="form-select">
+                        <option value="">-- Select --</option>
+                        <option value="Degree">Degree</option>
+                        <option value="Diploma">Diploma</option>
+                        <option value="Higher Certificate">Higher Certificate</option>
+                        <option value="Advanced Diploma">Advanced Diploma</option>
+                        <option value="Postgraduate Diploma">Postgraduate Diploma</option>
+                    </select>
+                </div>
+                <div>
+                    <label asp-for="QualificationCode" class="form-label">Code</label>
+                    <input asp-for="QualificationCode" class="form-control" />
+                </div>
+                <div>
+                    <label asp-for="NQFLevel" class="form-label">NQF Level</label>
+                    <input asp-for="NQFLevel" class="form-control" type="number" min="1" max="10" />
+                </div>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label asp-for="DurationYears" class="form-label">Duration (years)</label>
+                <input asp-for="DurationYears" class="form-control" type="number" step="0.5" min="0.5" max="10" style="max-width: 200px;" />
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label asp-for="CareerInformation" class="form-label">Career information</label>
+                <textarea asp-for="CareerInformation" class="form-control" rows="3"></textarea>
+            </div>
+
+            <h3 style="font-family: var(--font-display); margin: 32px 0 20px; font-size: 1.15rem;">Data verification</h3>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                <div>
+                    <label asp-for="SourceUrl" class="form-label">Source URL</label>
+                    <input asp-for="SourceUrl" class="form-control" />
+                </div>
+                <div>
+                    <label asp-for="LastVerified" class="form-label">Last verified</label>
+                    <input asp-for="LastVerified" class="form-control" type="date" />
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 24px; margin-bottom: 28px; flex-wrap: wrap;">
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                    <input asp-for="IsActive" type="checkbox" style="width: 18px; height: 18px; accent-color: var(--primary);" />
+                    <span style="font-size: 0.95rem;">Active — visible on public site</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                    <input asp-for="DataVerified" type="checkbox" style="width: 18px; height: 18px; accent-color: var(--primary);" />
+                    <span style="font-size: 0.95rem;">Data verified against prospectus</span>
+                </label>
+            </div>
+
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <button type="submit" class="btn-pill">
+                    <i class="fas fa-check" style="font-size: 0.8rem;"></i>
+                    Save changes
+                </button>
+                <a asp-action="Index" class="btn-pill-outline btn-pill">Cancel</a>
+            </div>
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

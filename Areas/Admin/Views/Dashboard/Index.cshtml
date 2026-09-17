@@ -2,121 +2,228 @@
     ViewData["Title"] = "Admin Dashboard";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-        <h1 class="mb-0">Admin Dashboard</h1>
-        <p class="text-muted mb-0">Manage the EducareSA catalogue.</p>
+<section style="padding: 48px 0 32px;">
+    <div class="shell">
+        <div class="page-header" style="margin: 0;">
+            <div>
+                <span class="eyebrow">Admin</span>
+                <h1 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); margin-bottom: 8px;">Dashboard</h1>
+                <p style="color: var(--brown-medium); margin: 0;">Manage the EducareSA catalogue.</p>
+            </div>
+        </div>
     </div>
-</div>
+</section>
 
-<div class="row g-3 mb-4">
-    <div class="col-6 col-md-3">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body">
-                <div class="text-muted small text-uppercase">Universities</div>
-                <div class="display-6 fw-bold">@ViewBag.UniversityCount</div>
+<section style="padding: 0 0 60px;">
+    <div class="shell">
+
+        <h3 style="font-family: var(--font-display); margin: 0 0 20px; font-size: 1.15rem;">Overview</h3>
+
+        <div class="dash-grid">
+            <a asp-area="" asp-controller="UniversityAdmin" asp-action="Index" class="stat-card">
+                <div class="stat-label">Universities</div>
+                <div class="stat-value">@ViewBag.UniversityCount</div>
                 @if (ViewBag.InactiveUniversities > 0)
                 {
-                    <div class="small text-warning">
-                        @ViewBag.InactiveUniversities inactive
-                    </div>
+                    <div class="stat-note text-warning">@ViewBag.InactiveUniversities inactive</div>
                 }
-            </div>
-        </div>
-    </div>
-    <div class="col-6 col-md-3">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body">
-                <div class="text-muted small text-uppercase">Campuses</div>
-                <div class="display-6 fw-bold">@ViewBag.CampusCount</div>
-            </div>
-        </div>
-    </div>
-    <div class="col-6 col-md-3">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body">
-                <div class="text-muted small text-uppercase">Faculties</div>
-                <div class="display-6 fw-bold">@ViewBag.FacultyCount</div>
-            </div>
-        </div>
-    </div>
-    <div class="col-6 col-md-3">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body">
-                <div class="text-muted small text-uppercase">Programmes</div>
-                <div class="display-6 fw-bold">@ViewBag.ProgrammeCount</div>
-                <div class="small text-success">
-                    @ViewBag.ActiveProgrammes active
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+            </a>
 
-<div class="row g-3 mb-4">
-    <div class="col-6 col-md-3">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body">
-                <div class="text-muted small text-uppercase">Subjects</div>
-                <div class="display-6 fw-bold">@ViewBag.SubjectCount</div>
-            </div>
-        </div>
-    </div>
-    <div class="col-6 col-md-3">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body">
-                <div class="text-muted small text-uppercase">Bursaries</div>
-                <div class="display-6 fw-bold">@ViewBag.BursaryCount</div>
-            </div>
-        </div>
-    </div>
-    <div class="col-6 col-md-3">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body">
-                <div class="text-muted small text-uppercase">Students</div>
-                <div class="display-6 fw-bold">@ViewBag.StudentCount</div>
-            </div>
-        </div>
-    </div>
-</div>
+            <a asp-area="" asp-controller="CampusAdmin" asp-action="Index" class="stat-card">
+                <div class="stat-label">Campuses</div>
+                <div class="stat-value">@ViewBag.CampusCount</div>
+            </a>
 
-<h3 class="mt-4 mb-3">Manage</h3>
+            <a asp-area="" asp-controller="FacultyAdmin" asp-action="Index" class="stat-card">
+                <div class="stat-label">Faculties</div>
+                <div class="stat-value">@ViewBag.FacultyCount</div>
+            </a>
 
-<div class="row g-3">
-    <div class="col-6 col-md-4 col-lg-3">
-        <a asp-controller="UniversityAdmin" asp-action="Index"
-           class="text-decoration-none">
-            <div class="card border-0 shadow-sm h-100 text-center p-3">
-                <div class="fs-3">🏛️</div>
-                <div class="fw-semibold">Universities</div>
+            <a asp-area="" asp-controller="ProgrammeAdmin" asp-action="Index" class="stat-card">
+                <div class="stat-label">Programmes</div>
+                <div class="stat-value">@ViewBag.ProgrammeCount</div>
+                <div class="stat-note text-success">@ViewBag.ActiveProgrammes active</div>
+            </a>
+
+            <div class="stat-card stat-static">
+                <div class="stat-label">Subjects</div>
+                <div class="stat-value">@ViewBag.SubjectCount</div>
             </div>
-        </a>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3">
-        <a asp-controller="CampusAdmin" asp-action="Index"
-           class="text-decoration-none">
-            <div class="card border-0 shadow-sm h-100 text-center p-3">
-                <div class="fs-3">📍</div>
-                <div class="fw-semibold">Campuses</div>
+
+            <div class="stat-card stat-static">
+                <div class="stat-label">Bursaries</div>
+                <div class="stat-value">@ViewBag.BursaryCount</div>
             </div>
-        </a>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3">
-        <a asp-controller="FacultyAdmin" asp-action="Index"
-           class="text-decoration-none">
-            <div class="card border-0 shadow-sm h-100 text-center p-3">
-                <div class="fs-3">🎓</div>
-                <div class="fw-semibold">Faculties</div>
+
+            <div class="stat-card stat-static">
+                <div class="stat-label">Students</div>
+                <div class="stat-value">@ViewBag.StudentCount</div>
             </div>
-        </a>
+        </div>
+
     </div>
-    <div class="col-6 col-md-4 col-lg-3">
-        <a asp-controller="ProgrammeAdmin" asp-action="Index"
-           class="text-decoration-none">
-            <div class="card border-0 shadow-sm h-100 text-center p-3">
-                <div class="fs-3">📚</div>
-                <div class="fw-semibold">Programmes</div>
-            </div>
-        </a>
+</section>
+
+<section style="padding: 0 0 100px;">
+    <div class="shell">
+        <h3 style="font-family: var(--font-display); margin: 0 0 20px; font-size: 1.15rem;">Manage</h3>
+
+        <div class="manage-grid">
+            <a asp-area="" asp-controller="UniversityAdmin" asp-action="Index" class="manage-card">
+                <div class="manage-icon">🏛️</div>
+                <div class="manage-label">Universities</div>
+                <div class="manage-desc">Add, edit and deactivate institutions</div>
+            </a>
+
+            <a asp-area="" asp-controller="CampusAdmin" asp-action="Index" class="manage-card">
+                <div class="manage-icon">📍</div>
+                <div class="manage-label">Campuses</div>
+                <div class="manage-desc">Locations, hero images, status</div>
+            </a>
+
+            <a asp-area="" asp-controller="FacultyAdmin" asp-action="Index" class="manage-card">
+                <div class="manage-icon">🎓</div>
+                <div class="manage-label">Faculties</div>
+                <div class="manage-desc">Academic groupings within universities</div>
+            </a>
+
+            <a asp-area="" asp-controller="ProgrammeAdmin" asp-action="Index" class="manage-card">
+                <div class="manage-icon">📚</div>
+                <div class="manage-label">Programmes</div>
+                <div class="manage-desc">Qualifications, requirements, fees</div>
+            </a>
+        </div>
+
+        <div style="margin-top: 32px;">
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="btn-pill-outline btn-pill">
+                <i class="fas fa-arrow-left" style="font-size: 0.75rem;"></i>
+                Back to public site
+            </a>
+        </div>
     </div>
-</div>
+</section>
+
+<style>
+    .dash-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+    }
+
+    @@media (max-width: 900px) {
+        .dash-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .dash-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .stat-card {
+        display: block;
+        padding: 24px;
+        border-radius: var(--r-lg);
+        background: var(--surface);
+        border: 1px solid var(--border);
+        text-decoration: none;
+        color: var(--text);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--border-strong);
+            color: var(--text);
+        }
+
+    .stat-static {
+        cursor: default;
+    }
+
+        .stat-static:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+    .stat-label {
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--brown-medium);
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .stat-value {
+        font-family: var(--font-display);
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--primary);
+        line-height: 1;
+    }
+
+    .stat-note {
+        font-size: 0.78rem;
+        margin-top: 6px;
+    }
+
+    .manage-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+    }
+
+    @@media (max-width: 900px) {
+        .manage-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .manage-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .manage-card {
+        display: flex;
+        flex-direction: column;
+        padding: 24px;
+        border-radius: var(--r-lg);
+        background: var(--surface);
+        border: 1px solid var(--border);
+        text-decoration: none;
+        color: var(--text);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+        .manage-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary);
+            color: var(--text);
+        }
+
+    .manage-icon {
+        font-size: 1.75rem;
+        margin-bottom: 12px;
+    }
+
+    .manage-label {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: var(--primary);
+        margin-bottom: 6px;
+    }
+
+    .manage-desc {
+        font-size: 0.85rem;
+        color: var(--brown-medium);
+        line-height: 1.5;
+    }
+</style>

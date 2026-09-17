@@ -31,6 +31,24 @@ namespace EducareSA.Models
 
         public bool IsActive { get; set; } = true;
 
+        /// <summary>
+        /// True when requirements, fees, and APS numbers for this programme
+        /// have been verified against the university's official prospectus.
+        /// Drives the "unverified data" badge on the public page.
+        /// </summary>
+        public bool DataVerified { get; set; } = false;
+
+        /// <summary>
+        /// Link to the official prospectus page where the data was confirmed.
+        /// </summary>
+        [StringLength(500)]
+        public string? SourceUrl { get; set; }
+
+        /// <summary>
+        /// When the data was last checked against the source. Null = never.
+        /// </summary>
+        public DateTime? LastVerified { get; set; }
+
         public Faculty Faculty { get; set; } = null!;
 
         public Campus? Campus { get; set; }

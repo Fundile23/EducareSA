@@ -21,7 +21,7 @@ namespace EducareSA.Migrations
                 oldType: "nvarchar(max)");
 
             migrationBuilder.AddColumn<string>(
-                name: "ApplicationUserId",
+                name: "IdentityUserId",
                 table: "Students",
                 type: "nvarchar(450)",
                 nullable: false,
@@ -52,15 +52,15 @@ namespace EducareSA.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Students_ApplicationUserId",
+                name: "IX_Students_IdentityUserId",
                 table: "Students",
-                column: "ApplicationUserId",
+                column: "IdentityUserId",
                 unique: true);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Students_AspNetUsers_ApplicationUserId",
+                name: "FK_Students_AspNetUsers_IdentityUserId",
                 table: "Students",
-                column: "ApplicationUserId",
+                column: "IdentityUserId",
                 principalTable: "AspNetUsers",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
@@ -70,18 +70,18 @@ namespace EducareSA.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Students_AspNetUsers_ApplicationUserId",
+                name: "FK_Students_AspNetUsers_IdentityUserId",
                 table: "Students");
 
             migrationBuilder.DropTable(
                 name: "Bursaries");
 
             migrationBuilder.DropIndex(
-                name: "IX_Students_ApplicationUserId",
+                name: "IX_Students_IdentityUserId",
                 table: "Students");
 
             migrationBuilder.DropColumn(
-                name: "ApplicationUserId",
+                name: "IdentityUserId",
                 table: "Students");
 
             migrationBuilder.AlterColumn<string>(

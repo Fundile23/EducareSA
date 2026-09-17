@@ -412,7 +412,7 @@ namespace EducareSA.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentId"));
 
-                    b.Property<string>("ApplicationUserId")
+                    b.Property<string>("IdentityUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -453,7 +453,7 @@ namespace EducareSA.Migrations
 
                     b.HasKey("StudentId");
 
-                    b.HasIndex("ApplicationUserId")
+                    b.HasIndex("IdentityUserId")
                         .IsUnique();
 
                     b.ToTable("Students");
@@ -880,13 +880,13 @@ namespace EducareSA.Migrations
 
             modelBuilder.Entity("EducareSA.Models.Student", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "ApplicationUser")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithOne()
-                        .HasForeignKey("EducareSA.Models.Student", "ApplicationUserId")
+                        .HasForeignKey("EducareSA.Models.Student", "IdentityUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("IdentityUser");
                 });
 
             modelBuilder.Entity("EducareSA.Models.StudentSubjectResult", b =>

@@ -198,6 +198,12 @@ namespace EducareSA.Controllers
                     programme.CareerInformation;
                 existingProgramme.IsActive =
                     programme.IsActive;
+                existingProgramme.DataVerified =
+                    programme.DataVerified;
+                existingProgramme.SourceUrl =
+                    programme.SourceUrl;
+                existingProgramme.LastVerified =
+                    programme.LastVerified;
 
                 await _context.SaveChangesAsync();
             }

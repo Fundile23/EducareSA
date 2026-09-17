@@ -38,7 +38,6 @@ builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
-// Seed database (catalogue + identity)
 // Seed database (catalogue + identity + university JSON)
 using (var scope = app.Services.CreateScope())
 {

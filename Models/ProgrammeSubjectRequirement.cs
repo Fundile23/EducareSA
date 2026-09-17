@@ -9,6 +9,8 @@ namespace EducareSA.Models
 
         public int ProgrammeId { get; set; }
 
+        public int? RequirementGroup { get; set; }
+
         public int SubjectId { get; set; }
 
         [Range(0, 100)]
@@ -17,6 +19,11 @@ namespace EducareSA.Models
         public bool Required { get; set; } = true;
 
         public int? MinimumLevel { get; set; }
+
+        [StringLength(500)]
+        public string? SourceUrl { get; set; }
+
+        public DateTime? LastVerified { get; set; }
 
         public string? Notes { get; set; }
 

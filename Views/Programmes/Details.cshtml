@@ -2,6 +2,19 @@
 @{
     ViewData["Title"] = Model.Name;
     var university = Model.Faculty?.University;
+    var ungrouped = Model.SubjectRequirements
+        .Where(r => r.RequirementGroup == null)
+        .OrderByDescending(x => x.Required)
+        .ThenBy(x => x.Subject?.Name)
+        .ToList();
+    var groups = Model.SubjectRequirements
+        .Where(r => r.RequirementGroup != null)
+        .GroupBy(r => r.RequirementGroup!.Value)
+        .OrderBy(g => g.Key)
+        .ToList();
+    var latestAdmission = Model.AdmissionRequirements
+        .OrderByDescending(a => a.AcademicYear)
+        .FirstOrDefault();
 }
 
 <!-- PAGE HEADER -->
@@ -10,7 +23,6 @@
 
     <div class="shell" style="position: relative; z-index: 2;">
 
-        <!-- Breadcrumb -->
         <nav style="margin-bottom: 24px;" data-aos="fade-right">
             <div style="font-size: 0.85rem; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
                 <a asp-action="Index" style="color: var(--brown-medium);">Programmes</a>
@@ -88,8 +100,61 @@
     </div>
 </section>
 
+<!-- DATA VERIFICATION BADGE -->
+@if (!Model.DataVerified)
+{
+    <section style="padding: 0 0 8px;">
+        <div class="shell">
+            <div style="background: var(--warning-bg); border: 1px solid rgba(176, 138, 74, 0.25); border-radius: var(--r-lg); padding: 20px 24px; display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap;" data-aos="fade-up">
+
+                <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(176, 138, 74, 0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                    <i class="fas fa-triangle-exclamation" style="color: var(--warning); font-size: 1.1rem;"></i>
+                </div>
+
+                <div style="flex: 1; min-width: 240px;">
+                    <div style="font-weight: 600; color: var(--primary); font-size: 0.95rem; margin-bottom: 6px;">
+                        Requirements not yet verified
+                    </div>
+                    <p style="margin: 0; font-size: 0.88rem; color: var(--brown-medium); line-height: 1.55;">
+                        The admission requirements, APS, and fees shown on this page are
+                        based on typical entry patterns and have <strong>not</strong> been
+                        confirmed against the official prospectus. Always check directly
+                        with the university before making application decisions.
+                    </p>
+                    @if (university != null && !string.IsNullOrWhiteSpace(university.WebsiteUrl))
+                    {
+                        <a href="@university.WebsiteUrl" target="_blank" rel="noopener"
+                           style="display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; font-size: 0.85rem; font-weight: 500; color: var(--primary);">
+                            Visit @university.ShortName's official site
+                            <i class="fas fa-arrow-up-right-from-square" style="font-size: 0.7rem;"></i>
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+}
+else if (Model.LastVerified.HasValue)
+{
+    <section style="padding: 0 0 8px;">
+        <div class="shell">
+            <div style="background: var(--success-bg); border-radius: var(--r-lg); padding: 16px 24px; display: flex; gap: 12px; align-items: center;" data-aos="fade-up">
+                <i class="fas fa-circle-check" style="color: var(--success); font-size: 1.1rem;"></i>
+                <div style="font-size: 0.88rem; color: var(--brown-medium);">
+                    <strong style="color: var(--primary);">Verified</strong> —
+                    last checked @Model.LastVerified.Value.ToString("dd MMM yyyy")
+                    @if (!string.IsNullOrWhiteSpace(Model.SourceUrl))
+                    {
+                        <a href="@Model.SourceUrl" target="_blank" rel="noopener" style="margin-left: 8px; font-weight: 500;">View source</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
 <!-- MAIN CONTENT -->
-<section style="padding: 56px 0 100px;">
+<section style="padding: 40px 0 100px;">
     <div class="shell">
         <div class="detail-layout">
 
@@ -122,15 +187,25 @@
 
                 <!-- Subject requirements -->
                 <div class="card" style="padding: 32px; border-radius: var(--r-lg);" data-aos="fade-up">
-                    <h3 style="font-family: var(--font-display); margin: 0 0 20px; font-size: 1.35rem;">
-                        <i class="fas fa-list-check" style="font-size: 1rem; color: var(--primary); margin-right: 10px;"></i>
-                        Subject requirements
-                    </h3>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; gap: 16px; flex-wrap: wrap;">
+                        <h3 style="font-family: var(--font-display); margin: 0; font-size: 1.35rem;">
+                            <i class="fas fa-list-check" style="font-size: 1rem; color: var(--primary); margin-right: 10px;"></i>
+                            Subject requirements
+                        </h3>
+                        @if (!Model.DataVerified)
+                        {
+                            <span class="badge" style="background: var(--warning-bg); color: var(--warning); font-size: 0.68rem;">
+                                <i class="fas fa-circle-exclamation" style="font-size: 0.6rem; margin-right: 4px;"></i>
+                                Unverified
+                            </span>
+                        }
+                    </div>
 
                     @if (Model.SubjectRequirements.Any())
                     {
                         <div style="display:flex; flex-direction:column; gap:12px;">
-                            @foreach (var r in Model.SubjectRequirements.OrderByDescending(x => x.Required).ThenBy(x => x.Subject?.Name))
+
+                            @foreach (var r in ungrouped)
                             {
                                 <div style="display:flex; justify-content:space-between; align-items:center; gap:16px; padding: 16px 20px; background: var(--beige-light); border-radius: var(--r-sm);">
                                     <div>
@@ -157,6 +232,31 @@
                                     </div>
                                 </div>
                             }
+
+                            @foreach (var g in groups)
+                            {
+                                <div style="padding: 16px 20px; background: var(--beige-light); border-radius: var(--r-sm);">
+                                    <div style="font-size: 0.7rem; color: var(--brown-medium); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 12px;">
+                                        <i class="fas fa-code-branch" style="font-size: 0.7rem; margin-right: 6px;"></i>
+                                        Any one of the following
+                                    </div>
+
+                                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                                        @foreach (var r in g.OrderBy(x => x.MinimumPercentage))
+                                        {
+                                            <div style="display:flex; justify-content:space-between; align-items:center; gap:16px;">
+                                                <div style="font-weight: 500; color: var(--primary); font-size: 0.95rem;">
+                                                    @r.Subject?.Name
+                                                </div>
+                                                <div style="font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; color: var(--primary); line-height: 1;">
+                                                    @r.MinimumPercentage.ToString("0")%
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+
                         </div>
                     }
                     else
@@ -214,17 +314,16 @@
             <!-- RIGHT COLUMN (sidebar) -->
             <aside style="display:flex; flex-direction:column; gap:20px;">
 
-                <!-- APS / Admission card -->
                 <div class="card" style="padding: 28px; border-radius: var(--r-lg); background: var(--secondary); border-color: transparent;" data-aos="fade-up">
-                    <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary); font-weight: 600; margin-bottom: 12px;">
-                        Minimum APS
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary); font-weight: 600;">
+                            Minimum APS
+                        </div>
+                        @if (!Model.DataVerified)
+                        {
+                            <i class="fas fa-circle-exclamation" style="color: var(--warning); font-size: 0.85rem;" title="Unverified"></i>
+                        }
                     </div>
-
-                    @{
-                        var latestAdmission = Model.AdmissionRequirements
-                            .OrderByDescending(a => a.AcademicYear)
-                            .FirstOrDefault();
-                    }
 
                     @if (latestAdmission?.MinimumAPS is decimal minAps)
                     {
@@ -243,7 +342,6 @@
                     }
                 </div>
 
-                <!-- Additional requirements -->
                 @if (!string.IsNullOrWhiteSpace(latestAdmission?.AdditionalRequirements))
                 {
                     <div class="card" style="padding: 28px; border-radius: var(--r-lg);" data-aos="fade-up">
@@ -256,11 +354,16 @@
                     </div>
                 }
 
-                <!-- Fees -->
                 <div class="card" style="padding: 28px; border-radius: var(--r-lg);" data-aos="fade-up">
-                    <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary); font-weight: 600; margin-bottom: 16px;">
-                        <i class="fas fa-coins" style="font-size: 0.75rem; margin-right: 6px;"></i>
-                        Fees
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary); font-weight: 600;">
+                            <i class="fas fa-coins" style="font-size: 0.75rem; margin-right: 6px;"></i>
+                            Fees
+                        </div>
+                        @if (!Model.DataVerified && Model.Fees.Any())
+                        {
+                            <i class="fas fa-circle-exclamation" style="color: var(--warning); font-size: 0.85rem;" title="Unverified"></i>
+                        }
                     </div>
 
                     @if (Model.Fees.Any())
@@ -296,7 +399,6 @@
                     }
                 </div>
 
-                <!-- Application periods -->
                 @if (Model.ApplicationPeriods.Any())
                 {
                     <div class="card" style="padding: 28px; border-radius: var(--r-lg);" data-aos="fade-up">
@@ -340,7 +442,6 @@
                     </div>
                 }
 
-                <!-- Back link -->
                 <a asp-action="Index" class="pill-link" style="align-self: flex-start;">
                     <i class="fas fa-arrow-left" style="font-size: 0.75rem;"></i>
                     Back to all programmes
