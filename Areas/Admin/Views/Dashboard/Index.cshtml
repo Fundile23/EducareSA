@@ -2,106 +2,110 @@
     ViewData["Title"] = "Admin Dashboard";
 }
 
-<section style="padding: 48px 0 32px;">
-    <div class="shell">
-        <div class="page-header" style="margin: 0;">
-            <div>
-                <span class="eyebrow">Admin</span>
-                <h1 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); margin-bottom: 8px;">Dashboard</h1>
-                <p style="color: var(--brown-medium); margin: 0;">Manage the EducareSA catalogue.</p>
+<div class="admin-bg" style="background-image: linear-gradient(rgba(100, 48, 61, 0.85), rgba(100, 48, 61, 0.85)), url('/images/campus.jpg');">
+
+    <section style="padding: 48px 0 32px;">
+        <div class="shell">
+            <div class="page-header" style="margin: 0;">
+                <div>
+                    <span class="eyebrow" style="color: var(--secondary);">Admin</span>
+                    <h1 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); margin-bottom: 8px; color: var(--cream);">Dashboard</h1>
+                    <p style="color: var(--beige-medium); margin: 0;">Manage the EducareSA catalogue.</p>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section style="padding: 0 0 60px;">
-    <div class="shell">
+    <section style="padding: 0 0 60px;">
+        <div class="shell">
 
-        <h3 style="font-family: var(--font-display); margin: 0 0 20px; font-size: 1.15rem;">Overview</h3>
+            <h3 style="font-family: var(--font-display); margin: 0 0 20px; font-size: 1.15rem; color: var(--cream);">Overview</h3>
 
-        <div class="dash-grid">
-            <a asp-area="" asp-controller="UniversityAdmin" asp-action="Index" class="stat-card">
-                <div class="stat-label">Universities</div>
-                <div class="stat-value">@ViewBag.UniversityCount</div>
-                @if (ViewBag.InactiveUniversities > 0)
-                {
-                    <div class="stat-note text-warning">@ViewBag.InactiveUniversities inactive</div>
-                }
-            </a>
+            <div class="dash-grid">
+                <a asp-area="" asp-controller="UniversityAdmin" asp-action="Index" class="stat-card">
+                    <div class="stat-label">Universities</div>
+                    <div class="stat-value">@ViewBag.UniversityCount</div>
+                    @if (ViewBag.InactiveUniversities > 0)
+                    {
+                        <div class="stat-note text-warning">@ViewBag.InactiveUniversities inactive</div>
+                    }
+                </a>
 
-            <a asp-area="" asp-controller="CampusAdmin" asp-action="Index" class="stat-card">
-                <div class="stat-label">Campuses</div>
-                <div class="stat-value">@ViewBag.CampusCount</div>
-            </a>
+                <a asp-area="" asp-controller="CampusAdmin" asp-action="Index" class="stat-card">
+                    <div class="stat-label">Campuses</div>
+                    <div class="stat-value">@ViewBag.CampusCount</div>
+                </a>
 
-            <a asp-area="" asp-controller="FacultyAdmin" asp-action="Index" class="stat-card">
-                <div class="stat-label">Faculties</div>
-                <div class="stat-value">@ViewBag.FacultyCount</div>
-            </a>
+                <a asp-area="" asp-controller="FacultyAdmin" asp-action="Index" class="stat-card">
+                    <div class="stat-label">Faculties</div>
+                    <div class="stat-value">@ViewBag.FacultyCount</div>
+                </a>
 
-            <a asp-area="" asp-controller="ProgrammeAdmin" asp-action="Index" class="stat-card">
-                <div class="stat-label">Programmes</div>
-                <div class="stat-value">@ViewBag.ProgrammeCount</div>
-                <div class="stat-note text-success">@ViewBag.ActiveProgrammes active</div>
-            </a>
+                <a asp-area="" asp-controller="ProgrammeAdmin" asp-action="Index" class="stat-card">
+                    <div class="stat-label">Programmes</div>
+                    <div class="stat-value">@ViewBag.ProgrammeCount</div>
+                    <div class="stat-note text-success">@ViewBag.ActiveProgrammes active</div>
+                </a>
 
-            <div class="stat-card stat-static">
-                <div class="stat-label">Subjects</div>
-                <div class="stat-value">@ViewBag.SubjectCount</div>
+                <div class="stat-card stat-static">
+                    <div class="stat-label">Subjects</div>
+                    <div class="stat-value">@ViewBag.SubjectCount</div>
+                </div>
+
+                <div class="stat-card stat-static">
+                    <div class="stat-label">Bursaries</div>
+                    <div class="stat-value">@ViewBag.BursaryCount</div>
+                </div>
+
+                <div class="stat-card stat-static">
+                    <div class="stat-label">Students</div>
+                    <div class="stat-value">@ViewBag.StudentCount</div>
+                </div>
             </div>
 
-            <div class="stat-card stat-static">
-                <div class="stat-label">Bursaries</div>
-                <div class="stat-value">@ViewBag.BursaryCount</div>
+        </div>
+    </section>
+
+    <section style="padding: 0 0 100px;">
+        <div class="shell">
+            <h3 style="font-family: var(--font-display); margin: 0 0 20px; font-size: 1.15rem; color: var(--cream);">Manage</h3>
+
+            <div class="manage-grid">
+                <a asp-area="" asp-controller="UniversityAdmin" asp-action="Index" class="manage-card">
+                    <div class="manage-icon">🏛️</div>
+                    <div class="manage-label">Universities</div>
+                    <div class="manage-desc">Add, edit and deactivate institutions</div>
+                </a>
+
+                <a asp-area="" asp-controller="CampusAdmin" asp-action="Index" class="manage-card">
+                    <div class="manage-icon">📍</div>
+                    <div class="manage-label">Campuses</div>
+                    <div class="manage-desc">Locations, hero images, status</div>
+                </a>
+
+                <a asp-area="" asp-controller="FacultyAdmin" asp-action="Index" class="manage-card">
+                    <div class="manage-icon">🎓</div>
+                    <div class="manage-label">Faculties</div>
+                    <div class="manage-desc">Academic groupings within universities</div>
+                </a>
+
+                <a asp-area="" asp-controller="ProgrammeAdmin" asp-action="Index" class="manage-card">
+                    <div class="manage-icon">📚</div>
+                    <div class="manage-label">Programmes</div>
+                    <div class="manage-desc">Qualifications, requirements, fees</div>
+                </a>
             </div>
 
-            <div class="stat-card stat-static">
-                <div class="stat-label">Students</div>
-                <div class="stat-value">@ViewBag.StudentCount</div>
+            <div style="margin-top: 32px;">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="btn-pill btn-pill-lg" style="background: var(--secondary); color: var(--primary); border-color: var(--secondary);">
+                    <i class="fas fa-arrow-left" style="font-size: 0.75rem;"></i>
+                    Back to public site
+                </a>
             </div>
         </div>
+    </section>
 
-    </div>
-</section>
-
-<section style="padding: 0 0 100px;">
-    <div class="shell">
-        <h3 style="font-family: var(--font-display); margin: 0 0 20px; font-size: 1.15rem;">Manage</h3>
-
-        <div class="manage-grid">
-            <a asp-area="" asp-controller="UniversityAdmin" asp-action="Index" class="manage-card">
-                <div class="manage-icon">🏛️</div>
-                <div class="manage-label">Universities</div>
-                <div class="manage-desc">Add, edit and deactivate institutions</div>
-            </a>
-
-            <a asp-area="" asp-controller="CampusAdmin" asp-action="Index" class="manage-card">
-                <div class="manage-icon">📍</div>
-                <div class="manage-label">Campuses</div>
-                <div class="manage-desc">Locations, hero images, status</div>
-            </a>
-
-            <a asp-area="" asp-controller="FacultyAdmin" asp-action="Index" class="manage-card">
-                <div class="manage-icon">🎓</div>
-                <div class="manage-label">Faculties</div>
-                <div class="manage-desc">Academic groupings within universities</div>
-            </a>
-
-            <a asp-area="" asp-controller="ProgrammeAdmin" asp-action="Index" class="manage-card">
-                <div class="manage-icon">📚</div>
-                <div class="manage-label">Programmes</div>
-                <div class="manage-desc">Qualifications, requirements, fees</div>
-            </a>
-        </div>
-
-        <div style="margin-top: 32px;">
-            <a asp-area="" asp-controller="Home" asp-action="Index" class="btn-pill-outline btn-pill">
-                <i class="fas fa-arrow-left" style="font-size: 0.75rem;"></i>
-                Back to public site
-            </a>
-        </div>
-    </div>
-</section>
+</div>
 
 <style>
     .dash-grid {
@@ -126,8 +130,9 @@
         display: block;
         padding: 24px;
         border-radius: var(--r-lg);
-        background: var(--surface);
+        background: #FFFFFF;
         border: 1px solid var(--border);
+        box-shadow: var(--shadow-sm);
         text-decoration: none;
         color: var(--text);
         transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
@@ -146,7 +151,7 @@
 
         .stat-static:hover {
             transform: none;
-            box-shadow: none;
+            box-shadow: var(--shadow-sm);
         }
 
     .stat-label {
@@ -194,8 +199,9 @@
         flex-direction: column;
         padding: 24px;
         border-radius: var(--r-lg);
-        background: var(--surface);
+        background: #FFFFFF;
         border: 1px solid var(--border);
+        box-shadow: var(--shadow-sm);
         text-decoration: none;
         color: var(--text);
         transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;

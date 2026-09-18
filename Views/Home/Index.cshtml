@@ -3,33 +3,33 @@
 }
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero hero-with-bg" style="background-image: linear-gradient(rgba(100, 48, 61, 0.75), rgba(100, 48, 61, 0.75)), url('/images/graduation.jpg');">
     <div class="shell">
         <div class="split" style="align-items:center; gap:80px;">
 
             <div class="hero-content" data-aos="fade-right">
-                <h1>Find the <span class="highlight">right course</span> for your future</h1>
-                <p class="hero-subtitle">South Africa's free matric course finder.</p>
-                <p>
+                <h1 style="color: var(--cream);">Find the <span class="highlight" style="color: var(--secondary);">right course</span> for your future</h1>
+                <p class="hero-subtitle" style="color: var(--beige-medium);">South Africa's free matric course finder.</p>
+                <p style="color: var(--beige-medium);">
                     Capture your subjects and marks once. Instantly see which
                     programmes you qualify for — and exactly why.
                 </p>
                 <div class="hero-cta">
                     @if (User.Identity?.IsAuthenticated == true)
                     {
-                        <a asp-controller="Student" asp-action="Results" class="btn-pill btn-pill-lg">
+                        <a asp-controller="Student" asp-action="Results" class="btn-pill btn-pill-lg" style="background: var(--secondary); color: var(--primary); border-color: var(--secondary);">
                             Capture my results
                         </a>
-                        <a asp-controller="Programmes" asp-action="Index" class="btn-pill-outline btn-pill btn-pill-lg">
+                        <a asp-controller="Programmes" asp-action="Index" class="btn-pill-outline btn-pill btn-pill-lg" style="color: var(--cream); border-color: var(--cream);">
                             Browse programmes
                         </a>
                     }
                     else
                     {
-                        <a asp-area="Identity" asp-page="/Account/Register" class="btn-pill btn-pill-lg">
+                        <a asp-area="Identity" asp-page="/Account/Register" class="btn-pill btn-pill-lg" style="background: var(--secondary); color: var(--primary); border-color: var(--secondary);">
                             Get started — it's free
                         </a>
-                        <a asp-controller="Programmes" asp-action="Index" class="btn-pill-outline btn-pill btn-pill-lg">
+                        <a asp-controller="Programmes" asp-action="Index" class="btn-pill-outline btn-pill btn-pill-lg" style="color: var(--cream); border-color: var(--cream);">
                             Browse programmes
                         </a>
                     }
@@ -74,11 +74,11 @@
     <div class="shell">
         <div class="stats-row">
             <div class="stat-item" data-aos="fade-up" data-aos-delay="0">
-                <div class="stat-number">26</div>
+                <div class="stat-number">24</div>
                 <div class="stat-label">Universities</div>
             </div>
             <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
-                <div class="stat-number">100+</div>
+                <div class="stat-number">87</div>
                 <div class="stat-label">Programmes</div>
             </div>
             <div class="stat-item" data-aos="fade-up" data-aos-delay="200">

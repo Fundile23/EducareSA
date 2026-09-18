@@ -3,195 +3,199 @@
     ViewData["Title"] = "My Matches";
 }
 
-<section style="padding: 48px 0 32px; background: linear-gradient(135deg, var(--beige-light) 0%, var(--cream) 100%);">
-    <div class="shell">
-        <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap;" data-aos="fade-right">
-            <div>
-                <span class="eyebrow">Matching</span>
-                <h1 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); margin-bottom: 8px;">My matches</h1>
-                <p style="color: var(--brown-medium); margin: 0; max-width: 520px;">
-                    Programmes you may qualify for, based on the results you've captured.
-                </p>
-            </div>
+<div style="background-image: linear-gradient(rgba(100, 48, 61, 0.55), rgba(100, 48, 61, 0.70)), url('/images/library.jpg'); background-size: cover; background-position: center; background-attachment: fixed; min-height: calc(100vh - 76px);">
 
-            @if (Model.HasResults)
+    <section style="padding: 64px 0 40px;">
+        <div class="shell">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap;" data-aos="fade-right">
+                <div>
+                    <span class="eyebrow" style="color: var(--secondary);">Matching</span>
+                    <h1 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); margin-bottom: 8px; color: var(--cream);">My matches</h1>
+                    <p style="color: var(--beige-medium); margin: 0; max-width: 520px;">
+                        Programmes you may qualify for, based on the results you've captured.
+                    </p>
+                </div>
+
+                @if (Model.HasResults)
+                {
+                    <div style="text-align: right;">
+                        <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--beige-medium); font-weight: 600; margin-bottom: 6px;">
+                            Your APS
+                        </div>
+                        <div style="font-family: var(--font-display); font-size: 3rem; font-weight: 700; color: var(--secondary); line-height: 1;">
+                            @Model.Aps
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+
+    <section style="padding: 8px 0 100px;">
+        <div class="shell">
+
+            @if (!Model.HasResults)
             {
-                <div style="text-align: right;">
-                    <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--brown-medium); font-weight: 600; margin-bottom: 6px;">
-                        Your APS
+                <div class="card" style="padding: 72px 32px; text-align: center; border-radius: var(--r-xl); background: #FFFFFF;" data-aos="fade-up">
+                    <div style="width: 80px; height: 80px; border-radius: 50%; background: var(--secondary); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--primary); margin: 0 auto 24px;">
+                        <i class="fas fa-clipboard-list"></i>
                     </div>
-                    <div style="font-family: var(--font-display); font-size: 3rem; font-weight: 700; color: var(--primary); line-height: 1;">
-                        @Model.Aps
-                    </div>
+                    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 12px;">
+                        You haven't captured any results yet
+                    </h3>
+                    <p class="text-muted" style="max-width: 420px; margin: 0 auto 28px;">
+                        Add your subjects and marks so we can match you against real admission requirements.
+                    </p>
+                    <a asp-controller="Student" asp-action="Results" class="btn-pill btn-pill-lg">
+                        Capture my results
+                        <i class="fas fa-arrow-right" style="font-size: 0.8rem;"></i>
+                    </a>
                 </div>
             }
-        </div>
-    </div>
-</section>
-
-<section style="padding: 40px 0 100px;">
-    <div class="shell">
-
-        @if (!Model.HasResults)
-        {
-            <div class="card" style="padding: 72px 32px; text-align: center; border-radius: var(--r-xl);" data-aos="fade-up">
-                <div style="width: 80px; height: 80px; border-radius: 50%; background: var(--secondary); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--primary); margin: 0 auto 24px;">
-                    <i class="fas fa-clipboard-list"></i>
+            else
+            {
+                <div style="display: flex; gap: 8px; margin-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 12px;" data-aos="fade-up">
+                    <button type="button" class="match-tab active" data-target="qualified">
+                        <i class="fas fa-check-circle" style="font-size: 0.8rem;"></i>
+                        You qualify
+                        <span class="match-tab-count">@Model.Qualified.Count</span>
+                    </button>
+                    <button type="button" class="match-tab" data-target="notqualified">
+                        <i class="fas fa-times-circle" style="font-size: 0.8rem;"></i>
+                        Not yet
+                        <span class="match-tab-count">@Model.NotQualified.Count</span>
+                    </button>
                 </div>
-                <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 12px;">
-                    You haven't captured any results yet
-                </h3>
-                <p class="text-muted" style="max-width: 420px; margin: 0 auto 28px;">
-                    Add your subjects and marks so we can match you against real admission requirements.
-                </p>
-                <a asp-controller="Student" asp-action="Results" class="btn-pill btn-pill-lg">
-                    Capture my results
-                    <i class="fas fa-arrow-right" style="font-size: 0.8rem;"></i>
-                </a>
-            </div>
-        }
-        else
-        {
-            <div style="display: flex; gap: 8px; margin-bottom: 32px; border-bottom: 1px solid var(--border); padding-bottom: 12px;" data-aos="fade-up">
-                <button type="button" class="match-tab active" data-target="qualified">
-                    <i class="fas fa-check-circle" style="font-size: 0.8rem;"></i>
-                    You qualify
-                    <span class="match-tab-count">@Model.Qualified.Count</span>
-                </button>
-                <button type="button" class="match-tab" data-target="notqualified">
-                    <i class="fas fa-times-circle" style="font-size: 0.8rem;"></i>
-                    Not yet
-                    <span class="match-tab-count">@Model.NotQualified.Count</span>
-                </button>
-            </div>
 
-            <div id="qualified" class="match-panel" style="display: block;">
-                @if (Model.Qualified.Count == 0)
-                {
-                    <div class="card" style="padding: 56px 32px; text-align: center; border-radius: var(--r-lg);">
-                        <div style="font-size: 2rem; margin-bottom: 12px;">🔎</div>
-                        <h3 style="font-family: var(--font-display); font-size: 1.25rem; margin-bottom: 8px;">
-                            No matches yet
-                        </h3>
-                        <p class="text-muted" style="max-width: 420px; margin: 0 auto;">
-                            Check the "Not yet" tab to see what requirements you still need to meet.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <div class="card-grid-3">
-                        @{
-                            var qi = 0;
-                        }
-                        @foreach (var m in Model.Qualified)
-                        {
-                            var delay = (qi % 6) * 80; qi++;
-                            <div class="card card-lift" style="border-radius: var(--r-lg); border-left: 4px solid var(--success); display: flex; flex-direction: column;"
-                                 data-aos="fade-up" data-aos-delay="@delay">
-                                <div style="padding: 26px; display: flex; flex-direction: column; flex: 1;">
-                                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
-                                        <span class="badge bg-secondary">@m.Programme.Faculty.University.ShortName</span>
-                                        <span class="badge bg-success">
-                                            <i class="fas fa-check" style="font-size: 0.65rem;"></i>
-                                        </span>
-                                    </div>
-
-                                    <h4 style="margin: 0 0 8px; font-family: var(--font-display); font-size: 1.1rem; line-height: 1.3; color: var(--primary);">
-                                        @m.Programme.Name
-                                    </h4>
-
-                                    <div style="font-size: 0.85rem; color: var(--brown-medium); margin-bottom: 16px;">
-                                        @m.Programme.Faculty.Name
-                                        @if (m.Programme.Campus != null)
-                                        {
-                                            <span>· @m.Programme.Campus.Name</span>
-                                        }
-                                    </div>
-
-                                    @if (m.Eligibility.RequiredAps.HasValue)
-                                    {
-                                        <div style="font-size: 0.82rem; color: var(--brown-medium); margin-bottom: 18px;">
-                                            Required APS <strong style="color: var(--primary);">@m.Eligibility.RequiredAps</strong>
-                                            · You have <strong style="color: var(--success);">@m.Eligibility.StudentAps</strong>
+                <div id="qualified" class="match-panel" style="display: block;">
+                    @if (Model.Qualified.Count == 0)
+                    {
+                        <div class="card" style="padding: 56px 32px; text-align: center; border-radius: var(--r-lg); background: #FFFFFF;">
+                            <div style="font-size: 2rem; margin-bottom: 12px;">🔎</div>
+                            <h3 style="font-family: var(--font-display); font-size: 1.25rem; margin-bottom: 8px;">
+                                No matches yet
+                            </h3>
+                            <p class="text-muted" style="max-width: 420px; margin: 0 auto;">
+                                Check the "Not yet" tab to see what requirements you still need to meet.
+                            </p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card-grid-3">
+                            @{
+                                var qi = 0;
+                            }
+                            @foreach (var m in Model.Qualified)
+                            {
+                                var delay = (qi % 6) * 80; qi++;
+                                <div class="card card-lift" style="border-radius: var(--r-lg); border-left: 4px solid var(--success); display: flex; flex-direction: column; background: #FFFFFF;"
+                                     data-aos="fade-up" data-aos-delay="@delay">
+                                    <div style="padding: 26px; display: flex; flex-direction: column; flex: 1;">
+                                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+                                            <span class="badge bg-secondary">@m.Programme.Faculty.University.ShortName</span>
+                                            <span class="badge bg-success">
+                                                <i class="fas fa-check" style="font-size: 0.65rem;"></i>
+                                            </span>
                                         </div>
-                                    }
 
-                                    <div style="margin-top: auto;">
-                                        <a asp-controller="Eligibility" asp-action="Check" asp-route-id="@m.Programme.ProgrammeId"
-                                           class="btn-pill btn-pill-sm btn-pill-block">
-                                            View details
-                                        </a>
+                                        <h4 style="margin: 0 0 8px; font-family: var(--font-display); font-size: 1.1rem; line-height: 1.3; color: var(--primary);">
+                                            @m.Programme.Name
+                                        </h4>
+
+                                        <div style="font-size: 0.85rem; color: var(--brown-medium); margin-bottom: 16px;">
+                                            @m.Programme.Faculty.Name
+                                            @if (m.Programme.Campus != null)
+                                            {
+                                                <span>· @m.Programme.Campus.Name</span>
+                                            }
+                                        </div>
+
+                                        @if (m.Eligibility.RequiredAps.HasValue)
+                                        {
+                                            <div style="font-size: 0.82rem; color: var(--brown-medium); margin-bottom: 18px;">
+                                                Required APS <strong style="color: var(--primary);">@m.Eligibility.RequiredAps</strong>
+                                                · You have <strong style="color: var(--success);">@m.Eligibility.StudentAps</strong>
+                                            </div>
+                                        }
+
+                                        <div style="margin-top: auto;">
+                                            <a asp-controller="Eligibility" asp-action="Check" asp-route-id="@m.Programme.ProgrammeId"
+                                               class="btn-pill btn-pill-sm btn-pill-block">
+                                                View details
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        }
-                    </div>
-                }
-            </div>
+                            }
+                        </div>
+                    }
+                </div>
 
-            <div id="notqualified" class="match-panel" style="display: none;">
-                @if (Model.NotQualified.Count == 0)
-                {
-                    <div class="card" style="padding: 56px 32px; text-align: center; border-radius: var(--r-lg);">
-                        <div style="font-size: 2rem; margin-bottom: 12px;">🎉</div>
-                        <h3 style="font-family: var(--font-display); font-size: 1.25rem; margin-bottom: 8px;">
-                            You qualify for everything we know about
-                        </h3>
-                    </div>
-                }
-                else
-                {
-                    <div style="display: flex; flex-direction: column; gap: 12px;">
-                        @{
-                            var ni = 0;
-                        }
-                        @foreach (var m in Model.NotQualified)
-                        {
-                            var delay = (ni % 6) * 60; ni++;
-                            <div class="card" style="border-radius: var(--r-lg); overflow: hidden;" data-aos="fade-up" data-aos-delay="@delay">
-                                <details>
-                                    <summary style="padding: 22px 26px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px;">
-                                        <div style="flex: 1;">
-                                            <div style="font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; color: var(--primary); margin-bottom: 4px;">
-                                                @m.Programme.Name
+                <div id="notqualified" class="match-panel" style="display: none;">
+                    @if (Model.NotQualified.Count == 0)
+                    {
+                        <div class="card" style="padding: 56px 32px; text-align: center; border-radius: var(--r-lg); background: #FFFFFF;">
+                            <div style="font-size: 2rem; margin-bottom: 12px;">🎉</div>
+                            <h3 style="font-family: var(--font-display); font-size: 1.25rem; margin-bottom: 8px;">
+                                You qualify for everything we know about
+                            </h3>
+                        </div>
+                    }
+                    else
+                    {
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            @{
+                                var ni = 0;
+                            }
+                            @foreach (var m in Model.NotQualified)
+                            {
+                                var delay = (ni % 6) * 60; ni++;
+                                <div class="card" style="border-radius: var(--r-lg); overflow: hidden; background: #FFFFFF;" data-aos="fade-up" data-aos-delay="@delay">
+                                    <details>
+                                        <summary style="padding: 22px 26px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px;">
+                                            <div style="flex: 1;">
+                                                <div style="font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; color: var(--primary); margin-bottom: 4px;">
+                                                    @m.Programme.Name
+                                                </div>
+                                                <div style="font-size: 0.85rem; color: var(--brown-medium);">
+                                                    @m.Programme.Faculty.University.Name
+                                                </div>
                                             </div>
-                                            <div style="font-size: 0.85rem; color: var(--brown-medium);">
-                                                @m.Programme.Faculty.University.Name
+                                            <i class="fas fa-chevron-down" style="color: var(--brown-soft); transition: transform 200ms ease;"></i>
+                                        </summary>
+
+                                        <div style="padding: 0 26px 26px 26px; border-top: 1px solid var(--border); margin-top: 8px; padding-top: 20px;">
+                                            <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--brown-medium); font-weight: 600; margin-bottom: 12px;">
+                                                Requirements
                                             </div>
+                                            <ul style="list-style: none; padding: 0; margin: 0 0 20px 0;">
+                                                @foreach (var check in m.Eligibility.Checks)
+                                                {
+                                                    <li style="display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; font-size: 0.9rem; color: @(check.Passed ? "var(--brown-medium)" : "var(--danger)");">
+                                                        <i class="fas @(check.Passed ? "fa-check-circle" : "fa-times-circle")" style="margin-top: 3px; font-size: 0.85rem; color: @(check.Passed ? "var(--success)" : "var(--danger)");"></i>
+                                                        <span>@check.Description</span>
+                                                    </li>
+                                                }
+                                            </ul>
+                                            <a asp-controller="Eligibility" asp-action="Check" asp-route-id="@m.Programme.ProgrammeId"
+                                               class="btn-pill-outline btn-pill btn-pill-sm">
+                                                Full breakdown
+                                                <i class="fas fa-arrow-right" style="font-size: 0.7rem;"></i>
+                                            </a>
                                         </div>
-                                        <i class="fas fa-chevron-down" style="color: var(--brown-soft); transition: transform 200ms ease;"></i>
-                                    </summary>
+                                    </details>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            }
 
-                                    <div style="padding: 0 26px 26px 26px; border-top: 1px solid var(--border); margin-top: 8px; padding-top: 20px;">
-                                        <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--brown-medium); font-weight: 600; margin-bottom: 12px;">
-                                            Requirements
-                                        </div>
-                                        <ul style="list-style: none; padding: 0; margin: 0 0 20px 0;">
-                                            @foreach (var check in m.Eligibility.Checks)
-                                            {
-                                                <li style="display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; font-size: 0.9rem; color: @(check.Passed ? "var(--brown-medium)" : "var(--danger)");">
-                                                    <i class="fas @(check.Passed ? "fa-check-circle" : "fa-times-circle")" style="margin-top: 3px; font-size: 0.85rem; color: @(check.Passed ? "var(--success)" : "var(--danger)");"></i>
-                                                    <span>@check.Description</span>
-                                                </li>
-                                            }
-                                        </ul>
-                                        <a asp-controller="Eligibility" asp-action="Check" asp-route-id="@m.Programme.ProgrammeId"
-                                           class="btn-pill-outline btn-pill btn-pill-sm">
-                                            Full breakdown
-                                            <i class="fas fa-arrow-right" style="font-size: 0.7rem;"></i>
-                                        </a>
-                                    </div>
-                                </details>
-                            </div>
-                        }
-                    </div>
-                }
-            </div>
-        }
+        </div>
+    </section>
 
-    </div>
-</section>
+</div>
 
 <style>
     .match-tab {
@@ -199,9 +203,9 @@
         align-items: center;
         gap: 8px;
         padding: 10px 20px;
-        border: 1px solid var(--border-strong);
-        background: transparent;
-        color: var(--brown-medium);
+        border: 1px solid rgba(255,255,255,0.3);
+        background: rgba(255,255,255,0.1);
+        color: var(--cream);
         border-radius: var(--r-pill);
         font-weight: 500;
         font-size: 0.9rem;
@@ -211,17 +215,17 @@
     }
 
         .match-tab:hover {
-            background: var(--beige-light);
+            background: rgba(255,255,255,0.2);
         }
 
         .match-tab.active {
-            background: var(--primary);
-            color: var(--white);
-            border-color: var(--primary);
+            background: var(--secondary);
+            color: var(--primary);
+            border-color: var(--secondary);
         }
 
     .match-tab-count {
-        background: rgba(255, 255, 255, 0.2);
+        background: rgba(0, 0, 0, 0.15);
         border-radius: 20px;
         padding: 2px 9px;
         font-size: 0.75rem;
@@ -229,9 +233,9 @@
         line-height: 1;
     }
 
-    .match-tab:not(.active) .match-tab-count {
-        background: var(--secondary);
-        color: var(--primary);
+    .match-tab.active .match-tab-count {
+        background: var(--primary);
+        color: var(--secondary);
     }
 
     details[open] summary .fa-chevron-down {
@@ -245,15 +249,15 @@
 
 @section Scripts {
     <script>
-        document.querySelectorAll('.match-tab').forEach(function (tab) {
-            tab.addEventListener('click', function () {
+        document.querySelectorAll('.match-tab').forEach(function(tab) {
+            tab.addEventListener('click', function() {
                 var target = tab.getAttribute('data-target');
 
-                document.querySelectorAll('.match-tab').forEach(function (t) {
+                document.querySelectorAll('.match-tab').forEach(function(t) {
                     t.classList.toggle('active', t === tab);
                 });
 
-                document.querySelectorAll('.match-panel').forEach(function (p) {
+                document.querySelectorAll('.match-panel').forEach(function(p) {
                     p.style.display = (p.id === target) ? 'block' : 'none';
                 });
             });
