@@ -1,0 +1,195 @@
+﻿@model EducareSA.Models.Bursary
+
+@{
+    ViewData["Title"] = "Bursary Details";
+}
+
+<div style="background: #f8f5f2; min-height: calc(100vh - 76px);">
+
+    ```
+    <section style="padding: 48px 0;">
+        <div class="shell">
+
+            <div style="margin-bottom: 32px;">
+                <span class="eyebrow" style="color: var(--primary);">
+                    Administration
+                </span>
+
+                <h1 style="margin-bottom: 8px;">
+                    Bursary Details
+                </h1>
+
+                <p style="color: #666; margin: 0;">
+                    View the complete information for this bursary.
+                </p>
+            </div>
+
+            <div class="card" style="padding: 32px;">
+
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap; margin-bottom: 30px;">
+
+                    <div>
+                        <h2 style="margin-bottom: 8px;">
+                            @Model.Name
+                        </h2>
+
+                        @if (!string.IsNullOrWhiteSpace(Model.Provider))
+                        {
+                            <p style="color: #666; margin: 0;">
+                                Provided by @Model.Provider
+                            </p>
+                        }
+                    </div>
+
+                    <div>
+                        @if (Model.IsActive)
+                        {
+                            <span style="color: #287a45; font-weight: 600;">
+                                ● Active
+                            </span>
+                        }
+                        else
+                        {
+                            <span style="color: #999; font-weight: 600;">
+                                ● Inactive
+                            </span>
+                        }
+                    </div>
+
+                </div>
+
+                <hr />
+
+                <div style="margin-top: 28px;">
+
+                    <h4>Description</h4>
+
+                    <p style="color: #555; white-space: pre-line;">
+                        @(string.IsNullOrWhiteSpace(Model.Description)
+                                                ? "No description provided."
+                                                : Model.Description)
+                    </p>
+
+                </div>
+
+                <div style="margin-top: 28px;">
+
+                    <h4>Coverage</h4>
+
+                    <p style="color: #555; white-space: pre-line;">
+                        @(string.IsNullOrWhiteSpace(Model.Coverage)
+                                                ? "No coverage information provided."
+                                                : Model.Coverage)
+                    </p>
+
+                </div>
+
+                <hr style="margin: 30px 0;" />
+
+                <h3 style="margin-bottom: 20px;">
+                    Application Information
+                </h3>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-4">
+                        <strong>Opening Date</strong>
+
+                        <p style="color: #666; margin-top: 6px;">
+                            @(Model.OpeningDate.HasValue
+                                                        ? Model.OpeningDate.Value.ToString("dd MMM yyyy")
+                                                        : "Not specified")
+                        </p>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <strong>Closing Date</strong>
+
+                        <p style="color: #666; margin-top: 6px;">
+                            @(Model.ClosingDate.HasValue
+                                                        ? Model.ClosingDate.Value.ToString("dd MMM yyyy")
+                                                        : "Not specified")
+                        </p>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <strong>Minimum APS</strong>
+
+                        <p style="color: #666; margin-top: 6px;">
+                            @(Model.MinimumAPS.HasValue
+                                                        ? Model.MinimumAPS.ToString()
+                                                        : "Not specified")
+                        </p>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <strong>Faculty</strong>
+
+                        <p style="color: #666; margin-top: 6px;">
+                            @(Model.Faculty != null
+                                                        ? Model.Faculty.Name
+                                                        : "Not assigned")
+                        </p>
+                    </div>
+
+                </div>
+
+                <div style="margin-top: 10px;">
+
+                    <h4>Eligibility Notes</h4>
+
+                    <p style="color: #555; white-space: pre-line;">
+                        @(string.IsNullOrWhiteSpace(Model.EligibilityNotes)
+                                                ? "No additional eligibility notes provided."
+                                                : Model.EligibilityNotes)
+                    </p>
+
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(Model.Website))
+                {
+                    <div style="margin-top: 28px;">
+
+                        <h4>Website</h4>
+
+                        <a href="@Model.Website"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            @Model.Website
+                        </a>
+
+                    </div>
+                }
+
+                <hr style="margin: 30px 0;" />
+
+                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+
+                    <a asp-action="Edit"
+                       asp-route-id="@Model.BursaryId"
+                       class="btn btn-primary">
+                        <i class="fas fa-edit me-1"></i>
+                        Edit
+                    </a>
+
+                    <a asp-action="Delete"
+                       asp-route-id="@Model.BursaryId"
+                       class="btn btn-outline-danger">
+                        <i class="fas fa-trash me-1"></i>
+                        Delete
+                    </a>
+
+                    <a asp-action="Index"
+                       class="btn btn-outline-secondary">
+                        Back to Bursaries
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+    ```
+
+</div>

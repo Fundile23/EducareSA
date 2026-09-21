@@ -199,6 +199,12 @@ namespace EducareSA.Data
 				.WithOne()
 				.HasForeignKey<Student>(s => s.ApplicationUserId)
 				.OnDelete(DeleteBehavior.Cascade);
-		}
+
+            modelBuilder.Entity<Bursary>()
+    .HasOne(b => b.Faculty)
+    .WithMany()
+    .HasForeignKey(b => b.FacultyId)
+    .OnDelete(DeleteBehavior.SetNull);
+        }
 	}
 }

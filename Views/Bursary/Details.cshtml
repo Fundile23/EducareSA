@@ -1,0 +1,117 @@
+﻿@model EducareSA.Models.Bursary
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="container py-4">
+
+    <div class="mb-3">
+        <a asp-controller="Bursary"
+           asp-action="Index"
+           class="text-decoration-none">
+            ← Back to Bursaries
+        </a>
+    </div>
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-body p-4">
+
+            <h1 class="fw-bold mb-2">
+                @Model.Name
+            </h1>
+
+            @if (!string.IsNullOrWhiteSpace(Model.Provider))
+            {
+                <p class="text-muted">
+                    Provided by <strong>@Model.Provider</strong>
+                </p>
+            }
+
+            <hr />
+
+            @if (!string.IsNullOrWhiteSpace(Model.Description))
+            {
+                <h5>About this bursary</h5>
+
+                <p>
+                    @Model.Description
+                </p>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(Model.Coverage))
+            {
+                <h5 class="mt-4">What it covers</h5>
+
+                <p>
+                    @Model.Coverage
+                </p>
+            }
+
+            @if (Model.Faculty != null)
+            {
+                <h5 class="mt-4">Relevant Faculty</h5>
+
+                <p>
+                    @Model.Faculty.Name
+                </p>
+            }
+
+            @if (Model.MinimumAPS.HasValue)
+            {
+                <h5 class="mt-4">Minimum APS</h5>
+
+                <p>
+                    @Model.MinimumAPS.Value
+                </p>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(Model.EligibilityNotes))
+            {
+                <h5 class="mt-4">Eligibility</h5>
+
+                <p>
+                    @Model.EligibilityNotes
+                </p>
+            }
+
+            <div class="row mt-4">
+
+                @if (Model.OpeningDate.HasValue)
+                {
+                    <div class="col-md-6">
+                        <strong>Opening Date</strong>
+                        <p>
+                            @Model.OpeningDate.Value.ToString("dd MMM yyyy")
+                        </p>
+                    </div>
+                }
+
+                @if (Model.ClosingDate.HasValue)
+                {
+                    <div class="col-md-6">
+                        <strong>Closing Date</strong>
+                        <p>
+                            @Model.ClosingDate.Value.ToString("dd MMM yyyy")
+                        </p>
+                    </div>
+                }
+
+            </div>
+
+            @if (!string.IsNullOrWhiteSpace(Model.WebsiteUrl))
+            {
+                <a href="@Model.WebsiteUrl"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="btn btn-primary mt-3">
+                    Visit Bursary Website
+                </a>
+            }
+
+        </div>
+
+    </div>
+
+</div>

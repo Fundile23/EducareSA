@@ -1,0 +1,262 @@
+﻿@model EducareSA.Models.Bursary
+
+@{
+    ViewData["Title"] = "Add Bursary";
+}
+
+<div style="background: #f8f5f2; min-height: calc(100vh - 76px);">
+
+    ```
+    <section style="padding: 48px 0;">
+        <div class="shell">
+
+            <div style="margin-bottom: 32px;">
+                <span class="eyebrow" style="color: var(--primary);">
+                    Administration
+                </span>
+
+                <h1 style="margin-bottom: 8px;">
+                    Add Bursary
+                </h1>
+
+                <p style="color: #666; margin: 0;">
+                    Add a new bursary opportunity for students.
+                </p>
+            </div>
+
+            <div class="card" style="padding: 32px;">
+
+                <form asp-action="Create" method="post">
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger"
+                         style="margin-bottom: 20px;">
+                    </div>
+
+                    <!-- Bursary Information -->
+
+                    <h3 style="margin-bottom: 20px;">
+                        Bursary Information
+                    </h3>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Name" class="form-label">
+                                Bursary Name
+                            </label>
+
+                            <input asp-for="Name"
+                                   class="form-control"
+                                   placeholder="e.g. NSFAS Bursary" />
+
+                            <span asp-validation-for="Name"
+                                  class="text-danger">
+                            </span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Provider" class="form-label">
+                                Provider
+                            </label>
+
+                            <input asp-for="Provider"
+                                   class="form-control"
+                                   placeholder="e.g. NSFAS" />
+
+                            <span asp-validation-for="Provider"
+                                  class="text-danger">
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label">
+                            Description
+                        </label>
+
+                        <textarea asp-for="Description"
+                                  class="form-control"
+                                  rows="5"
+                                  placeholder="Describe the bursary and what it offers."></textarea>
+
+                        <span asp-validation-for="Description"
+                              class="text-danger">
+                        </span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Coverage" class="form-label">
+                            Coverage
+                        </label>
+
+                        <textarea asp-for="Coverage"
+                                  class="form-control"
+                                  rows="3"
+                                  placeholder="e.g. Tuition, accommodation, meals and learning materials"></textarea>
+
+                        <span asp-validation-for="Coverage"
+                              class="text-danger">
+                        </span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Website" class="form-label">
+                            Website
+                        </label>
+
+                        <input asp-for="Website"
+                               class="form-control"
+                               placeholder="https://example.com" />
+
+                        <span asp-validation-for="Website"
+                              class="text-danger">
+                        </span>
+                    </div>
+
+                    <hr style="margin: 30px 0;" />
+
+                    <!-- Dates -->
+
+                    <h3 style="margin-bottom: 20px;">
+                        Application Dates
+                    </h3>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="OpeningDate" class="form-label">
+                                Opening Date
+                            </label>
+
+                            <input asp-for="OpeningDate"
+                                   type="date"
+                                   class="form-control" />
+
+                            <span asp-validation-for="OpeningDate"
+                                  class="text-danger">
+                            </span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ClosingDate" class="form-label">
+                                Closing Date
+                            </label>
+
+                            <input asp-for="ClosingDate"
+                                   type="date"
+                                   class="form-control" />
+
+                            <span asp-validation-for="ClosingDate"
+                                  class="text-danger">
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <hr style="margin: 30px 0;" />
+
+                    <!-- Eligibility -->
+
+                    <h3 style="margin-bottom: 20px;">
+                        Eligibility
+                    </h3>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="MinimumAPS" class="form-label">
+                                Minimum APS
+                            </label>
+
+                            <input asp-for="MinimumAPS"
+                                   type="number"
+                                   class="form-control"
+                                   placeholder="e.g. 25" />
+
+                            <span asp-validation-for="MinimumAPS"
+                                  class="text-danger">
+                            </span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="FacultyId" class="form-label">
+                                Faculty
+                            </label>
+
+                            <select asp-for="FacultyId"
+                                    class="form-select"
+                                    asp-items="ViewBag.FacultyId">
+                                <option value="">
+                                    -- Select Faculty --
+                                </option>
+                            </select>
+
+                            <span asp-validation-for="FacultyId"
+                                  class="text-danger">
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="EligibilityNotes"
+                               class="form-label">
+                            Eligibility Notes
+                        </label>
+
+                        <textarea asp-for="EligibilityNotes"
+                                  class="form-control"
+                                  rows="4"
+                                  placeholder="Enter additional eligibility requirements."></textarea>
+
+                        <span asp-validation-for="EligibilityNotes"
+                              class="text-danger">
+                        </span>
+                    </div>
+
+                    <!-- Status -->
+
+                    <div class="form-check mb-4">
+
+                        <input asp-for="IsActive"
+                               class="form-check-input" />
+
+                        <label asp-for="IsActive"
+                               class="form-check-label">
+                            Active bursary
+                        </label>
+
+                    </div>
+
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+
+                        <button type="submit"
+                                class="btn btn-primary">
+                            <i class="fas fa-save me-1"></i>
+                            Save Bursary
+                        </button>
+
+                        <a asp-action="Index"
+                           class="btn btn-outline-secondary">
+                            Cancel
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </section>
+    ```
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

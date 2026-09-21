@@ -1,0 +1,103 @@
+﻿@model EducareSA.Models.Bursary
+
+@{
+    ViewData["Title"] = "Delete Bursary";
+}
+
+<div style="background: #f8f5f2; min-height: calc(100vh - 76px);">
+
+    ```
+    <section style="padding: 48px 0;">
+        <div class="shell">
+
+            <div style="margin-bottom: 32px;">
+                <span class="eyebrow" style="color: var(--primary);">
+                    Administration
+                </span>
+
+                <h1 style="margin-bottom: 8px;">
+                    Delete Bursary
+                </h1>
+
+                <p style="color: #666; margin: 0;">
+                    Review the bursary before permanently deleting it.
+                </p>
+            </div>
+
+            <div class="card" style="padding: 32px;">
+
+                <div style="padding: 20px; margin-bottom: 28px; background: #fff3f3; border: 1px solid #f0caca; border-radius: 8px;">
+
+                    <strong style="color: #a33;">
+                        Are you sure you want to delete this bursary?
+                    </strong>
+
+                    <p style="margin: 8px 0 0; color: #666;">
+                        This action cannot be undone.
+                    </p>
+
+                </div>
+
+                <h2 style="margin-bottom: 8px;">
+                    @Model.Name
+                </h2>
+
+                @if (!string.IsNullOrWhiteSpace(Model.Provider))
+                {
+                    <p style="color: #666;">
+                        Provider: @Model.Provider
+                    </p>
+                }
+
+                <hr style="margin: 28px 0;" />
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <strong>Faculty</strong>
+
+                        <p style="color: #666;">
+                            @(Model.Faculty?.Name ?? "Not assigned")
+                        </p>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <strong>Status</strong>
+
+                        <p style="color: #666;">
+                            @(Model.IsActive ? "Active" : "Inactive")
+                        </p>
+                    </div>
+
+                </div>
+
+                <form asp-action="DeletConfirmed"
+                      method="post">
+
+                    <input type="hidden"
+                           asp-for="BursaryId" />
+
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px;">
+
+                        <button type="submit"
+                                class="btn btn-danger">
+                            <i class="fas fa-trash me-1"></i>
+                            Delete Bursary
+                        </button>
+
+                        <a asp-action="Index"
+                           class="btn btn-outline-secondary">
+                            Cancel
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </section>
+    ```
+
+</div>

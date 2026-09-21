@@ -8,12 +8,30 @@
     <section style="padding: 64px 0 40px;">
         <div class="shell">
             <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap;" data-aos="fade-right">
+
                 <div>
                     <span class="eyebrow" style="color: var(--secondary);">Matching</span>
-                    <h1 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); margin-bottom: 8px; color: var(--cream);">My matches</h1>
+
+                    <h1 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); margin-bottom: 8px; color: var(--cream);">
+                        My matches
+                    </h1>
+
                     <p style="color: var(--beige-medium); margin: 0; max-width: 520px;">
                         Programmes you may qualify for, based on the results you've captured.
                     </p>
+
+                    @if (Model.HasResults)
+                    {
+                        <div style="margin-top: 18px;">
+                            <a asp-controller="Bursary"
+                               asp-action="Index"
+                               class="btn btn-primary">
+                                <i class="fas fa-money-check-alt me-1"></i>
+                                Find Bursaries
+                            </a>
+                        </div>
+                    }
+                    
                 </div>
 
                 @if (Model.HasResults)
@@ -22,11 +40,14 @@
                         <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--beige-medium); font-weight: 600; margin-bottom: 6px;">
                             Your APS
                         </div>
+
                         <div style="font-family: var(--font-display); font-size: 3rem; font-weight: 700; color: var(--secondary); line-height: 1;">
                             @Model.Aps
                         </div>
+                        
                     </div>
                 }
+
             </div>
         </div>
     </section>
