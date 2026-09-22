@@ -16,11 +16,10 @@ namespace EducareSA.Controllers
             _context = context;
         }
 
-        // GET: BursaryAdmin
+        // GET: AdminBursary
         public async Task<IActionResult> Index()
         {
             var bursaries = await _context.Bursaries
-                .Include(b => b.Faculty)
                 .AsNoTracking()
                 .OrderBy(b => b.Name)
                 .ToListAsync();
@@ -28,14 +27,13 @@ namespace EducareSA.Controllers
             return View(bursaries);
         }
 
-        // GET: BursaryAdmin/Details/5
+        // GET: AdminBursary/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
                 return NotFound();
 
             var bursary = await _context.Bursaries
-                .Include(b => b.Faculty)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(b => b.BursaryId == id);
 
@@ -45,23 +43,19 @@ namespace EducareSA.Controllers
             return View(bursary);
         }
 
-        // GET: BursaryAdmin/Create
-        public async Task<IActionResult> Create()
+        // GET: AdminBursary/Create
+        public IActionResult Create()
         {
-            await LoadFaculties();
             return View();
         }
 
-        // POST: BursaryAdmin/Create
+        // POST: AdminBursary/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Bursary bursary)
         {
             if (!ModelState.IsValid)
-            {
-                await LoadFaculties();
                 return View(bursary);
-            }
 
             bursary.CreatedAt = DateTime.UtcNow;
             bursary.UpdatedAt = DateTime.UtcNow;
@@ -72,24 +66,21 @@ namespace EducareSA.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: BursaryAdmin/Edit/5
+        // GET: AdminBursary/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
                 return NotFound();
 
-            var bursary = await _context.Bursaries
-                .FindAsync(id);
+            var bursary = await _context.Bursaries.FindAsync(id);
 
             if (bursary == null)
                 return NotFound();
 
-            await LoadFaculties();
-
             return View(bursary);
         }
 
-        // POST: BursaryAdmin/Edit/5
+        // POST: AdminBursary/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Bursary bursary)
@@ -98,13 +89,9 @@ namespace EducareSA.Controllers
                 return NotFound();
 
             if (!ModelState.IsValid)
-            {
-                await LoadFaculties();
                 return View(bursary);
-            }
 
-            var existingBursary = await _context.Bursaries
-                .FindAsync(id);
+            var existingBursary = await _context.Bursaries.FindAsync(id);
 
             if (existingBursary == null)
                 return NotFound();
@@ -118,7 +105,6 @@ namespace EducareSA.Controllers
             existingBursary.ClosingDate = bursary.ClosingDate;
             existingBursary.MinimumAPS = bursary.MinimumAPS;
             existingBursary.EligibilityNotes = bursary.EligibilityNotes;
-            existingBursary.FacultyId = bursary.FacultyId;
             existingBursary.IsActive = bursary.IsActive;
             existingBursary.UpdatedAt = DateTime.UtcNow;
 
@@ -127,14 +113,13 @@ namespace EducareSA.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: BursaryAdmin/Delete/5
+        // GET: AdminBursary/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
                 return NotFound();
 
             var bursary = await _context.Bursaries
-                .Include(b => b.Faculty)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(b => b.BursaryId == id);
 
@@ -144,13 +129,12 @@ namespace EducareSA.Controllers
             return View(bursary);
         }
 
-        // POST: BursaryAdmin/Delete/5
+        // POST: AdminBursary/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var bursary = await _context.Bursaries
-                .FindAsync(id);
+            var bursary = await _context.Bursaries.FindAsync(id);
 
             if (bursary == null)
                 return NotFound();
@@ -159,17 +143,6 @@ namespace EducareSA.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
-        }
-
-        private async Task LoadFaculties()
-        {
-            ViewBag.Faculties = await _context.Faculties
-                .Include(f => f.University)
-                .Where(f => f.University.IsActive)
-                .OrderBy(f => f.University.Name)
-                .ThenBy(f => f.Name)
-                .AsNoTracking()
-                .ToListAsync();
         }
     }
 }

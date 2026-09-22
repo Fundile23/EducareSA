@@ -14,20 +14,17 @@ namespace EducareSA.Controllers
         private readonly EducareDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IStudentProvisioningService _provisioning;
-        private readonly IEligibilityService _eligibility;
         private readonly IApsCalculator _aps;
 
         public BursaryController(
             EducareDbContext context,
             UserManager<IdentityUser> userManager,
             IStudentProvisioningService provisioning,
-            IEligibilityService eligibility,
             IApsCalculator aps)
         {
             _context = context;
             _userManager = userManager;
             _provisioning = provisioning;
-            _eligibility = eligibility;
             _aps = aps;
         }
 
@@ -48,61 +45,25 @@ namespace EducareSA.Controllers
                 .AsNoTracking()
                 .ToListAsync();
 
-            // No results yet
+            // No results yet — still show all bursaries, but flag that APS isn't known
             if (results.Count == 0)
             {
                 ViewBag.HasResults = false;
                 ViewBag.Aps = 0;
-
-                return View(new List<Bursary>());
             }
-
-            // Get active programmes
-            var programmes = await _context.Programmes
-                .Include(p => p.Faculty)
-                    .ThenInclude(f => f.University)
-                .Where(p =>
-                    p.IsActive &&
-                    p.Faculty.University.IsActive)
-                .AsNoTracking()
-                .ToListAsync();
-
-            // Find programmes the learner qualifies for
-            var qualifiedProgrammes = new List<Models.Programme>();
-
-            foreach (var programme in programmes)
+            else
             {
-                var evaluation = await _eligibility.EvaluateAsync(
-                    student.StudentId,
-                    programme.ProgrammeId,
-                    DateTime.UtcNow.Year);
-
-                if (evaluation.IsQualified)
-                {
-                    qualifiedProgrammes.Add(programme);
-                }
+                ViewBag.HasResults = true;
+                ViewBag.Aps = _aps.CalculateForStudent(results);
             }
 
-            // Get the faculties of the qualified programmes
-            var facultyIds = qualifiedProgrammes
-                .Select(p => p.FacultyId)
-                .Distinct()
-                .ToList();
-
-            // Find active bursaries linked to those faculties
+            // Get all active bursaries
             var bursaries = await _context.Bursaries
-                .Include(b => b.Faculty)
-                .Where(b =>
-                    b.IsActive &&
-                    b.FacultyId.HasValue &&
-                    facultyIds.Contains(b.FacultyId.Value))
+                .Where(b => b.IsActive)
                 .OrderBy(b => b.ClosingDate)
+                .ThenBy(b => b.Name)
                 .AsNoTracking()
                 .ToListAsync();
-
-            ViewBag.HasResults = true;
-            ViewBag.Aps = _aps.CalculateForStudent(results);
-            ViewBag.QualifiedProgrammes = qualifiedProgrammes;
 
             return View(bursaries);
         }
@@ -114,7 +75,6 @@ namespace EducareSA.Controllers
                 return NotFound();
 
             var bursary = await _context.Bursaries
-                .Include(b => b.Faculty)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(b => b.BursaryId == id);
 

@@ -35,9 +35,5 @@ namespace EducareSA.Models
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-
-        public int? FacultyId { get; set; }
-
-        public Faculty? Faculty { get; set; }
     }
 }

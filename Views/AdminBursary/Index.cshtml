@@ -1,196 +1,120 @@
 ﻿@model IEnumerable<EducareSA.Models.Bursary>
-
 @{
     ViewData["Title"] = "Manage Bursaries";
 }
 
-<div style="background: #f8f5f2; min-height: calc(100vh - 76px);">
-
-    <section style="padding: 48px 0;">
-        <div class="shell">
-
-            <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin-bottom: 32px;">
-
-                <div>
-                    <span class="eyebrow" style="color: var(--primary);">
-                        Administration
-                    </span>
-
-                    <h1 style="margin-bottom: 8px;">
-                        Manage Bursaries
-                    </h1>
-
-                    <p style="color: #666; margin: 0;">
-                        Add, update and manage bursary opportunities available to students.
-                    </p>
-                </div>
-
-                <div>
-                    <a asp-action="Create" class="btn btn-primary">
-                        <i class="fas fa-plus me-1"></i>
-                        Add Bursary
-                    </a>
-                </div>
-
+<section style="padding: 48px 0 32px;">
+    <div class="shell">
+        <div class="page-header" style="margin: 0;">
+            <div>
+                <span class="eyebrow">Admin</span>
+                <h1 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); margin-bottom: 8px;">Bursaries</h1>
+                <p style="color: var(--brown-medium); margin: 0;">
+                    @Model.Count() total · manage bursary opportunities.
+                </p>
             </div>
-
-            @if (!Model.Any())
-            {
-                <div class="card" style="padding: 40px; text-align: center;">
-
-                    <i class="fas fa-graduation-cap"
-                       style="font-size: 2.5rem; margin-bottom: 16px; color: var(--primary);">
-                    </i>
-
-                    <h3>No bursaries found</h3>
-
-                    <p style="color: #666; margin-bottom: 24px;">
-                        There are currently no bursaries in the system.
-                    </p>
-
-                    <a asp-action="Create" class="btn btn-primary">
-                        Add First Bursary
-                    </a>
-
-                </div>
-            }
-            else
-            {
-                <div class="card" style="padding: 0; overflow: hidden;">
-
-                    <div style="overflow-x: auto;">
-
-                        <table style="width: 100%; border-collapse: collapse;">
-
-                            <thead>
-                                <tr style="border-bottom: 1px solid #ddd;">
-                                    <th style="padding: 16px; text-align: left;">
-                                        Bursary
-                                    </th>
-
-                                    <th style="padding: 16px; text-align: left;">
-                                        Provider
-                                    </th>
-
-                                    <th style="padding: 16px; text-align: left;">
-                                        Faculty
-                                    </th>
-
-                                    <th style="padding: 16px; text-align: left;">
-                                        Closing Date
-                                    </th>
-
-                                    <th style="padding: 16px; text-align: left;">
-                                        Status
-                                    </th>
-
-                                    <th style="padding: 16px; text-align: right;">
-                                        Actions
-                                    </th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-
-                                @foreach (var bursary in Model)
-                                {
-                                    <tr style="border-bottom: 1px solid #eee;">
-
-                                        <td style="padding: 16px;">
-                                            <strong>
-                                                @bursary.Name
-                                            </strong>
-                                        </td>
-
-                                        <td style="padding: 16px;">
-                                            @if (!string.IsNullOrWhiteSpace(bursary.Provider))
-                                            {
-                                                @bursary.Provider
-                                            }
-                                            else
-                                            {
-                                                <span style="color: #999;">
-                                                    Not specified
-                                                </span>
-                                            }
-                                        </td>
-
-                                        <td style="padding: 16px;">
-                                            @if (bursary.Faculty != null)
-                                            {
-                                                @bursary.Faculty.Name
-                                            }
-                                            else
-                                            {
-                                                <span style="color: #999;">
-                                                    Not assigned
-                                                </span>
-                                            }
-                                        </td>
-
-                                        <td style="padding: 16px;">
-                                            @if (bursary.ClosingDate.HasValue)
-                                            {
-                                                @bursary.ClosingDate.Value.ToString("dd MMM yyyy")
-                                            }
-                                            else
-                                            {
-                                                <span style="color: #999;">
-                                                    Not specified
-                                                </span>
-                                            }
-                                        </td>
-
-                                        <td style="padding: 16px;">
-                                            @if (bursary.IsActive)
-                                            {
-                                                <span style="color: #287a45; font-weight: 600;">
-                                                    Active
-                                                </span>
-                                            }
-                                            else
-                                            {
-                                                <span style="color: #999; font-weight: 600;">
-                                                    Inactive
-                                                </span>
-                                            }
-                                        </td>
-
-                                        <td style="padding: 16px; text-align: right;">
-
-                                            <a asp-action="Details"
-                                               asp-route-id="@bursary.BursaryId"
-                                               class="btn btn-sm btn-outline-secondary me-1">
-                                                Details
-                                            </a>
-
-                                            <a asp-action="Edit"
-                                               asp-route-id="@bursary.BursaryId"
-                                               class="btn btn-sm btn-outline-primary me-1">
-                                                Edit
-                                            </a>
-
-                                            <a asp-action="Delete"
-                                               asp-route-id="@bursary.BursaryId"
-                                               class="btn btn-sm btn-outline-danger">
-                                                Delete
-                                            </a>
-
-                                        </td>
-
-                                    </tr>
-                                }
-
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-                </div>
-            }
-
+            <a asp-action="Create" class="btn-pill">
+                <i class="fas fa-plus" style="font-size: 0.8rem;"></i>
+                Add bursary
+            </a>
         </div>
-    </section>
+    </div>
+</section>
 
-</div>
+<section style="padding: 0 0 100px;">
+    <div class="shell">
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger" style="margin-bottom: 20px;">@TempData["Error"]</div>
+        }
+
+        @if (!Model.Any())
+        {
+            <div class="card" style="padding: 72px 32px; text-align: center; border-radius: var(--r-xl);">
+                <div style="width: 80px; height: 80px; border-radius: 50%; background: var(--secondary); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--primary); margin: 0 auto 24px;">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 12px;">
+                    No bursaries yet
+                </h3>
+                <p class="text-muted" style="max-width: 420px; margin: 0 auto 28px;">
+                    Add the first bursary to make it visible to students.
+                </p>
+                <a asp-action="Create" class="btn-pill">Add first bursary</a>
+            </div>
+        }
+        else
+        {
+            <div class="card" style="border-radius: var(--r-lg); overflow: hidden;">
+                <div style="overflow-x: auto;">
+                    <table class="table table-hover" style="margin: 0;">
+                        <thead>
+                            <tr>
+                                <th>Bursary</th>
+                                <th>Provider</th>
+                                <th style="width: 130px;">Closing date</th>
+                                <th style="width: 90px;">Status</th>
+                                <th style="width: 220px; text-align: right;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var b in Model.OrderBy(x => x.Name))
+                            {
+                                <tr>
+                                    <td>
+                                        <div style="font-weight: 500;">@b.Name</div>
+                                        @if (!string.IsNullOrWhiteSpace(b.Coverage))
+                                        {
+                                            <div style="font-size: 0.78rem; color: var(--brown-medium);">
+                                                @b.Coverage
+                                            </div>
+                                        }
+                                    </td>
+                                    <td style="color: var(--brown-medium); font-size: 0.9rem;">
+                                        @(string.IsNullOrWhiteSpace(b.Provider) ? "—" : b.Provider)
+                                    </td>
+                                    <td style="font-size: 0.88rem;">
+                                        @if (b.ClosingDate.HasValue)
+                                        {
+                                            @b.ClosingDate.Value.ToString("dd MMM yyyy")
+                                        }
+                                        else
+                                        {
+                                            <span style="color: var(--brown-soft);">—</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (b.IsActive)
+                                        {
+                                            <span class="badge bg-success">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">Inactive</span>
+                                        }
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <a asp-action="Details" asp-route-id="@b.BursaryId"
+                                           class="btn-pill-outline btn-pill btn-pill-sm" style="padding: 6px 12px; font-size: 0.78rem;">View</a>
+                                        <a asp-action="Edit" asp-route-id="@b.BursaryId"
+                                           class="btn-pill btn-pill-sm" style="padding: 6px 14px; font-size: 0.78rem; margin-left: 4px;">Edit</a>
+                                        <a asp-action="Delete" asp-route-id="@b.BursaryId"
+                                           class="btn-pill-outline btn-pill btn-pill-sm" style="padding: 6px 12px; font-size: 0.78rem; margin-left: 4px; color: var(--danger); border-color: var(--danger);">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+
+        <div style="margin-top: 24px;">
+            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="btn-pill-outline btn-pill">
+                <i class="fas fa-arrow-left" style="font-size: 0.75rem;"></i>
+                Back to dashboard
+            </a>
+        </div>
+    </div>
+</section>

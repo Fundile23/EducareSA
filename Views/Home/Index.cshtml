@@ -147,6 +147,42 @@
     </div>
 </section>
 
+<!-- BURSARIES -->
+<section class="section">
+    <div class="shell">
+        <div class="card card-lift" style="padding: 56px 48px; border-radius: var(--r-xl); display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;" data-aos="fade-up">
+
+            <div>
+                <span class="eyebrow">Funding</span>
+
+                <h2 style="font-family: var(--font-display); font-size: clamp(1.75rem, 3.5vw, 2.5rem); margin-bottom: 16px; letter-spacing: -0.02em; line-height: 1.15;">
+                    Bursaries for your studies
+                </h2>
+
+                <p style="color: var(--brown-medium); font-size: 1.05rem; line-height: 1.65; margin: 0; max-width: 560px;">
+                    Don't let funding stop you. Browse bursary opportunities from
+                    NSFAS, government departments, banks and major South African
+                    companies — all in one place.
+                </p>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 12px; flex-shrink: 0;">
+                <a asp-controller="Bursary" asp-action="Index" class="btn-pill btn-pill-lg">
+                    <i class="fas fa-graduation-cap" style="font-size: 0.85rem;"></i>
+                    Browse bursaries
+                </a>
+
+                <div style="display: flex; gap: 8px; justify-content: center;">
+                    <span class="badge bg-secondary">NSFAS</span>
+                    <span class="badge bg-secondary">Funza Lushaka</span>
+                    <span class="badge bg-secondary">Sasol</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
 <!-- FOR LEARNERS / PARENTS -->
 <section class="section" style="background: var(--beige-light);">
     <div class="shell">
@@ -216,3 +252,12 @@
         </div>
     </div>
 </section>
+
+<style>
+    @@media (max-width: 768px) {
+        section .card[style*="grid-template-columns: 1fr auto"] {
+            grid-template-columns: 1fr !important;
+            text-align: center;
+        }
+    }
+</style>

@@ -1,195 +1,145 @@
 ﻿@model EducareSA.Models.Bursary
-
 @{
-    ViewData["Title"] = "Bursary Details";
+    ViewData["Title"] = Model.Name;
 }
 
-<div style="background: #f8f5f2; min-height: calc(100vh - 76px);">
+<section style="padding: 48px 0 32px;">
+    <div class="shell">
+        <nav style="margin-bottom: 20px; font-size: 0.85rem;">
+            <a asp-action="Index" style="color: var(--brown-medium);">Bursaries</a>
+            <span style="color: var(--brown-soft); margin: 0 8px;">/</span>
+            <span style="color: var(--primary); font-weight: 500;">@Model.Name</span>
+        </nav>
 
-    ```
-    <section style="padding: 48px 0;">
-        <div class="shell">
+        <h1 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); margin-bottom: 8px;">@Model.Name</h1>
+        <p style="color: var(--brown-medium); margin: 0;">
+            @(string.IsNullOrWhiteSpace(Model.Provider) ? "Provider not specified" : Model.Provider)
+            @if (!Model.IsActive)
+            {
+                <span class="badge bg-danger" style="margin-left: 10px;">Inactive</span>
+            }
+        </p>
+    </div>
+</section>
 
-            <div style="margin-bottom: 32px;">
-                <span class="eyebrow" style="color: var(--primary);">
-                    Administration
-                </span>
+<section style="padding: 0 0 100px;">
+    <div class="shell">
+        <div class="admin-details-layout">
 
-                <h1 style="margin-bottom: 8px;">
-                    Bursary Details
-                </h1>
+            <div class="card" style="padding: 32px; border-radius: var(--r-lg);">
 
-                <p style="color: #666; margin: 0;">
-                    View the complete information for this bursary.
-                </p>
-            </div>
-
-            <div class="card" style="padding: 32px;">
-
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap; margin-bottom: 30px;">
-
-                    <div>
-                        <h2 style="margin-bottom: 8px;">
-                            @Model.Name
-                        </h2>
-
-                        @if (!string.IsNullOrWhiteSpace(Model.Provider))
-                        {
-                            <p style="color: #666; margin: 0;">
-                                Provided by @Model.Provider
-                            </p>
-                        }
-                    </div>
-
-                    <div>
-                        @if (Model.IsActive)
-                        {
-                            <span style="color: #287a45; font-weight: 600;">
-                                ● Active
-                            </span>
-                        }
-                        else
-                        {
-                            <span style="color: #999; font-weight: 600;">
-                                ● Inactive
-                            </span>
-                        }
-                    </div>
-
-                </div>
-
-                <hr />
-
-                <div style="margin-top: 28px;">
-
-                    <h4>Description</h4>
-
-                    <p style="color: #555; white-space: pre-line;">
-                        @(string.IsNullOrWhiteSpace(Model.Description)
-                                                ? "No description provided."
-                                                : Model.Description)
-                    </p>
-
-                </div>
-
-                <div style="margin-top: 28px;">
-
-                    <h4>Coverage</h4>
-
-                    <p style="color: #555; white-space: pre-line;">
-                        @(string.IsNullOrWhiteSpace(Model.Coverage)
-                                                ? "No coverage information provided."
-                                                : Model.Coverage)
-                    </p>
-
-                </div>
-
-                <hr style="margin: 30px 0;" />
-
-                <h3 style="margin-bottom: 20px;">
-                    Application Information
-                </h3>
-
-                <div class="row">
-
-                    <div class="col-md-6 mb-4">
-                        <strong>Opening Date</strong>
-
-                        <p style="color: #666; margin-top: 6px;">
-                            @(Model.OpeningDate.HasValue
-                                                        ? Model.OpeningDate.Value.ToString("dd MMM yyyy")
-                                                        : "Not specified")
-                        </p>
-                    </div>
-
-                    <div class="col-md-6 mb-4">
-                        <strong>Closing Date</strong>
-
-                        <p style="color: #666; margin-top: 6px;">
-                            @(Model.ClosingDate.HasValue
-                                                        ? Model.ClosingDate.Value.ToString("dd MMM yyyy")
-                                                        : "Not specified")
-                        </p>
-                    </div>
-
-                    <div class="col-md-6 mb-4">
-                        <strong>Minimum APS</strong>
-
-                        <p style="color: #666; margin-top: 6px;">
-                            @(Model.MinimumAPS.HasValue
-                                                        ? Model.MinimumAPS.ToString()
-                                                        : "Not specified")
-                        </p>
-                    </div>
-
-                    <div class="col-md-6 mb-4">
-                        <strong>Faculty</strong>
-
-                        <p style="color: #666; margin-top: 6px;">
-                            @(Model.Faculty != null
-                                                        ? Model.Faculty.Name
-                                                        : "Not assigned")
-                        </p>
-                    </div>
-
-                </div>
-
-                <div style="margin-top: 10px;">
-
-                    <h4>Eligibility Notes</h4>
-
-                    <p style="color: #555; white-space: pre-line;">
-                        @(string.IsNullOrWhiteSpace(Model.EligibilityNotes)
-                                                ? "No additional eligibility notes provided."
-                                                : Model.EligibilityNotes)
-                    </p>
-
-                </div>
-
-                @if (!string.IsNullOrWhiteSpace(Model.Website))
+                @if (!string.IsNullOrWhiteSpace(Model.Description))
                 {
-                    <div style="margin-top: 28px;">
-
-                        <h4>Website</h4>
-
-                        <a href="@Model.Website"
-                           target="_blank"
-                           rel="noopener noreferrer">
-                            @Model.Website
-                        </a>
-
+                    <div style="margin-bottom: 24px;">
+                        <div class="form-label">Description</div>
+                        <p style="color: var(--brown-medium); line-height: 1.7; margin: 0; white-space: pre-line;">
+                            @Model.Description
+                        </p>
                     </div>
                 }
 
-                <hr style="margin: 30px 0;" />
+                @if (!string.IsNullOrWhiteSpace(Model.Coverage))
+                {
+                    <div style="padding-top: 24px; border-top: 1px solid var(--border); margin-bottom: 24px;">
+                        <div class="form-label">Coverage</div>
+                        <p style="color: var(--brown-medium); line-height: 1.7; margin: 0; white-space: pre-line;">
+                            @Model.Coverage
+                        </p>
+                    </div>
+                }
 
-                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-
-                    <a asp-action="Edit"
-                       asp-route-id="@Model.BursaryId"
-                       class="btn btn-primary">
-                        <i class="fas fa-edit me-1"></i>
-                        Edit
-                    </a>
-
-                    <a asp-action="Delete"
-                       asp-route-id="@Model.BursaryId"
-                       class="btn btn-outline-danger">
-                        <i class="fas fa-trash me-1"></i>
-                        Delete
-                    </a>
-
-                    <a asp-action="Index"
-                       class="btn btn-outline-secondary">
-                        Back to Bursaries
-                    </a>
-
+                <div style="padding-top: 24px; border-top: 1px solid var(--border);">
+                    <div class="form-label">Application dates</div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <div style="font-size: 0.82rem; color: var(--brown-medium);">Opening</div>
+                            <div style="font-weight: 500;">
+                                @(Model.OpeningDate.HasValue
+                                    ? Model.OpeningDate.Value.ToString("dd MMM yyyy")
+                                    : "—")
+                            </div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.82rem; color: var(--brown-medium);">Closing</div>
+                            <div style="font-weight: 500;">
+                                @(Model.ClosingDate.HasValue
+                                    ? Model.ClosingDate.Value.ToString("dd MMM yyyy")
+                                    : "—")
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <div style="padding-top: 24px; border-top: 1px solid var(--border); margin-top: 24px;">
+                    <div class="form-label">Eligibility</div>
+                    <div style="margin-bottom: 12px;">
+                        <span style="font-size: 0.82rem; color: var(--brown-medium);">Minimum APS:</span>
+                        <strong style="margin-left: 6px;">
+                            @(Model.MinimumAPS.HasValue
+                                ? Model.MinimumAPS.Value.ToString("0.##")
+                                : "—")
+                        </strong>
+                    </div>
+                    @if (!string.IsNullOrWhiteSpace(Model.EligibilityNotes))
+                    {
+                        <p style="color: var(--brown-medium); line-height: 1.7; margin: 0; white-space: pre-line;">
+                            @Model.EligibilityNotes
+                        </p>
+                    }
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(Model.WebsiteUrl))
+                {
+                    <div style="padding-top: 24px; border-top: 1px solid var(--border); margin-top: 24px;">
+                        <div class="form-label">Website</div>
+                        <a href="@Model.WebsiteUrl" target="_blank" rel="noopener noreferrer">@Model.WebsiteUrl</a>
+                    </div>
+                }
 
             </div>
 
-        </div>
-    </section>
-    ```
+            <aside class="card" style="padding: 24px; border-radius: var(--r-lg);">
+                <div class="form-label">Actions</div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <a asp-action="Edit" asp-route-id="@Model.BursaryId" class="btn-pill btn-pill-block">
+                        <i class="fas fa-pen" style="font-size: 0.8rem;"></i>
+                        Edit
+                    </a>
+                    <a asp-controller="Bursary" asp-action="Details" asp-route-id="@Model.BursaryId"
+                       class="btn-pill-outline btn-pill btn-pill-block" target="_blank">
+                        <i class="fas fa-external-link-alt" style="font-size: 0.8rem;"></i>
+                        View public page
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@Model.BursaryId"
+                       class="btn-pill-outline btn-pill btn-pill-block" style="color: var(--danger); border-color: var(--danger);">
+                        <i class="fas fa-trash" style="font-size: 0.8rem;"></i>
+                        Delete
+                    </a>
+                </div>
 
-</div>
+                <div class="form-label" style="margin-top: 24px;">Meta</div>
+                <div style="font-size: 0.85rem; color: var(--brown-medium); line-height: 1.9;">
+                    <div>ID: @Model.BursaryId</div>
+                    <div>Created: @Model.CreatedAt.ToString("dd MMM yyyy")</div>
+                    <div>Updated: @Model.UpdatedAt.ToString("dd MMM yyyy")</div>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+</section>
+
+<style>
+    .admin-details-layout {
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        gap: 32px;
+        align-items: start;
+    }
+
+    @@media (max-width: 900px) {
+        .admin-details-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

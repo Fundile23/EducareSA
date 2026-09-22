@@ -4,8 +4,6 @@
     ViewData["Title"] = "Bursaries";
     var hasResults = ViewBag.HasResults as bool? ?? false;
     var aps = ViewBag.Aps ?? 0;
-    var qualifiedProgrammes = ViewBag.QualifiedProgrammes
-        as IEnumerable<EducareSA.Models.Programme>;
 }
 
 <div class="container py-5">
@@ -21,30 +19,27 @@
         </h1>
 
         <p class="text-muted">
-            Find bursary opportunities that match the programmes
-            you qualify for.
+            Bursary opportunities for South African students.
         </p>
     </div>
 
-
     @if (!hasResults)
     {
-        <!-- No marks -->
-        <div class="card border-0 shadow-sm p-5 text-center">
+        <!-- No marks captured yet -->
+        <div class="card border-0 shadow-sm p-5 text-center mb-5">
 
             <div class="mb-3">
                 <i class="fas fa-graduation-cap fa-3x text-primary"></i>
             </div>
 
             <h3 class="fw-bold">
-                Add your marks first
+                Add your marks to see your APS
             </h3>
 
             <p class="text-muted mx-auto"
                style="max-width: 500px;">
-                Add your school results so EducareSA can identify
-                programmes you qualify for and recommend relevant
-                bursaries.
+                Capture your school results so EducareSA can show
+                your APS alongside each bursary's minimum requirement.
             </p>
 
             <div class="mt-3">
@@ -62,218 +57,163 @@
     {
         <!-- APS summary -->
         <div class="card border-0 shadow-sm mb-4">
-
             <div class="card-body">
-
                 <div class="row align-items-center">
-
                     <div class="col-md-8">
-
                         <small class="text-muted">
-                            YOUR CURRENT MATCHING PROFILE
+                            YOUR CURRENT PROFILE
                         </small>
 
                         <h4 class="fw-bold mt-1 mb-1">
-                            Bursaries based on your qualified programmes
+                            Available bursaries
                         </h4>
 
                         <p class="text-muted mb-0">
                             Your APS: <strong>@aps</strong>
                         </p>
-
                     </div>
 
                     <div class="col-md-4 text-md-end mt-3 mt-md-0">
-
                         <span class="badge bg-success px-3 py-2">
-                            @(qualifiedProgrammes?.Count() ?? 0)
-                            Qualified Programme(s)
+                            @Model.Count() Bursary(s)
                         </span>
-
                     </div>
-
                 </div>
-
             </div>
+        </div>
+    }
+
+    <!-- Bursaries -->
+    @if (!Model.Any())
+    {
+        <div class="card border-0 shadow-sm p-5 text-center">
+
+            <div class="mb-3">
+                <i class="fas fa-search fa-3x text-muted"></i>
+            </div>
+
+            <h3 class="fw-bold">
+                No bursaries listed yet
+            </h3>
+
+            <p class="text-muted mx-auto"
+               style="max-width: 550px;">
+                There are no active bursary opportunities in the
+                system at the moment. Check back soon.
+            </p>
+
+            <a asp-controller="Programmes"
+               asp-action="Index"
+               class="btn btn-outline-primary mt-2">
+                Explore Programmes
+            </a>
 
         </div>
+    }
+    else
+    {
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="fw-bold mb-0">
+                All bursaries
+            </h4>
 
+            <span class="text-muted small">
+                @Model.Count() opportunity(s)
+            </span>
+        </div>
 
-        <!-- Qualified programmes -->
-        @if (qualifiedProgrammes != null &&
-            qualifiedProgrammes.Any())
-        {
-            <div class="mb-4">
+        <div class="row g-4">
 
-                <h5 class="fw-bold">
-                    Your qualified programmes
-                </h5>
+            @foreach (var bursary in Model)
+            {
+                <div class="col-md-6 col-lg-4">
 
-                <div class="d-flex flex-wrap gap-2 mt-2">
+                    <div class="card h-100 border-0 shadow-sm">
 
-                    @foreach (var programme in qualifiedProgrammes)
-                    {
-                        <span class="badge bg-light text-dark border p-2">
-                            @programme.Name
-                        </span>
-                    }
+                        <div class="card-body d-flex flex-column">
 
-                </div>
+                            <div class="mb-3">
+                                <span class="badge bg-primary-subtle text-primary">
+                                    Bursary
+                                </span>
+                            </div>
 
-            </div>
-        }
+                            <h5 class="fw-bold">
+                                @bursary.Name
+                            </h5>
 
+                            @if (!string.IsNullOrWhiteSpace(bursary.Provider))
+                            {
+                                <p class="text-muted mb-2">
+                                    <i class="fas fa-building me-1"></i>
+                                    @bursary.Provider
+                                </p>
+                            }
 
-        <!-- Bursaries -->
-        @if (!Model.Any())
-        {
-            <div class="card border-0 shadow-sm p-5 text-center">
+                            @if (!string.IsNullOrWhiteSpace(bursary.Description))
+                            {
+                                <p class="text-muted">
+                                    @bursary.Description
+                                </p>
+                            }
 
-                <div class="mb-3">
-                    <i class="fas fa-search fa-3x text-muted"></i>
-                </div>
+                            @if (!string.IsNullOrWhiteSpace(bursary.Coverage))
+                            {
+                                <div class="mb-2">
+                                    <strong>
+                                        Coverage
+                                    </strong>
 
-                <h3 class="fw-bold">
-                    No matching bursaries found
-                </h3>
+                                    <p class="text-muted mb-0">
+                                        @bursary.Coverage
+                                    </p>
+                                </div>
+                            }
 
-                <p class="text-muted mx-auto"
-                   style="max-width: 550px;">
-                    We couldn't find any active bursaries linked
-                    to the faculties of your qualified programmes
-                    at the moment.
-                </p>
+                            @if (bursary.MinimumAPS.HasValue)
+                            {
+                                <div class="mb-2">
+                                    <strong>
+                                        Minimum APS
+                                    </strong>
 
-                <a asp-controller="Programmes"
-                   asp-action="Index"
-                   class="btn btn-outline-primary mt-2">
-                    Explore Programmes
-                </a>
+                                    <p class="text-muted mb-0">
+                                        @bursary.MinimumAPS.Value
+                                    </p>
+                                </div>
+                            }
 
-            </div>
-        }
-        else
-        {
-            <div class="d-flex justify-content-between
-                                align-items-center mb-3">
-
-                <h4 class="fw-bold mb-0">
-                    Recommended bursaries
-                </h4>
-
-                <span class="text-muted small">
-                    @Model.Count() opportunity(s)
-                </span>
-
-            </div>
-
-
-            <div class="row g-4">
-
-                @foreach (var bursary in Model)
-                {
-                    <div class="col-md-6 col-lg-4">
-
-                        <div class="card h-100 border-0 shadow-sm">
-
-                            <div class="card-body d-flex flex-column">
-
+                            @if (bursary.ClosingDate.HasValue)
+                            {
                                 <div class="mb-3">
+                                    <strong>
+                                        Closing Date
+                                    </strong>
 
-                                    <span class="badge bg-primary-subtle
-                                                             text-primary">
-                                        Bursary
-                                    </span>
-
-                                </div>
-
-                                <h5 class="fw-bold">
-                                    @bursary.Name
-                                </h5>
-
-                                @if (!string.IsNullOrWhiteSpace(
-                                                    bursary.Provider))
-                                {
-                                    <p class="text-muted mb-2">
-                                        <i class="fas fa-building me-1"></i>
-                                        @bursary.Provider
+                                    <p class="text-muted mb-0">
+                                        @bursary.ClosingDate.Value.ToString("dd MMM yyyy")
                                     </p>
-                                }
-
-                                @if (!string.IsNullOrWhiteSpace(
-                                                    bursary.Description))
-                                {
-                                    <p class="text-muted">
-                                        @bursary.Description
-                                    </p>
-                                }
-
-                                @if (!string.IsNullOrWhiteSpace(
-                                                    bursary.Coverage))
-                                {
-                                    <div class="mb-2">
-                                        <strong>
-                                            Coverage
-                                        </strong>
-
-                                        <p class="text-muted mb-0">
-                                            @bursary.Coverage
-                                        </p>
-                                    </div>
-                                }
-
-                                @if (bursary.Faculty != null)
-                                {
-                                    <div class="mb-2">
-
-                                        <strong>
-                                            Faculty
-                                        </strong>
-
-                                        <p class="text-muted mb-0">
-                                            @bursary.Faculty.Name
-                                        </p>
-
-                                    </div>
-                                }
-
-                                @if (bursary.ClosingDate.HasValue)
-                                {
-                                    <div class="mb-3">
-
-                                        <strong>
-                                            Closing Date
-                                        </strong>
-
-                                        <p class="text-muted mb-0">
-                                            @bursary.ClosingDate.Value
-                                            .ToString("dd MMM yyyy")
-                                        </p>
-
-                                    </div>
-                                }
-
-                                <div class="mt-auto pt-3">
-
-                                    <a asp-controller="Bursary"
-                                       asp-action="Details"
-                                       asp-route-id="@bursary.BursaryId"
-                                       class="btn btn-primary w-100">
-                                        View Bursary
-                                        <i class="fas fa-arrow-right ms-1"></i>
-                                    </a>
-
                                 </div>
+                            }
 
+                            <div class="mt-auto pt-3">
+                                <a asp-controller="Bursary"
+                                   asp-action="Details"
+                                   asp-route-id="@bursary.BursaryId"
+                                   class="btn btn-primary w-100">
+                                    View Bursary
+                                    <i class="fas fa-arrow-right ms-1"></i>
+                                </a>
                             </div>
 
                         </div>
 
                     </div>
-                }
 
-            </div>
-        }
+                </div>
+            }
+
+        </div>
     }
 
 </div>
