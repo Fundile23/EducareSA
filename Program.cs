@@ -34,7 +34,11 @@ builder.Services.AddScoped<EducareSA.Services.IEligibilityService, EducareSA.Ser
 builder.Services.AddScoped<EducareSA.Services.IStudentProvisioningService,
                            EducareSA.Services.StudentProvisioningService>();
 
+builder.Services.AddHttpClient<EducareSA.Services.ILlmService,
+                               EducareSA.Services.OllamaLlmService>();
+
 builder.Services.AddRazorPages();
+
 
 var app = builder.Build();
 
