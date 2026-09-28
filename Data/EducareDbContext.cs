@@ -42,7 +42,13 @@ namespace EducareSA.Data
 
 		public DbSet<Bursary> Bursaries { get; set; }
 
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
+        public DbSet<College> Colleges { get; set; }
+
+        public DbSet<CollegeCampus> CollegeCampuses { get; set; }
+
+        public DbSet<CollegeProgramme> CollegeProgrammes { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
 
@@ -99,9 +105,21 @@ namespace EducareSA.Data
 				.WithMany(f => f.Programmes)
 				.HasForeignKey(p => p.FacultyId)
 				.OnDelete(DeleteBehavior.Cascade);
+            // College → Campus
+            modelBuilder.Entity<CollegeCampus>()
+               .HasOne(c => c.College)
+               .WithMany(c => c.Campuses)
+               .HasForeignKey(c => c.CollegeId)
+               .OnDelete(DeleteBehavior.Cascade);
+            // College → Programme
+            modelBuilder.Entity<CollegeProgramme>()
+                .HasOne(p => p.College)
+                .WithMany(c => c.Programmes)
+                .HasForeignKey(p => p.CollegeId)
+                .OnDelete(DeleteBehavior.Cascade);
 
-			// Campus → Programme
-			modelBuilder.Entity<Programme>()
+            // Campus → Programme
+            modelBuilder.Entity<Programme>()
 				.HasOne(p => p.Campus)
 				.WithMany(c => c.Programmes)
 				.HasForeignKey(p => p.CampusId)

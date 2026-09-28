@@ -1,0 +1,235 @@
+﻿@model EducareSA.Models.CollegeProgramme
+
+@{
+    ViewData["Title"] = "Add College Programme";
+}
+
+<div class="container py-4">
+
+    <h2>Add College Programme</h2>
+
+    <p class="text-muted">
+        Add a programme and its admission information.
+    </p>
+
+    <div class="card shadow-sm">
+
+        <div class="card-body p-4">
+
+            <form asp-action="Create" method="post">
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3">
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="CollegeId"
+                           class="form-label">
+                        College
+                    </label>
+
+                    <select asp-for="CollegeId"
+                            class="form-select"
+                            asp-items="@(new SelectList(ViewBag.Colleges, "CollegeId", "Name"))">
+
+                        <option value="">
+                            -- Select College --
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="CollegeId"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="Name"
+                           class="form-label">
+                        Programme Name
+                    </label>
+
+                    <input asp-for="Name"
+                           class="form-control" />
+
+                    <span asp-validation-for="Name"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="ProgrammeType"
+                               class="form-label">
+                            Programme Type
+                        </label>
+
+                        <select asp-for="ProgrammeType"
+                                class="form-select">
+
+                            <option value="">
+                                -- Select Type --
+                            </option>
+
+                            <option value="NC(V)">
+                                NC(V)
+                            </option>
+
+                            <option value="Report 191">
+                                Report 191 / NATED
+                            </option>
+
+                            <option value="Occupational">
+                                Occupational Qualification
+                            </option>
+
+                            <option value="PLP">
+                                Pre-Vocational Learning Programme
+                            </option>
+
+                            <option value="Skills Programme">
+                                Skills Programme
+                            </option>
+
+                        </select>
+
+                        <span asp-validation-for="ProgrammeType"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="NQFLevel"
+                               class="form-label">
+                            NQF Level
+                        </label>
+
+                        <input asp-for="NQFLevel"
+                               class="form-control"
+                               placeholder="e.g. Level 2" />
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="MinimumEntryRequirement"
+                           class="form-label">
+                        Minimum Entry Requirement
+                    </label>
+
+                    <textarea asp-for="MinimumEntryRequirement"
+                              class="form-control"
+                              rows="3"
+                              placeholder="Example: Grade 9 or equivalent"></textarea>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="MinimumAPS"
+                               class="form-label">
+                            Minimum APS
+                            <span class="text-muted">
+                                (optional)
+                            </span>
+                        </label>
+
+                        <input asp-for="MinimumAPS"
+                               class="form-control"
+                               type="number"
+                               step="0.01"
+                               min="0"
+                               max="100"
+                               placeholder="Leave blank if not specified" />
+
+                        <span asp-validation-for="MinimumAPS"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="Duration"
+                               class="form-label">
+                            Duration
+                        </label>
+
+                        <input asp-for="Duration"
+                               class="form-control"
+                               placeholder="e.g. 3 years" />
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="RequiredSubjects"
+                           class="form-label">
+                        Required Subjects
+                    </label>
+
+                    <textarea asp-for="RequiredSubjects"
+                              class="form-control"
+                              rows="3"
+                              placeholder="List the relevant subjects or subject requirements"></textarea>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="Description"
+                           class="form-label">
+                        Description
+                    </label>
+
+                    <textarea asp-for="Description"
+                              class="form-control"
+                              rows="4"></textarea>
+
+                </div>
+
+                <div class="form-check mb-4">
+
+                    <input asp-for="IsActive"
+                           class="form-check-input" />
+
+                    <label asp-for="IsActive"
+                           class="form-check-label">
+                        Active programme
+                    </label>
+
+                </div>
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    Save Programme
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-outline-secondary ms-2">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

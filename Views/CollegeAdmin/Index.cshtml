@@ -1,0 +1,104 @@
+﻿@model IEnumerable<EducareSA.Models.College>
+
+@{
+    ViewData["Title"] = "Manage Colleges";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2>Manage Colleges</h2>
+            <p class="text-muted mb-0">
+                Add and maintain TVET college information.
+            </p>
+        </div>
+
+        <a asp-action="Create" class="btn btn-primary">
+            + Add College
+        </a>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Success"]
+        </div>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            No colleges have been added yet.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>College</th>
+                        <th>Province</th>
+                        <th>City</th>
+                        <th>Status</th>
+                        <th>Website</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var college in Model)
+                    {
+                        <tr>
+                            <td>@college.Name</td>
+                            <td>@college.Province</td>
+                            <td>@college.City</td>
+                            <td>
+                                @if (college.IsActive)
+                                {
+                                    <span class="badge bg-success">
+                                        Active
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">
+                                        Inactive
+                                    </span>
+                                }
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrWhiteSpace(college.WebsiteUrl))
+                                {
+                                    <a href="@college.WebsiteUrl"
+                                       target="_blank"
+                                       rel="noopener noreferrer">
+                                        Visit website
+                                    </a>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Not provided</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <a asp-action="Edit"
+                                       asp-route-id="@college.CollegeId"
+                                       class="btn btn-sm btn-outline-primary">
+                                        Edit
+                                    </a>
+
+                                    <a asp-action="Delete"
+                                       asp-route-id="@college.CollegeId"
+                                       class="btn btn-sm btn-outline-danger">
+                                        Delete
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

@@ -38,6 +38,16 @@ builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
+// Seed database (catalogue + identity + College JSON)
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var context = services.GetRequiredService<EducareDbContext>();
+
+    await CollegeDataSeeder.SeedAsync(context);
+}
+
 // Seed database (catalogue + identity + university JSON)
 using (var scope = app.Services.CreateScope())
 {

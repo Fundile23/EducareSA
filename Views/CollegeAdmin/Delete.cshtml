@@ -1,0 +1,46 @@
+﻿@model EducareSA.Models.College
+
+@{
+    ViewData["Title"] = "Delete College";
+}
+
+<div class="container py-4">
+    <div class="card shadow-sm border-danger">
+        <div class="card-body p-4">
+            <h2 class="text-danger">Delete College</h2>
+
+            <p>
+                Are you sure you want to delete
+                <strong>@Model.Name</strong>?
+            </p>
+
+            <div class="alert alert-warning">
+                Deleting this college may also delete its related
+                campuses and programmes because cascade deletion
+                is configured in the data model.
+            </div>
+
+            <dl class="row">
+                <dt class="col-sm-3">Province</dt>
+                <dd class="col-sm-9">@(Model.Province ?? "Not provided")</dd>
+
+                <dt class="col-sm-3">City</dt>
+                <dd class="col-sm-9">@(Model.City ?? "Not provided")</dd>
+            </dl>
+
+            <form asp-action="Delete"
+                  asp-route-id="@Model.CollegeId"
+                  method="post">
+
+                <button type="submit" class="btn btn-danger">
+                    Confirm Delete
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-outline-secondary ms-2">
+                    Cancel
+                </a>
+            </form>
+        </div>
+    </div>
+</div>

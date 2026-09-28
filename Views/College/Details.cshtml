@@ -1,0 +1,199 @@
+﻿@model EducareSA.Models.College
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="container py-5">
+
+    <div class="mb-4">
+
+        <a asp-action="Index"
+           class="text-decoration-none">
+            ← Back to Colleges
+        </a>
+
+    </div>
+
+    <div class="mb-5">
+
+        <h1>@Model.Name</h1>
+
+        <p class="text-muted">
+            <i class="fas fa-map-marker-alt me-1"></i>
+            @(Model.City ?? "Location not provided"),
+            @(Model.Province ?? "")
+        </p>
+
+        @if (!string.IsNullOrWhiteSpace(Model.Description))
+        {
+            <p style="max-width: 800px;">
+                @Model.Description
+            </p>
+        }
+
+        @if (!string.IsNullOrWhiteSpace(Model.WebsiteUrl))
+        {
+            <a href="@Model.WebsiteUrl"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="btn btn-outline-primary">
+                Visit Official Website
+            </a>
+        }
+
+    </div>
+
+    <!-- CAMPUSES -->
+
+    <section class="mb-5">
+
+        <h2 class="mb-3">Campuses</h2>
+
+        @if (!Model.Campuses.Any())
+        {
+            <p class="text-muted">
+                No campus information is currently available.
+            </p>
+        }
+        else
+        {
+            <div class="row g-3">
+
+                @foreach (var campus in Model.Campuses)
+                {
+                    <div class="col-md-6">
+
+                        <div class="card h-100 shadow-sm">
+
+                            <div class="card-body">
+
+                                <h5>
+                                    @campus.Name
+                                </h5>
+
+                                @if (!string.IsNullOrWhiteSpace(
+                                                        campus.Address))
+                                {
+                                    <p class="mb-1">
+                                        @campus.Address
+                                    </p>
+                                }
+
+                                <p class="text-muted">
+                                    @(campus.City ?? ""),
+                                    @(campus.Province ?? "")
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+        }
+
+    </section>
+
+    <!-- PROGRAMMES -->
+
+    <section>
+
+        <div class="d-flex justify-content-between
+                    align-items-center mb-3">
+
+            <div>
+                <h2>Available Programmes</h2>
+
+                <p class="text-muted mb-0">
+                    Explore programmes and their entry requirements.
+                </p>
+            </div>
+
+        </div>
+
+        @if (!Model.Programmes.Any())
+        {
+            <div class="alert alert-info">
+                No programme information is currently available
+                for this college.
+            </div>
+        }
+        else
+        {
+            <div class="row g-4">
+
+                @foreach (var programme in Model.Programmes)
+                {
+                    <div class="col-md-6 col-lg-4">
+
+                        <div class="card h-100 shadow-sm">
+
+                            <div class="card-body d-flex flex-column">
+
+                                <span class="badge bg-secondary
+                                                     align-self-start mb-2">
+                                    @programme.ProgrammeType
+                                </span>
+
+                                <h4 class="card-title">
+                                    @programme.Name
+                                </h4>
+
+                                @if (!string.IsNullOrWhiteSpace(
+                                                        programme.NQFLevel))
+                                {
+                                    <p class="mb-1">
+                                        <strong>NQF:</strong>
+                                        @programme.NQFLevel
+                                    </p>
+                                }
+
+                                @if (programme.MinimumAPS.HasValue)
+                                {
+                                    <p class="mb-1">
+                                        <strong>Minimum APS:</strong>
+                                        @programme.MinimumAPS.Value
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p class="text-muted mb-1">
+                                        APS requirement not specified
+                                    </p>
+                                }
+
+                                @if (!string.IsNullOrWhiteSpace(
+                                                        programme.Duration))
+                                {
+                                    <p>
+                                        <strong>Duration:</strong>
+                                        @programme.Duration
+                                    </p>
+                                }
+
+                                <div class="mt-auto pt-3">
+
+                                    <a asp-action="Programme"
+                                       asp-route-id="@programme.CollegeProgrammeId"
+                                       class="btn btn-primary">
+                                        View Requirements
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+        }
+
+    </section>
+
+</div>

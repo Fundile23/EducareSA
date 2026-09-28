@@ -1,0 +1,69 @@
+﻿@model EducareSA.Models.CollegeProgramme
+
+@{
+    ViewData["Title"] = "Delete College Programme";
+}
+
+<div class="container py-4">
+
+    <div class="card border-danger shadow-sm">
+
+        <div class="card-body p-4">
+
+            <h2 class="text-danger">
+                Delete Programme
+            </h2>
+
+            <p>
+                Are you sure you want to delete
+                <strong>@Model.Name</strong>?
+            </p>
+
+            <dl class="row">
+
+                <dt class="col-sm-3">
+                    College
+                </dt>
+
+                <dd class="col-sm-9">
+                    @Model.College?.Name
+                </dd>
+
+                <dt class="col-sm-3">
+                    Programme Type
+                </dt>
+
+                <dd class="col-sm-9">
+                    @Model.ProgrammeType
+                </dd>
+
+                <dt class="col-sm-3">
+                    APS
+                </dt>
+
+                <dd class="col-sm-9">
+                    @(Model.MinimumAPS?.ToString("0.##")
+                                        ?? "Not specified")
+                </dd>
+
+            </dl>
+
+            <form asp-action="Delete"
+                  asp-route-id="@Model.CollegeProgrammeId"
+                  method="post">
+
+                <button type="submit"
+                        class="btn btn-danger">
+                    Confirm Delete
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-outline-secondary ms-2">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+    </div>
+</div>

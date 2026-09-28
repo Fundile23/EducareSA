@@ -1,0 +1,162 @@
+﻿@model EducareSA.Models.CollegeProgramme
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="container py-5">
+
+    <div class="mb-4">
+
+        <a asp-action="Details"
+           asp-route-id="@Model.CollegeId"
+           class="text-decoration-none">
+            ← Back to @Model.College?.Name
+        </a>
+
+    </div>
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-9">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body p-4 p-md-5">
+
+                    <span class="badge bg-secondary mb-3">
+                        @Model.ProgrammeType
+                    </span>
+
+                    <h1 class="mb-2">
+                        @Model.Name
+                    </h1>
+
+                    <p class="text-muted mb-4">
+                        @Model.College?.Name
+                    </p>
+
+                    @if (!string.IsNullOrWhiteSpace(
+                                        Model.Description))
+                    {
+                        <div class="mb-4">
+
+                            <h4>About the Programme</h4>
+
+                            <p>
+                                @Model.Description
+                            </p>
+
+                        </div>
+                    }
+
+                    <hr />
+
+                    <h4 class="mb-3">
+                        Entry Requirements
+                    </h4>
+
+                    @if (!string.IsNullOrWhiteSpace(
+                                        Model.MinimumEntryRequirement))
+                    {
+                        <div class="mb-4">
+
+                            <h6>
+                                Minimum Entry Requirement
+                            </h6>
+
+                            <p>
+                                @Model.MinimumEntryRequirement
+                            </p>
+
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(
+                                        Model.RequiredSubjects))
+                    {
+                        <div class="mb-4">
+
+                            <h6>
+                                Required Subjects
+                            </h6>
+
+                            <p>
+                                @Model.RequiredSubjects
+                            </p>
+
+                        </div>
+                    }
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+
+                            <strong>Programme Type</strong>
+
+                            <div>
+                                @Model.ProgrammeType
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <strong>NQF Level</strong>
+
+                            <div>
+                                @(Model.NQFLevel ?? "Not specified")
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <strong>Duration</strong>
+
+                            <div>
+                                @(Model.Duration ?? "Not specified")
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <strong>Minimum APS</strong>
+
+                            <div>
+                                @if (Model.MinimumAPS.HasValue)
+                                {
+                                    @Model.MinimumAPS.Value
+                                }
+                                else
+                                {
+                                    <span class="text-muted">
+                                        Not specified
+                                    </span>
+                                }
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="alert alert-info mt-4">
+
+                        <strong>Important:</strong>
+
+                        Programme requirements can change.
+                        Please verify the latest admission requirements
+                        with the college before applying.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,122 @@
+﻿@model IEnumerable<EducareSA.Models.CollegeProgramme>
+
+@{
+    ViewData["Title"] = "Manage College Programmes";
+}
+
+<div class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2>Manage College Programmes</h2>
+            <p class="text-muted mb-0">
+                Manage programmes and their entry requirements.
+            </p>
+        </div>
+
+        <a asp-action="Create"
+           class="btn btn-primary">
+            + Add Programme
+        </a>
+
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Success"]
+        </div>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            No college programmes have been added yet.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead>
+                    <tr>
+                        <th>Programme</th>
+                        <th>College</th>
+                        <th>Type</th>
+                        <th>NQF</th>
+                        <th>APS</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var programme in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                <strong>
+                                    @programme.Name
+                                </strong>
+                            </td>
+
+                            <td>
+                                @programme.College?.Name
+                            </td>
+
+                            <td>
+                                @programme.ProgrammeType
+                            </td>
+
+                            <td>
+                                @(programme.NQFLevel ?? "—")
+                            </td>
+
+                            <td>
+                                @(programme.MinimumAPS?.ToString("0.##") ?? "Not specified")
+                            </td>
+
+                            <td>
+                                @if (programme.IsActive)
+                                {
+                                    <span class="badge bg-success">
+                                        Active
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">
+                                        Inactive
+                                    </span>
+                                }
+                            </td>
+
+                            <td>
+                                <a asp-action="Edit"
+                                   asp-route-id="@programme.CollegeProgrammeId"
+                                   class="btn btn-sm btn-outline-primary">
+                                    Edit
+                                </a>
+
+                                <a asp-action="Delete"
+                                   asp-route-id="@programme.CollegeProgrammeId"
+                                   class="btn btn-sm btn-outline-danger">
+                                    Delete
+                                </a>
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+    }
+</div>
