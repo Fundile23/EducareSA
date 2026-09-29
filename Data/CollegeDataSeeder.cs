@@ -11,130 +11,53 @@ namespace EducareSA.Data
             // COLLEGES
             // -----------------------------------------
 
-            var colleges = new List<College>
+            var collegeData = new List<(string Name, string Province, string City, string Website, string Description)>
             {
-                new College
-                {
-                    CollegeId = 1,
-                    Name = "Coastal KZN TVET College",
-                    Province = "KwaZulu-Natal",
-                    City = "Durban",
-                    WebsiteUrl = "https://www.coastalkzn.co.za/",
-                    Description =
-                        "A public Technical and Vocational Education and Training college offering NCV, NATED and other vocational programmes.",
-                    IsActive = true
-                },
-
-                new College
-                {
-                    CollegeId = 2,
-                    Name = "Elangeni TVET College",
-                    Province = "KwaZulu-Natal",
-                    City = "Pinetown",
-                    WebsiteUrl = "https://www.efet.co.za/",
-                    Description =
-                        "A public TVET college serving learners across KwaZulu-Natal.",
-                    IsActive = true
-                },
-
-                new College
-                {
-                    CollegeId = 3,
-                    Name = "Esayidi TVET College",
-                    Province = "KwaZulu-Natal",
-                    City = "Port Shepstone",
-                    WebsiteUrl = "https://www.esayidifet.co.za/",
-                    Description =
-                        "A public TVET college serving communities in southern KwaZulu-Natal.",
-                    IsActive = true
-                },
-
-                new College
-                {
-                    CollegeId = 4,
-                    Name = "Majuba TVET College",
-                    Province = "KwaZulu-Natal",
-                    City = "Newcastle",
-                    WebsiteUrl = "https://www.majuba.edu.za/",
-                    Description =
-                        "A public TVET college offering vocational, engineering and business-related education and training.",
-                    IsActive = true
-                },
-
-                new College
-                {
-                    CollegeId = 5,
-                    Name = "Mnambithi TVET College",
-                    Province = "KwaZulu-Natal",
-                    City = "Ladysmith",
-                    WebsiteUrl = "https://www.mnambithicollege.co.za/",
-                    Description =
-                        "A public TVET college serving Ladysmith, Estcourt and surrounding communities.",
-                    IsActive = true
-                },
-
-                new College
-                {
-                    CollegeId = 6,
-                    Name = "Mthashana TVET College",
-                    Province = "KwaZulu-Natal",
-                    City = "Vryheid",
-                    WebsiteUrl = "https://www.mthashanafet.co.za/",
-                    Description =
-                        "A public TVET college serving communities in northern KwaZulu-Natal.",
-                    IsActive = true
-                },
-
-                new College
-                {
-                    CollegeId = 7,
-                    Name = "Thekwini TVET College",
-                    Province = "KwaZulu-Natal",
-                    City = "Durban",
-                    WebsiteUrl = "https://www.thekwinicollege.co.za/",
-                    Description =
-                        "A public TVET college serving learners in the Durban metropolitan area.",
-                    IsActive = true
-                },
-
-                new College
-                {
-                    CollegeId = 8,
-                    Name = "uMfolozi TVET College",
-                    Province = "KwaZulu-Natal",
-                    City = "Richards Bay",
-                    WebsiteUrl = "https://www.umfolozicollege.co.za/",
-                    Description =
-                        "A public TVET college serving northern KwaZulu-Natal.",
-                    IsActive = true
-                },
-
-                new College
-                {
-                    CollegeId = 9,
-                    Name = "Umgungundlovu TVET College",
-                    Province = "KwaZulu-Natal",
-                    City = "Pietermaritzburg",
-                    WebsiteUrl = "https://www.ufetc.edu.za/",
-                    Description =
-                        "A public TVET college serving the Midlands and surrounding areas of KwaZulu-Natal.",
-                    IsActive = true
-                }
+                ("Coastal KZN TVET College", "KwaZulu-Natal", "Durban", "https://www.coastalkzn.co.za/",
+                    "A public Technical and Vocational Education and Training college offering NCV, NATED and other vocational programmes."),
+                ("Elangeni TVET College", "KwaZulu-Natal", "Pinetown", "https://www.efet.co.za/",
+                    "A public TVET college serving learners across KwaZulu-Natal."),
+                ("Esayidi TVET College", "KwaZulu-Natal", "Port Shepstone", "https://www.esayidifet.co.za/",
+                    "A public TVET college serving communities in southern KwaZulu-Natal."),
+                ("Majuba TVET College", "KwaZulu-Natal", "Newcastle", "https://www.majuba.edu.za/",
+                    "A public TVET college offering vocational, engineering and business-related education and training."),
+                ("Mnambithi TVET College", "KwaZulu-Natal", "Ladysmith", "https://www.mnambithicollege.co.za/",
+                    "A public TVET college serving Ladysmith, Estcourt and surrounding communities."),
+                ("Mthashana TVET College", "KwaZulu-Natal", "Vryheid", "https://www.mthashanafet.co.za/",
+                    "A public TVET college serving communities in northern KwaZulu-Natal."),
+                ("Thekwini TVET College", "KwaZulu-Natal", "Durban", "https://www.thekwinicollege.co.za/",
+                    "A public TVET college serving learners in the Durban metropolitan area."),
+                ("uMfolozi TVET College", "KwaZulu-Natal", "Richards Bay", "https://www.umfolozicollege.co.za/",
+                    "A public TVET college serving northern KwaZulu-Natal."),
+                ("Umgungundlovu TVET College", "KwaZulu-Natal", "Pietermaritzburg", "https://www.ufetc.edu.za/",
+                    "A public TVET college serving the Midlands and surrounding areas of KwaZulu-Natal.")
             };
 
-            foreach (var college in colleges)
+            foreach (var (name, province, city, website, description) in collegeData)
             {
-                if (!await context.Colleges.AnyAsync(c => c.CollegeId == college.CollegeId))
+                if (!await context.Colleges.AnyAsync(c => c.Name == name))
                 {
-                    college.CreatedAt = DateTime.UtcNow;
-                    college.UpdatedAt = DateTime.UtcNow;
-
-                    context.Colleges.Add(college);
+                    context.Colleges.Add(new College
+                    {
+                        Name = name,
+                        Province = province,
+                        City = city,
+                        WebsiteUrl = website,
+                        Description = description,
+                        IsActive = true,
+                        CreatedAt = DateTime.UtcNow,
+                        UpdatedAt = DateTime.UtcNow
+                    });
                 }
             }
 
             await context.SaveChangesAsync();
 
+            // Look up college IDs by name (now populated by the DB)
+            var coastal = await context.Colleges.FirstAsync(c => c.Name == "Coastal KZN TVET College");
+            var mnambithi = await context.Colleges.FirstAsync(c => c.Name == "Mnambithi TVET College");
+            var majuba = await context.Colleges.FirstAsync(c => c.Name == "Majuba TVET College");
+            var umfolozi = await context.Colleges.FirstAsync(c => c.Name == "uMfolozi TVET College");
 
             // -----------------------------------------
             // PROGRAMMES
@@ -143,13 +66,12 @@ namespace EducareSA.Data
             var programmes = new List<CollegeProgramme>
             {
                 // =====================================
-                // COASTAL
+                // COASTAL KZN
                 // =====================================
 
                 new CollegeProgramme
                 {
-                    CollegeProgrammeId = 1,
-                    CollegeId = 1,
+                    CollegeId = coastal.CollegeId,
                     Name = "Information Technology and Computer Science",
                     ProgrammeType = "NC(V)",
                     NQFLevel = "NQF Level 2-4",
@@ -157,14 +79,11 @@ namespace EducareSA.Data
                     MinimumAPS = null,
                     RequiredSubjects = "Language; Life Orientation; Mathematics or Mathematical Literacy",
                     Duration = "3 years",
-                    Description =
-                        "Vocational programme covering information technology and computer science."
+                    Description = "Vocational programme covering information technology and computer science."
                 },
-
                 new CollegeProgramme
                 {
-                    CollegeProgrammeId = 2,
-                    CollegeId = 1,
+                    CollegeId = coastal.CollegeId,
                     Name = "Finance, Economics and Accounting",
                     ProgrammeType = "NC(V)",
                     NQFLevel = "NQF Level 2-4",
@@ -173,11 +92,9 @@ namespace EducareSA.Data
                     Duration = "3 years",
                     Description = "Vocational business and accounting programme."
                 },
-
                 new CollegeProgramme
                 {
-                    CollegeProgrammeId = 3,
-                    CollegeId = 1,
+                    CollegeId = coastal.CollegeId,
                     Name = "Office Administration",
                     ProgrammeType = "NC(V)",
                     NQFLevel = "NQF Level 2-4",
@@ -186,11 +103,9 @@ namespace EducareSA.Data
                     Duration = "3 years",
                     Description = "Vocational programme focused on office administration."
                 },
-
                 new CollegeProgramme
                 {
-                    CollegeProgrammeId = 4,
-                    CollegeId = 1,
+                    CollegeId = coastal.CollegeId,
                     Name = "Hospitality",
                     ProgrammeType = "NC(V)",
                     NQFLevel = "NQF Level 2-4",
@@ -199,11 +114,9 @@ namespace EducareSA.Data
                     Duration = "3 years",
                     Description = "Vocational hospitality programme."
                 },
-
                 new CollegeProgramme
                 {
-                    CollegeProgrammeId = 5,
-                    CollegeId = 1,
+                    CollegeId = coastal.CollegeId,
                     Name = "Tourism",
                     ProgrammeType = "NC(V)",
                     NQFLevel = "NQF Level 2-4",
@@ -212,11 +125,9 @@ namespace EducareSA.Data
                     Duration = "3 years",
                     Description = "Vocational tourism programme."
                 },
-
                 new CollegeProgramme
                 {
-                    CollegeProgrammeId = 6,
-                    CollegeId = 1,
+                    CollegeId = coastal.CollegeId,
                     Name = "Civil Engineering",
                     ProgrammeType = "NATED",
                     NQFLevel = "N1-N6",
@@ -225,11 +136,9 @@ namespace EducareSA.Data
                     Duration = "N1-N6",
                     Description = "NATED engineering programme in civil engineering."
                 },
-
                 new CollegeProgramme
                 {
-                    CollegeProgrammeId = 7,
-                    CollegeId = 1,
+                    CollegeId = coastal.CollegeId,
                     Name = "Electrical Engineering",
                     ProgrammeType = "NATED",
                     NQFLevel = "N1-N6",
@@ -239,29 +148,24 @@ namespace EducareSA.Data
                     Description = "NATED engineering programme in electrical engineering."
                 },
 
-
                 // =====================================
                 // MNAMBITHI
                 // =====================================
 
                 new CollegeProgramme
                 {
-                    CollegeProgrammeId = 8,
-                    CollegeId = 5,
+                    CollegeId = mnambithi.CollegeId,
                     Name = "Information Technology and Computer Science",
                     ProgrammeType = "NC(V)",
                     NQFLevel = "NQF Level 2-4",
                     MinimumEntryRequirement = "Grade 9-12 school report or approved PLP bridging programme",
                     RequiredSubjects = "English; Mathematics; Life Orientation",
                     Duration = "3 years",
-                    Description =
-                        "NC(V) programme covering systems development, networking, programming and computer technology."
+                    Description = "NC(V) programme covering systems development, networking, programming and computer technology."
                 },
-
                 new CollegeProgramme
                 {
-                    CollegeProgrammeId = 9,
-                    CollegeId = 5,
+                    CollegeId = mnambithi.CollegeId,
                     Name = "Finance, Economics and Accounting",
                     ProgrammeType = "NC(V)",
                     NQFLevel = "NQF Level 2-4",
@@ -270,11 +174,9 @@ namespace EducareSA.Data
                     Duration = "3 years",
                     Description = "NC(V) business and accounting programme."
                 },
-
                 new CollegeProgramme
                 {
-                    CollegeProgrammeId = 10,
-                    CollegeId = 5,
+                    CollegeId = mnambithi.CollegeId,
                     Name = "Office Administration",
                     ProgrammeType = "NC(V)",
                     NQFLevel = "NQF Level 2-4",
@@ -283,11 +185,9 @@ namespace EducareSA.Data
                     Duration = "3 years",
                     Description = "NC(V) office administration programme."
                 },
-
                 new CollegeProgramme
                 {
-                    CollegeProgrammeId = 11,
-                    CollegeId = 5,
+                    CollegeId = mnambithi.CollegeId,
                     Name = "Education and Development",
                     ProgrammeType = "NC(V)",
                     NQFLevel = "NQF Level 2-4",
@@ -297,29 +197,24 @@ namespace EducareSA.Data
                     Description = "NC(V) programme in education and development."
                 },
 
-
                 // =====================================
                 // MAJUBA
                 // =====================================
 
                 new CollegeProgramme
                 {
-                    CollegeProgrammeId = 12,
-                    CollegeId = 4,
+                    CollegeId = majuba.CollegeId,
                     Name = "Engineering and Related Design",
                     ProgrammeType = "NC(V)",
                     NQFLevel = "NQF Level 2-4",
                     MinimumEntryRequirement = "Grade 9, 10, 11 or 12 certificate or NQF Level 1 qualification",
                     RequiredSubjects = "English; Mathematics or Mathematical Literacy; Life Orientation",
                     Duration = "3 years",
-                    Description =
-                        "Engineering and related design with specialisation options including fitting and turning, boilermaking, motor mechanics and welding."
+                    Description = "Engineering and related design with specialisation options including fitting and turning, boilermaking, motor mechanics and welding."
                 },
-
                 new CollegeProgramme
                 {
-                    CollegeProgrammeId = 13,
-                    CollegeId = 4,
+                    CollegeId = majuba.CollegeId,
                     Name = "Electrical Infrastructure Construction",
                     ProgrammeType = "NC(V)",
                     NQFLevel = "NQF Level 2-4",
@@ -328,11 +223,9 @@ namespace EducareSA.Data
                     Duration = "3 years",
                     Description = "Vocational electrical infrastructure construction programme."
                 },
-
                 new CollegeProgramme
                 {
-                    CollegeProgrammeId = 14,
-                    CollegeId = 4,
+                    CollegeId = majuba.CollegeId,
                     Name = "Civil Engineering and Building Construction",
                     ProgrammeType = "NC(V)",
                     NQFLevel = "NQF Level 2-4",
@@ -341,11 +234,9 @@ namespace EducareSA.Data
                     Duration = "3 years",
                     Description = "Vocational civil engineering and building construction programme."
                 },
-
                 new CollegeProgramme
                 {
-                    CollegeProgrammeId = 15,
-                    CollegeId = 4,
+                    CollegeId = majuba.CollegeId,
                     Name = "Hospitality",
                     ProgrammeType = "NC(V)",
                     NQFLevel = "NQF Level 2-4",
@@ -355,15 +246,13 @@ namespace EducareSA.Data
                     Description = "Vocational hospitality programme."
                 },
 
-
                 // =====================================
                 // UMFOLOZI
                 // =====================================
 
                 new CollegeProgramme
                 {
-                    CollegeProgrammeId = 16,
-                    CollegeId = 8,
+                    CollegeId = umfolozi.CollegeId,
                     Name = "Engineering and Related Design",
                     ProgrammeType = "NC(V)",
                     NQFLevel = "NQF Level 2-4",
@@ -371,11 +260,9 @@ namespace EducareSA.Data
                     Duration = "3 years",
                     Description = "NC(V) Engineering and Related Design programme."
                 },
-
                 new CollegeProgramme
                 {
-                    CollegeProgrammeId = 17,
-                    CollegeId = 8,
+                    CollegeId = umfolozi.CollegeId,
                     Name = "Office Administration",
                     ProgrammeType = "NC(V)",
                     NQFLevel = "NQF Level 2-4",
@@ -383,11 +270,9 @@ namespace EducareSA.Data
                     Duration = "3 years",
                     Description = "NC(V) Office Administration programme."
                 },
-
                 new CollegeProgramme
                 {
-                    CollegeProgrammeId = 18,
-                    CollegeId = 8,
+                    CollegeId = umfolozi.CollegeId,
                     Name = "Public Management",
                     ProgrammeType = "NATED",
                     NQFLevel = "N4-N6",
@@ -395,11 +280,9 @@ namespace EducareSA.Data
                     Duration = "18 months",
                     Description = "NATED Business Studies programme in Public Management."
                 },
-
                 new CollegeProgramme
                 {
-                    CollegeProgrammeId = 19,
-                    CollegeId = 8,
+                    CollegeId = umfolozi.CollegeId,
                     Name = "Financial Management",
                     ProgrammeType = "NATED",
                     NQFLevel = "N4-N6",
@@ -407,11 +290,9 @@ namespace EducareSA.Data
                     Duration = "18 months",
                     Description = "NATED Business Studies programme in Financial Management."
                 },
-
                 new CollegeProgramme
                 {
-                    CollegeProgrammeId = 20,
-                    CollegeId = 8,
+                    CollegeId = umfolozi.CollegeId,
                     Name = "Legal Secretary",
                     ProgrammeType = "NATED",
                     NQFLevel = "N4-N6",
@@ -423,8 +304,10 @@ namespace EducareSA.Data
 
             foreach (var programme in programmes)
             {
-                if (!await context.CollegeProgrammes
-                    .AnyAsync(p => p.CollegeProgrammeId == programme.CollegeProgrammeId))
+                bool exists = await context.CollegeProgrammes
+                    .AnyAsync(p => p.CollegeId == programme.CollegeId && p.Name == programme.Name);
+
+                if (!exists)
                 {
                     programme.IsActive = true;
                     context.CollegeProgrammes.Add(programme);
